@@ -15,11 +15,16 @@
 \usepackage{glossaries}
 \makeglossaries
 
+\def \ajax {AJAX}
+\def \pjaxr {PJAXR}
+\def \jqueryPjaxr {jquery-pjaxr}
+\def \httpRequest {HTTP-request}
+
 \include{glossaries}
 
 \author{Jonas Braun}
 
-\title{PJAXR - A new technology for stateful Single-page applications}
+\title{\pjaxr{} - A new technology for stateful Single-page applications}
 
 \degreecourse{Informatik}
 
@@ -57,29 +62,29 @@
     This approach only loading one website initially and then changing its content interactively is called Single-page application.
     Single-page applications are more user-friendly than the common designs, e.g. due to lower load-times in combination of not being able to indicate clearly that a new website is being loaded.
     A big disadvantage of those are that users are not able to save their websites as a bookmark, because while surfing on this page, the URL never changes.
-    Due to some disadvantages of Flash and an increasing usage of JavaScript and it's development, more and more pages started to use AJAX, a method to asynchronously request content and update the website's content. This technique introduces the ability to implement a Single-page application using AJAX, which is available in nearly every browser. A lot of different frameworks gain this functionality, improving and enhancing it.
+    Due to some disadvantages of Flash and an increasing usage of JavaScript and it's development, more and more pages started to use \ajax{}, a method to asynchronously request content and update the website's content. This technique introduces the ability to implement a Single-page application using \ajax{}, which is available in nearly every browser. A lot of different frameworks gain this functionality, improving and enhancing it.
 
     Both of those approaches have a problem in the current time: Search-engines and other crawlers trying to examine websites will find nothing more than content which was provided initially. Every further change of content is not easily accessible.
-    As Google is the most used search-engine in the World Wide Web, they have a design pattern\footnote{https://developers.google.com/webmasters/ajax-crawling/docs/getting-started} for implementing a crawlable AJAX web application. In this guideline it is recommended to have snapshots available under an \emph{ugly} URL.
-    In this thesis we will evaluate if PJAXR is able to make a web application crawlable without using a special second endpoint for crawlers and implementing specific design patterns for search-engines.
+    As Google is the most used search-engine in the World Wide Web, they have a design pattern\footnote{https://developers.google.com/webmasters/ajax-crawling/docs/getting-started} for implementing a crawlable \ajax{} web application. In this guideline it is recommended to have snapshots available under an \emph{ugly} URL.
+    In this thesis we will evaluate if \pjaxr{} is able to make a web application crawlable without using a special second endpoint for crawlers and implementing specific design patterns for search-engines.
 
 
 \section{Related Work}
-  As showed in \cite{mesbah09} page 109-111, crawling AJAX applications is a complex task. One solution of this task is finding clickables and navigating to every page found by this. Nevertheless that only generates a snapshot, as stated in \cite[p. 124]{mesbah09}.
-  As mentioned in \cite[p. 44]{roodt06} AJAX websites have a better usability than non-AJAX websites.
-  AJAX introduces possibilites for a better UX, as stated in \cite{klugeKarglWeber07}, despite lack of browser navigation support.
-  „Crawling AJAX is a difficult problem, avoided by current search engines.“\cite{matter08}, page 81.
+  As showed in \cite{mesbah09} page 109-111, crawling \ajax{} applications is a complex task. One solution of this task is finding clickables and navigating to every page found by this. Nevertheless that only generates a snapshot, as stated in \cite[p. 124]{mesbah09}.
+  As mentioned in \cite[p. 44]{roodt06} \ajax{} websites have a better usability than non-\ajax{} websites.
+  \ajax{} introduces possibilites for a better UX, as stated in \cite{klugeKarglWeber07}, despite lack of browser navigation support.
+  „Crawling \ajax{} is a difficult problem, avoided by current search engines.“\cite{matter08}, page 81.
 
 
 \section{State of the art}
   At the beginning of the World Wide Web the most common technique was to load every website completely. Changing content was not possible.
     
   With the rise of Flash in the early 2000's, it was possible to have Single-page applications. It was possible to send asynchronous requests out of Flash to load the needed content individually.
-  The engineers of Flickr found a feature of JavaScript called XMLHTTPRequest and invented Asynchronous JavaScript and XML, short AJAX. It was now possible to use JavaScript to load content without the need to reload full pages.
-  This technique and iOS' full-featured browser incl. JavaScript and no support of Flash started the fall of Flash. From 2007 on AJAX was the technique to use for Single-page applications.
+  The engineers of Flickr found a feature of JavaScript called XMLHTTPRequest and invented Asynchronous JavaScript and XML, short \ajax{}. It was now possible to use JavaScript to load content without the need to reload full pages.
+  This technique and iOS' full-featured browser incl. JavaScript and no support of Flash started the fall of Flash. From 2007 on \ajax{} was the technique to use for Single-page applications.
   
 \section{Fundamentals}
-  To understand how AJAX and similar techniques work, you have to understand how HTTP-Requests work:
+  To understand how \ajax{} and similar techniques work, you have to understand how HTTP-Requests work:
   First a browser interprets the URL and requests the path, e.g. "/index.html" from the host, e.g. "google.de" via the protocol, e.g. "http".
   Then the web-server analyses the request and responds with the content, corresponding to the requested path.
   To display the requested website, the browser interprets the response and renders the content. 
@@ -89,90 +94,90 @@
   Starting with the used document type those files have a XML-like structured hierarchy.
   Every item inside is a semantic tag, which can have attributes like a class or an ID.
 
-  Single-page application designs using AJAX aim on changing those tags dynamically without having to load a full new page.
+  Single-page application designs using \ajax{} aim on changing those tags dynamically without having to load a full new page.
   When e.g. clicking a link, JavaScript will prevent the default browser action for clicking a link, a request of a new website, but it will do it internally.
   It requests a special URL to retrieve some data, most often JSON, which is then interpreted and rendered, often into a front-end template, using JavaScript.
 
   Introducing HTML 5 on 28th October 2014 W3C released a new standard for HTML and associated APIs. 
   This release introduced officially the History-API.
   
-\section{PJAXR}
-  PJAXR, based on AJAX, uses the History-API of HTML 5.
+\section{\pjaxr{}}
+  \pjaxr{}, based on \ajax{}, uses the History-API of HTML 5.
   Part of that are the JavaScript-functions pushState, replaceState and a state-object.
-  To load a page, the first request is a normal HTTP-Request, followed by a JavaScript initializing the jquery-pjaxr module.
-  Further requests to the same host are then interpreted by jquery-pjaxr.
-  The content delivered by a PJAXR-backend is interpreted and replaces tags, with matching IDs.
-  PJAXR in combination with the History-API makes it then possible to update the content and change the URL, like it would be made by normal requests.
+  To load a page, the first request is a normal HTTP-Request, followed by a JavaScript initializing the \jqueryPjaxr{} module.
+  Further requests to the same host are then interpreted by \jqueryPjaxr{}.
+  The content delivered by a \pjaxr{}-backend is interpreted and replaces tags, with matching IDs.
+  \pjaxr{} in combination with the History-API makes it then possible to update the content and change the URL, like it would be made by normal requests.
   Also the back- and forward-buttons in a browser will work as it were a full request.
   
-  Additionally when requesting an URL, which is requested by jquery-pjaxr, a full page will be responded.
-  This is possible with using a PJAXR-backend at the web-server and a well-structured HTML-hierarchy.
-  AJAX usually requests URLs pointing to JSON or other formatted data, not representing a full website, even on non-AJAX requests.
+  Additionally when requesting an URL, which is requested by \jqueryPjaxr{}, a full page will be responded.
+  This is possible with using a \pjaxr{}-backend at the web-server and a well-structured HTML-hierarchy.
+  \ajax{} usually requests URLs pointing to JSON or other formatted data, not representing a full website, even on non-\ajax{} requests.
   This makes it possible for user to save bookmarks of the website with the current content.
 
 \section{Implementation}
-  Part of the thesis and to evaluate PJAXR a sample web application will be implemented, which will provide non-AJAX, AJAX-based and PJAXR-based endpoints.
-  This will especially include an implementation of a PJAXR-backend for PHP. As another part jquery-pjaxr will be adjusted to fulfil the requirements for a PHP-backend.
+  Part of the thesis and to evaluate \pjaxr{} a sample web application will be implemented, which will provide non-\ajax{}, \ajax{}-based and \pjaxr{}-based endpoints.
+  This will especially include an implementation of a \pjaxr{}-backend for PHP. As another part \jqueryPjaxr{} will be adjusted to fulfil the requirements for a PHP-backend.
 
 \section{Evaluation}
-  As one traditional testing model, we will evaluate the PJAXR sample application via black-box tests.
-  Testing AJAX is not trivial due to multiple programming- and markup-languages influencing it. 
+  As one traditional testing model, we will evaluate the \pjaxr{} sample application via black-box tests.
+  Testing \ajax{} is not trivial due to multiple programming- and markup-languages influencing it. 
   One possibility to test web applications, as suggested in \cite{lundmark11}, is Selenium\footnote{http://www.seleniumhq.org/}.
   With this tool it is possible to generate automated tests for web applications.
   
-  To evaluate whether the application is crawlable or not is the biggest criteria of PJAXR.
-  One way to crawl AJAX web applications, recommended in \cite{crawljax:tweb12} is to use Crawljax\footnote{http://crawljax.com/}. 
-  It explores AJAX-based web applications by following every link recursively and saving the associated content. In this thesis the three endpoints of the sample project will be crawled by Crawljax to see whether all endpoints provide the same content or not.
+  To evaluate whether the application is crawlable or not is the biggest criteria of \pjaxr{}.
+  One way to crawl \ajax{} web applications, recommended in \cite{crawljax:tweb12} is to use Crawljax\footnote{http://crawljax.com/}. 
+  It explores \ajax{}-based web applications by following every link recursively and saving the associated content. In this thesis the three endpoints of the sample project will be crawled by Crawljax to see whether all endpoints provide the same content or not.
   
-  Another way to evaluate whether PJAXR fulfils its goals, is testing if the Googlebot\footnote{http://google.com/bot.html} will discover all the content provided.
+  Another way to evaluate whether \pjaxr{} fulfils its goals, is testing if the Googlebot\footnote{http://google.com/bot.html} will discover all the content provided.
   Again, all three endpoints will be tested to check, if all data is found by this technique.
-  While Crawljax is intended to find not easily accessible content, Googlebot is intended to find content, matching design patterns\footnote{https://developers.google.com/webmasters/ajax-crawling/} by Google. This fact makes it more challenging for PJAXR, not implementing these, to have good results in this test.
+  While Crawljax is intended to find not easily accessible content, Googlebot is intended to find content, matching design patterns\footnote{https://developers.google.com/webmasters/ajax-crawling/} by Google. This fact makes it more challenging for \pjaxr{}, not implementing these, to have good results in this test.
 
 \section{Contents}
 
 \begin{enumerate}
   \item Introduction
   \begin{enumerate}[label*=\arabic*.]
-  	\item Background and motivation
-  	\item Goals of this thesis
-  	\item Thesis outline
+    \item Background and motivation
+    \item Goals of this thesis
+    \item Thesis outline
   \end{enumerate}
   \item Fundamentals
   \begin{enumerate}[label*=\arabic*.]
-  	\item HTTP-Request
-  	\item HTML
-  	\item Single-Page applications
-  	\item AJAX
-  	\item History API
+    \item \httpRequest{}
+    \item HTML
+    \item Single-Page applications
+    \item \ajax{}
+    \item History API
   \end{enumerate}
   \item State of the art
   \begin{enumerate}[label*=\arabic*.]
-  	\item AJAX
-  	\item Hijax
-  	\item Hash-Bang URLs
+    \item \ajax{}
+    \item Hijax
+    \item Hash-Bang URLs
   \end{enumerate}
-  \item PJAXR
+  \item \pjaxr{}
   \begin{enumerate}[label*=\arabic*.]
-  	\item Introduction
+    \item Introduction
       \item Functionality
-  	\item jquery-pjaxr
-  	\item Usage
-  	\item PJAXR-backends
+    \item \jqueryPjaxr{}
+    \item Usage
+    \item \pjaxr{}-backends
   \end{enumerate}
   \item Implementation
   \begin{enumerate}[label*=\arabic*.]
-  	\item Sample PHP web application
-  	\item PHP PJAXR-backend
-  	\item jquery-pjaxr adjustments
-  	\item Concluding remarks
+    \item Sample PHP web application
+    \item PHP \pjaxr{}-backend
+    \item \jqueryPjaxr{} adjustments
+    \item Concluding remarks
   \end{enumerate}
   \item Evaluation
   \begin{enumerate}[label*=\arabic*.]
-  	\item Selenium
-  	\item Crawljax
-  	\item Googlebot
-  	\item Results
-  	\item Concluding remarks
+    \item Selenium
+    \item Crawljax
+    \item Googlebot
+    \item Results
+    \item Concluding remarks
   \end{enumerate}
   \item Conclusion and future work
 
