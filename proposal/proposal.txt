@@ -1,0 +1,99 @@
+pjaxr - A new technology for stateful one page designs
+
+
+Introduction
+
+  Problem and relevance
+
+    At the beginning of the World Wide Web websites had a similarity, they were self-contained. The content which was initally loaded was not changed until a new website visited.
+
+    One big change was the integration of Flash into browsers. It introduced the possiblity to render animations and changing contents without a full new request.
+    This approach only loading one website initally and then changing it's content interactively is called  Single-page Web Applications.
+
+    Single-page Web Applications are more user-friendly than the common designs, e.g. due to lower load-times in combination of not being able to indicate clearly that a new website is being loaded.
+    A big disadvantage of those are that users are not able to save their websites as a bookmark, because while surfing on this page, the URL never changes.
+
+    Due to some disadvantages of flash and an increasing usage of Javascript and it's development more and more pages started to use AJAX, a method to asynchronously request content and update the website's content. A lot of different Frameworks gain this functionality, improving and enhancing it.
+
+    Both of those approaches have a problem in the current time: Search-engines and other crawlers trying to examine websites will not find any other content but the one which was loaded initally, every later change of content is not easily accessible.
+    
+    This disadvantage can be avoided by using PJAXR, a new technology which will be presented in this thesis.
+
+
+
+Related Work
+
+  Analysis and Testing of Ajax-based Single-page Web Applications by Ali Mesbah (http://www.st.ewi.tudelft.nl/~arie/phds/Mesbah.pdf)
+    
+    As Ali Mesbah states in his dissertation that crawling a normal website is very complex[1].
+    His approach of finding clickables and navigating brute-force like to every page he can find[2] is not a complete approach and as he states, only “a snapshot instance“[3].
+
+    As Youri op't Roodt shows in his master thesis AJAX websites have a better usability than non-AJAX websites.
+
+    In [5] is shown that AJAX has a better UX, despite lack of browser navigation support.
+
+    „Crawling AJAX is a difficult problem, avoided by current search engines.“ [6]
+
+    [1](p. 109, 5.2 Challenges of Crawling Ajax, http://www.st.ewi.tudelft.nl/~arie/phds/Mesbah.pdf)
+    [2](p. 111, 5.3 A Method for Crawling Ajax, http://www.st.ewi.tudelft.nl/~arie/phds/Mesbah.pdf)
+    [3](p. 125, 5.6.4 State Space, http://www.st.ewi.tudelft.nl/~arie/phds/Mesbah.pdf)
+
+    [4](p. 44, 9.4 Conclusion, http://homepages.cwi.nl/~paulk/thesesMasterSoftwareEngineering/2006/YouriOpTRoodt.pdf)
+
+    [5](https://www.uni-ulm.de/fileadmin/website_uni_ulm/iui.inst.100/institut/Papers/Prof_Weber/webist2007.pdf)
+
+    [6](p. 81, 10. Conclusion and Future Work, http://e-collection.library.ethz.ch/eserv/eth:30709/eth-30709-01.pdf)
+
+  State of the Art
+
+    At the beginning of the World Wide Web the most common technique was to load every website completely. Changing content was not possible.
+    
+    With the rise of Flash in the early 2000s it was possible to have Single-page Web Applications. It was possible to send asynchronous requests out of Flash to load the needed content individually.
+    The engineers of Flickr found a feature of JavaScript called XMLHTTPRequest and invented Asynchronous JavaScript and XML, short AJAX. It was now possible using Javascript to load content without the needing to reload full pages.
+    This technique and Apple's iOS’ full-featured browser incl. Javascript and no support of Flash started the fall of Flash. From 2007 on AJAX was the technique to use for Single-page Web Applications.
+    
+
+Fundamentals
+
+  
+  To understand how AJAX and similar techniques work, you have to understand how HTTP-Requests work:
+  First a browser interprets the URL and requests the path, e.g. "/index.html" from the host, e.g. "google.de" via the protocol, e.g. "http".
+  Then the web-server analyses the request and responds with the content, corresponding to the requested path.
+  To display the requested website, the browser interpets the respsonse and renders the content. 
+  Images, Javascripts and Stylesheets which are linked inside the response are retrieved and interpreted the same way.
+
+  The first response is typically a HTML-file.
+  Starting with the used schema those files have a XML-like structured hierarchy.
+  Every item inside is a semantic tag, which can have attributes like a class or an ID.
+  Those ID's should only be declared once per website, which has to be stricly done when using PJAXR.
+
+  Single-page Web Application approaches using AJAX aim on changing those tags dynamically without having to load a full new page.
+  When e.g. clicking a link Javascript will prevent the default browser action for clicking a link, a request of a new website, but it will do it internally.
+  It requests a special URL to retrieve some data, most often JSON, which is then interpreted and rendered, often into a front-end template, using Javascript.
+
+  Introducing HTML 5 on 28.October 2014 W3C released a new standard for HTML and associated APIs. 
+  This release introduced officially the History-API.
+  Part of that are the JS-functions pushState and replaceState and a state-object, the fundamentals for the functionality of PJAXR.
+  
+PJAXR
+
+  PJAXR, based on AJAX, uses those newly introduced functions and objects.
+  To load a page the first request is a normal HTTP-Request, followed by a Javascript initializing the jquery-pjaxr module.
+  Further requests to the same host are then interpreted by jquery-pjaxr.
+  PJAXR in combination with the History-API makes it then possible to update the content and change the URL, like it would be made by normal requests.
+  Even the back- and forward-buttons in browser will work as it were a full requests.
+  
+  Additionally when requesting an URL, which is requested by jquery-pjaxr, a full page will be responded.
+  This is possible with using a pjaxr-backend at the webserver and a well-structured HTML-hierarchy.
+  AJAX usually requests URLs pointing to JSON or other formatted data, not representing a full website, even on non-ajax requests.
+  This makes it possible for user to save bookmarks of the website with the current content.
+  
+Example Apps
+
+  
+
+Actual PJAXR-request analysis
+
+Evaluation
+
+Conclusion

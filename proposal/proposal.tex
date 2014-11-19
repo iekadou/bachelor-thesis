@@ -1,0 +1,217 @@
+\documentclass[f,bachelor,binding,twoside,palatino]{WeSTthesis}
+% Please read the README.md file for additional information on the parameters and overall usage of WeSTthesis
+
+\usepackage[ngerman, english]{babel}         % English and new German spelling
+\usepackage[utf8]{inputenc}                 % correct input encoding
+\usepackage[T1]{fontenc}                    % correct output encoding
+\usepackage{graphicx}                       % enhanced support for graphics
+\usepackage{tabularx}                       % more flexible tabular
+\usepackage{amsfonts}                       % math fonts
+\usepackage{amssymb}                        % math symbols
+\usepackage{amsmath}                        % overall enhancements to math environment
+\usepackage[babel,english=quotes]{csquotes}
+\usepackage{enumitem}
+\usepackage{url}
+\usepackage{glossaries}
+\makeglossaries
+
+\include{glossaries}
+
+\author{Jonas Braun}
+
+\title{PJAXR - A new technology for stateful Single-page applications}
+
+\degreecourse{Informatik}
+
+\firstreviewer{Prof. Dr. Steffen Staab}
+\firstreviewerinfo{Institute for Web Science and Technologies}
+
+\secondreviewer{René Pickhardt}
+\secondreviewerinfo{Institute for Web Science and Technologies}
+
+
+\begin{document}
+
+% optional: change document language from ngerman to english
+% \selectlanguage{english}
+
+\maketitle %prints the cover page  an empty page if two-sided print
+\pagenumbering{roman}
+
+\tableofcontents
+
+\varclearpage
+
+% list of figures
+% \listoffigures
+% \varclearpage
+
+\pagenumbering{arabic}
+
+% beginning of the actual text section
+\addtocounter{footnote}
+
+\section{Introduction}
+    At the beginning of the World Wide Web websites had a similarity, they were self-contained. The content which was initially loaded was not changed until a new URL was requested by the user.
+    One big change was the integration of Flash into browsers. It introduced the possibility to render animations and changing contents without the need of requesting a new URL.
+    This approach only loading one website initially and then changing its content interactively is called Single-page application.
+    Single-page applications are more user-friendly than the common designs, e.g. due to lower load-times in combination of not being able to indicate clearly that a new website is being loaded.
+    A big disadvantage of those are that users are not able to save their websites as a bookmark, because while surfing on this page, the URL never changes.
+    Due to some disadvantages of Flash and an increasing usage of JavaScript and it's development, more and more pages started to use AJAX, a method to asynchronously request content and update the website's content. This technique introduces the ability to implement a Single-page application using AJAX, which is available in nearly every browser. A lot of different frameworks gain this functionality, improving and enhancing it.
+
+    Both of those approaches have a problem in the current time: Search-engines and other crawlers trying to examine websites will find nothing more than content which was provided initially. Every further change of content is not easily accessible.
+    As Google is the most used search-engine in the World Wide Web, they have a design pattern\footnote{https://developers.google.com/webmasters/ajax-crawling/docs/getting-started} for implementing a crawlable AJAX web application. In this guideline it is recommended to have snapshots available under an \emph{ugly} URL.
+    In this thesis we will evaluate if PJAXR is able to make a web application crawlable without using a special second endpoint for crawlers and implementing specific design patterns for search-engines.
+
+
+\section{Related Work}
+  As showed in \cite{mesbah09} page 109-111, crawling AJAX applications is a complex task. One solution of this task is finding clickables and navigating to every page found by this. Nevertheless that only generates a snapshot, as stated in \cite[p. 124]{mesbah09}.
+  As mentioned in \cite[p. 44]{roodt06} AJAX websites have a better usability than non-AJAX websites.
+  AJAX introduces possibilites for a better UX, as stated in \cite{klugeKarglWeber07}, despite lack of browser navigation support.
+  „Crawling AJAX is a difficult problem, avoided by current search engines.“\cite{matter08}, page 81.
+
+
+\section{State of the art}
+  At the beginning of the World Wide Web the most common technique was to load every website completely. Changing content was not possible.
+    
+  With the rise of Flash in the early 2000's, it was possible to have Single-page applications. It was possible to send asynchronous requests out of Flash to load the needed content individually.
+  The engineers of Flickr found a feature of JavaScript called XMLHTTPRequest and invented Asynchronous JavaScript and XML, short AJAX. It was now possible to use JavaScript to load content without the need to reload full pages.
+  This technique and iOS' full-featured browser incl. JavaScript and no support of Flash started the fall of Flash. From 2007 on AJAX was the technique to use for Single-page applications.
+  
+\section{Fundamentals}
+  To understand how AJAX and similar techniques work, you have to understand how HTTP-Requests work:
+  First a browser interprets the URL and requests the path, e.g. "/index.html" from the host, e.g. "google.de" via the protocol, e.g. "http".
+  Then the web-server analyses the request and responds with the content, corresponding to the requested path.
+  To display the requested website, the browser interprets the response and renders the content. 
+  Images, JavaScripts and Stylesheets which are linked inside the response are retrieved and interpreted the same way on further HTTP-Requests.
+
+  The first response is typically a HTML-file.
+  Starting with the used document type those files have a XML-like structured hierarchy.
+  Every item inside is a semantic tag, which can have attributes like a class or an ID.
+
+  Single-page application designs using AJAX aim on changing those tags dynamically without having to load a full new page.
+  When e.g. clicking a link, JavaScript will prevent the default browser action for clicking a link, a request of a new website, but it will do it internally.
+  It requests a special URL to retrieve some data, most often JSON, which is then interpreted and rendered, often into a front-end template, using JavaScript.
+
+  Introducing HTML 5 on 28th October 2014 W3C released a new standard for HTML and associated APIs. 
+  This release introduced officially the History-API.
+  
+\section{PJAXR}
+  PJAXR, based on AJAX, uses the History-API of HTML 5.
+  Part of that are the JavaScript-functions pushState, replaceState and a state-object.
+  To load a page, the first request is a normal HTTP-Request, followed by a JavaScript initializing the jquery-pjaxr module.
+  Further requests to the same host are then interpreted by jquery-pjaxr.
+  The content delivered by a PJAXR-backend is interpreted and replaces tags, with matching IDs.
+  PJAXR in combination with the History-API makes it then possible to update the content and change the URL, like it would be made by normal requests.
+  Also the back- and forward-buttons in a browser will work as it were a full request.
+  
+  Additionally when requesting an URL, which is requested by jquery-pjaxr, a full page will be responded.
+  This is possible with using a PJAXR-backend at the web-server and a well-structured HTML-hierarchy.
+  AJAX usually requests URLs pointing to JSON or other formatted data, not representing a full website, even on non-AJAX requests.
+  This makes it possible for user to save bookmarks of the website with the current content.
+
+\section{Implementation}
+  Part of the thesis and to evaluate PJAXR a sample web application will be implemented, which will provide non-AJAX, AJAX-based and PJAXR-based endpoints.
+  This will especially include an implementation of a PJAXR-backend for PHP. As another part jquery-pjaxr will be adjusted to fulfil the requirements for a PHP-backend.
+
+\section{Evaluation}
+  As one traditional testing model, we will evaluate the PJAXR sample application via black-box tests.
+  Testing AJAX is not trivial due to multiple programming- and markup-languages influencing it. 
+  One possibility to test web applications, as suggested in \cite{lundmark11}, is Selenium\footnote{http://www.seleniumhq.org/}.
+  With this tool it is possible to generate automated tests for web applications.
+  
+  To evaluate whether the application is crawlable or not is the biggest criteria of PJAXR.
+  One way to crawl AJAX web applications, recommended in \cite{crawljax:tweb12} is to use Crawljax\footnote{http://crawljax.com/}. 
+  It explores AJAX-based web applications by following every link recursively and saving the associated content. In this thesis the three endpoints of the sample project will be crawled by Crawljax to see whether all endpoints provide the same content or not.
+  
+  Another way to evaluate whether PJAXR fulfils its goals, is testing if the Googlebot\footnote{http://google.com/bot.html} will discover all the content provided.
+  Again, all three endpoints will be tested to check, if all data is found by this technique.
+  While Crawljax is intended to find not easily accessible content, Googlebot is intended to find content, matching design patterns\footnote{https://developers.google.com/webmasters/ajax-crawling/} by Google. This fact makes it more challenging for PJAXR, not implementing these, to have good results in this test.
+
+\section{Contents}
+
+\begin{enumerate}
+  \item Introduction
+  \begin{enumerate}[label*=\arabic*.]
+  	\item Background and motivation
+  	\item Goals of this thesis
+  	\item Thesis outline
+  \end{enumerate}
+  \item Fundamentals
+  \begin{enumerate}[label*=\arabic*.]
+  	\item HTTP-Request
+  	\item HTML
+  	\item Single-Page applications
+  	\item AJAX
+  	\item History API
+  \end{enumerate}
+  \item State of the art
+  \begin{enumerate}[label*=\arabic*.]
+  	\item AJAX
+  	\item Hijax
+  	\item Hash-Bang URLs
+  \end{enumerate}
+  \item PJAXR
+  \begin{enumerate}[label*=\arabic*.]
+  	\item Introduction
+      \item Functionality
+  	\item jquery-pjaxr
+  	\item Usage
+  	\item PJAXR-backends
+  \end{enumerate}
+  \item Implementation
+  \begin{enumerate}[label*=\arabic*.]
+  	\item Sample PHP web application
+  	\item PHP PJAXR-backend
+  	\item jquery-pjaxr adjustments
+  	\item Concluding remarks
+  \end{enumerate}
+  \item Evaluation
+  \begin{enumerate}[label*=\arabic*.]
+  	\item Selenium
+  	\item Crawljax
+  	\item Googlebot
+  	\item Results
+  	\item Concluding remarks
+  \end{enumerate}
+  \item Conclusion and future work
+
+\end{enumerate}
+
+\printglossary
+
+\begin{thebibliography}{9}
+
+\bibitem{mesbah09}
+  Mesbah, Ali (2009).
+  \emph{Analysis and Testing of Ajax-based Single-page Web Applications}.
+  Ph.D. Thesis. TU Delft
+
+\bibitem{roodt06}
+  Youri op't Roodt (2006).
+  \emph{The effect of Ajax on performance and usability in web environments}.
+  Master Thesis. University of Amsterdam
+
+\bibitem{klugeKarglWeber07}
+  Kluge, Jonas and Kargl, Frank and Weber, Michael (2007).
+  \emph{The effects of the AJAX technology on web application usability}.
+  WebIST 2007, Barcelona
+
+\bibitem{matter08}
+  Duda, Cristian and Frey, Gianni and Kossmann, Donald and Matter, Reto and Zhou, Chong (2009).
+  \emph{AJAX Crawl: Making AJAX Applications Searchable}.
+  Data Engineering, 2009. ICDE '09, Shanghai
+  
+\bibitem{lundmark11}
+  Lundmark, Simon (2011)
+  \emph{Automatic Testing of Modern Web Applications in an Agile Environment}
+  Bachelor Thesis, Stockholm
+
+\bibitem{crawljax:tweb12}
+  Mesbah, Ali and van Deursen, Arie and Lenselink, Stefan
+  \emph{Crawling {Ajax}-based Web Applications through Dynamic Analysis of User Interface State Changes}
+  ACM Transactions on the Web (TWEB) 2012
+  
+\end{thebibliography}
+
+\end{document}
