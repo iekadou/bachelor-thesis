@@ -19,12 +19,14 @@
 \def \pjaxr {PJAXR}
 \def \jqueryPjaxr {jquery-pjaxr}
 \def \httpRequest {HTTP-request}
+\def \singlePageApplication {single-page application}
+\def \SinglePageApplication {Single-page application}
 
 \include{glossaries}
 
 \author{Jonas Braun}
 
-\title{\pjaxr{} - A new technology for stateful Single-page applications}
+\title{\pjaxr{} - A new technology for stateful \singlePageApplication{}s}
 
 \degreecourse{Informatik}
 
@@ -59,27 +61,30 @@
 \section{Introduction}
     At the beginning of the World Wide Web websites had a similarity, they were self-contained. The content which was initially loaded was not changed until a new URL was requested by the user.
     One big change was the integration of Flash into browsers. It introduced the possibility to render animations and changing contents without the need of requesting a new URL.
-    This approach only loading one website initially and then changing its content interactively is called Single-page application.
-    Single-page applications are more user-friendly than the common designs, e.g. due to lower load-times in combination of not being able to indicate clearly that a new website is being loaded.
+    This approach only loading one website initially and then changing its content interactively is called \singlePageApplication{}.
+    \singlePageApplication{}s are more user-friendly than the common designs, e.g. due to lower load-times in combination of not being able to indicate clearly that a new website is being loaded.
     A big disadvantage of those are that users are not able to save their websites as a bookmark, because while surfing on this page, the URL never changes.
-    Due to some disadvantages of Flash and an increasing usage of JavaScript and it's development, more and more pages started to use \ajax{}, a method to asynchronously request content and update the website's content. This technique introduces the ability to implement a Single-page application using \ajax{}, which is available in nearly every browser. A lot of different frameworks gain this functionality, improving and enhancing it.
+    Due to some disadvantages of Flash and an increasing usage of JavaScript and it's development, more and more pages started to use \ajax{}, a method to asynchronously request content and update the website's content. This technique introduces the ability to implement a \singlePageApplication{} using \ajax{}, which is available in nearly every browser. A lot of different frameworks gain this functionality, improving and enhancing it.
 
     Both of those approaches have a problem in the current time: Search-engines and other crawlers trying to examine websites will find nothing more than content which was provided initially. Every further change of content is not easily accessible.
     As Google is the most used search-engine in the World Wide Web, they have a design pattern\footnote{https://developers.google.com/webmasters/ajax-crawling/docs/getting-started} for implementing a crawlable \ajax{} web application. In this guideline it is recommended to have snapshots available under an \emph{ugly} URL.
-    In this thesis we will evaluate if \pjaxr{} is able to make a web application crawlable without using a special second endpoint for crawlers and implementing specific design patterns for search-engines.
+    In this thesis we will evaluate if \pjaxr{} is able to make a web application crawlable without using a special second endpoint for crawlers or implementing specific design patterns for search-engines.
 
 
 \section{Related Work}
-  As showed in \cite{mesbah09} page 109-111, crawling \ajax{} applications is a complex task. One solution of this task is finding clickables and navigating to every page found by this. Nevertheless that only generates a snapshot, as stated in \cite[p. 124]{mesbah09}.
-  As mentioned in \cite[p. 44]{roodt06} \ajax{} websites have a better usability than non-\ajax{} websites.
-  \ajax{} introduces possibilites for a better UX, as stated in \cite{klugeKarglWeber07}, despite lack of browser navigation support.
-  „Crawling \ajax{} is a difficult problem, avoided by current search engines.“\cite{matter08}, page 81.
+  \ajax{} is a widely used technique in the internet to build web applications because of the UX improvements it brings.
+  In \cite{roodt06} is mentioned that \ajax{} applications have a better usability than non-\ajax{} websites.
+  The same conclusion is made in \cite{klugeKarglWeber07}, despite of the lack of browser navigation support.
+  Beside the navigation problem another disadvantage is, as presented in \cite{mesbah09}, crawling \ajax{} applications is not trivial.
+  One solution of this task is finding clickables and navigating to every page found by this.
+  Nevertheless \cite{mesbah09} states also that this only generates a snapshot of the full application.
+  This difficulty of crawling those websites is additionally presented by search engines, avoiding this problem.\cite{matter08}, page 81.
 
 
 \section{State of the art}
   At the beginning of the World Wide Web the most common technique was to load every website completely. Changing content was not possible.
     
-  With the rise of Flash in the early 2000's, it was possible to have Single-page applications. It was possible to send asynchronous requests out of Flash to load the needed content individually.
+  With the rise of Flash in the early 2000's, it was possible to have \singlePageApplication{}s. It was possible to send asynchronous requests out of Flash to load the needed content individually.
   The engineers of Flickr found a feature of JavaScript called XMLHTTPRequest and invented Asynchronous JavaScript and XML, short \ajax{}. It was now possible to use JavaScript to load content without the need to reload full pages.
   This technique and iOS' full-featured browser incl. JavaScript and no support of Flash started the fall of Flash. From 2007 on \ajax{} was the technique to use for Single-page applications.
   
@@ -94,7 +99,7 @@
   Starting with the used document type those files have a XML-like structured hierarchy.
   Every item inside is a semantic tag, which can have attributes like a class or an ID.
 
-  Single-page application designs using \ajax{} aim on changing those tags dynamically without having to load a full new page.
+  \SinglePageApplication{}s using \ajax{} aim on changing those tags dynamically without having to load a full new page.
   When e.g. clicking a link, JavaScript will prevent the default browser action for clicking a link, a request of a new website, but it will do it internally.
   It requests a special URL to retrieve some data, most often JSON, which is then interpreted and rendered, often into a front-end template, using JavaScript.
 
@@ -187,11 +192,6 @@
 
 \begin{thebibliography}{9}
 
-\bibitem{mesbah09}
-  Mesbah, Ali (2009).
-  \emph{Analysis and Testing of Ajax-based Single-page Web Applications}.
-  Ph.D. Thesis. TU Delft
-
 \bibitem{roodt06}
   Youri op't Roodt (2006).
   \emph{The effect of Ajax on performance and usability in web environments}.
@@ -201,6 +201,11 @@
   Kluge, Jonas and Kargl, Frank and Weber, Michael (2007).
   \emph{The effects of the AJAX technology on web application usability}.
   WebIST 2007, Barcelona
+
+\bibitem{mesbah09}
+  Mesbah, Ali (2009).
+  \emph{Analysis and Testing of Ajax-based Single-page Web Applications}.
+  Ph.D. Thesis. TU Delft
 
 \bibitem{matter08}
   Duda, Cristian and Frey, Gianni and Kossmann, Donald and Matter, Reto and Zhou, Chong (2009).
