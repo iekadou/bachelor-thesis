@@ -62,7 +62,7 @@
     At the beginning of the World Wide Web websites had a similarity, they were self-contained. The content which was initially loaded was not changed until a new URL was requested by the user.
     One big change was the integration of Flash into browsers. It introduced the possibility to render animations and changing contents without the need of requesting a new URL.
     This approach only loading one website initially and then changing its content interactively is called \singlePageApplication{}.
-    \singlePageApplication{}s are more user-friendly than the common designs, e.g. due to lower load-times in combination of not being able to indicate clearly that a new website is being loaded.
+    \SinglePageApplication{}s are more user-friendly than the common designs, e.g. due to lower load-times in combination of not being able to indicate clearly that a new website is being loaded.
     A big disadvantage of those are that users are not able to save their websites as a bookmark, because while surfing on this page, the URL never changes.
     Due to some disadvantages of Flash and an increasing usage of JavaScript and it's development, more and more pages started to use \ajax{}, a method to asynchronously request content and update the website's content. This technique introduces the ability to implement a \singlePageApplication{} using \ajax{}, which is available in nearly every browser. A lot of different frameworks gain this functionality, improving and enhancing it.
 
@@ -86,7 +86,7 @@
     
   With the rise of Flash in the early 2000's, it was possible to have \singlePageApplication{}s. It was possible to send asynchronous requests out of Flash to load the needed content individually.
   The engineers of Flickr found a feature of JavaScript called XMLHTTPRequest and invented Asynchronous JavaScript and XML, short \ajax{}. It was now possible to use JavaScript to load content without the need to reload full pages.
-  This technique and iOS' full-featured browser incl. JavaScript and no support of Flash started the fall of Flash. From 2007 on \ajax{} was the technique to use for Single-page applications.
+  This technique and iOS' full-featured browser incl. JavaScript and no support of Flash started the fall of Flash. From 2007 on \ajax{} was the technique to use for \singlePageApplication{}s.
   
 \section{Fundamentals}
   To understand how \ajax{} and similar techniques work, you have to understand how HTTP-Requests work:
@@ -111,14 +111,14 @@
   Part of that are the JavaScript-functions pushState, replaceState and a state-object.
   To load a page, the first request is a normal HTTP-Request, followed by a JavaScript initializing the \jqueryPjaxr{} module.
   Further requests to the same host are then interpreted by \jqueryPjaxr{}.
-  The content delivered by a \pjaxr{}-backend is interpreted and replaces tags, with matching IDs.
+  The content delivered by a \pjaxr{}-backend is interpreted and replaces tags with matching IDs.
   \pjaxr{} in combination with the History-API makes it then possible to update the content and change the URL, like it would be made by normal requests.
   Also the back- and forward-buttons in a browser will work as it were a full request.
   
   Additionally when requesting an URL, which is requested by \jqueryPjaxr{}, a full page will be responded.
   This is possible with using a \pjaxr{}-backend at the web-server and a well-structured HTML-hierarchy.
   \ajax{} usually requests URLs pointing to JSON or other formatted data, not representing a full website, even on non-\ajax{} requests.
-  This makes it possible for user to save bookmarks of the website with the current content.
+  This makes it possible for users to save bookmarks of the website with the current content.
 
 \section{Implementation}
   Part of the thesis and to evaluate \pjaxr{} a sample web application will be implemented, which will provide non-\ajax{}, \ajax{}-based and \pjaxr{}-based endpoints.
