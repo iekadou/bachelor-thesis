@@ -13,12 +13,13 @@
 \usepackage{enumitem}
 \usepackage{url}
 \usepackage{glossaries}
+\usepackage{xcolor}
 \makeglossaries
 
 \def \ajax {AJAX}
 \def \pjaxr {PJAXR}
 \def \jqueryPjaxr {jquery-pjaxr}
-\def \httpRequest {HTTP-request}
+\def \httpRequest {HTTP request}
 \def \singlePageApplication {single-page application}
 \def \SinglePageApplication {Single-page application}
 
@@ -56,18 +57,22 @@
 \pagenumbering{arabic}
 
 % beginning of the actual text section
+\newcommand\todo[1]{\textcolor{red}{#1}}
 
 \section{Introduction}
     At the beginning of the World Wide Web websites had a similarity, they were self-contained. The content which was initially loaded was not changed until a new URL was requested by the user.
     One big change was the integration of Flash into browsers. It introduced the possibility to render animations and changing contents without the need of requesting a new URL.
     This approach only loading one website initially and then changing its content interactively is called \singlePageApplication{}.
-    \SinglePageApplication{}s are more user-friendly than the common designs, e.g. due to lower load-times in combination of not being able to indicate clearly that a new website is being loaded.
+    \SinglePageApplication{}s are more user-friendly than the common designs, e.g. due to lower load times in combination of not being able to indicate clearly that a new website is being loaded.
     A big disadvantage of those are that users are not able to save their websites as a bookmark, because while surfing on this page, the URL never changes.
     Due to some disadvantages of Flash and an increasing usage of JavaScript and it's development, more and more pages started to use \ajax{}, a method to asynchronously request content and update the website's content. This technique introduces the ability to implement a \singlePageApplication{} using \ajax{}, which is available in nearly every browser. A lot of different frameworks gain this functionality, improving and enhancing it.
 
-    Both of those approaches have a problem in the current time: Search-engines and other crawlers trying to examine websites will find nothing more than content which was provided initially. Every further change of content is not easily accessible.
-    As Google is the most used search-engine in the World Wide Web, they have a design pattern\footnote{https://developers.google.com/webmasters/ajax-crawling/docs/getting-started} for implementing a crawlable \ajax{} web application. In this guideline it is recommended to have snapshots available under an \emph{ugly} URL.
-    In this thesis we will evaluate if \pjaxr{} is able to make a web application crawlable without using a special second endpoint for crawlers or implementing specific design patterns for search-engines.
+    Both of those approaches have a problem in the current time: Search engines and other crawlers trying to examine websites will find nothing more than content which was provided initially. Every further change of content is not easily accessible.
+    As Google is the most used search engine in the World Wide Web they have a design pattern\footnote{https://developers.google.com/webmasters/ajax-crawling/docs/getting-started} for implementing a crawlable \ajax{} web application. In this guideline it is recommended to have snapshots available under an non-user-friendly URL.
+
+
+    \todo{change this}  
+    In this thesis we will evaluate if \pjaxr{} is able to make a web application crawlable without using a special second endpoint for crawlers or implementing specific design patterns for search engines.
 
 
 \section{Related Work}
@@ -80,51 +85,54 @@
   This difficulty of crawling those websites is additionally presented by search engines, avoiding this problem.\cite{matter08}, page 81.
 
 
+    \todo{Anforderung vs. Realisierungskonzepte vs. Implementierung}  
+
 \section{State of the art}
+    \todo{remove flash}  
   At the beginning of the World Wide Web the most common technique was to load every website completely. Changing content was not possible.
     
   With the rise of Flash in the early 2000's, it was possible to have \singlePageApplication{}s. It was possible to send asynchronous requests out of Flash to load the needed content individually.
   The engineers of Flickr found a feature of JavaScript called XMLHTTPRequest and invented Asynchronous JavaScript and XML, short \ajax{}. It was now possible to use JavaScript to load content without the need to reload full pages.
-  This technique and iOS' full-featured browser incl. JavaScript and no support of Flash started the fall of Flash. From 2007 on \ajax{} was the technique to use for \singlePageApplication{}s.
+  This technique and iOS' full featured browser incl. JavaScript and no support of Flash started the fall of Flash. From 2007 on \ajax{} was the technique to use for \singlePageApplication{}s.
   
 \section{Fundamentals}
-  To understand how \ajax{} and similar techniques work, you have to understand how HTTP-Requests work:
+  To understand how \ajax{} and similar techniques work, you have to understand how \httpRequest{}s work:
   First a browser interprets the URL and requests the path, e.g. "/index.html" from the host, e.g. "google.de" via the protocol, e.g. "http".
-  Then the web-server analyses the request and responds with the content, corresponding to the requested path.
+  Then the webserver analyses the request and responds with the content, corresponding to the requested path.
   To display the requested website, the browser interprets the response and renders the content. 
-  Images, JavaScripts and Stylesheets which are linked inside the response are retrieved and interpreted the same way on further HTTP-Requests.
+  Images, JavaScripts and Stylesheets which are linked inside the response are retrieved and interpreted the same way on further \httpRequest{}s.
 
-  The first response is typically a HTML-file.
-  Starting with the used document type those files have a XML-like structured hierarchy.
+  The first response is typically a HTML file.
+  Starting with the used document type those files have a XML like structured hierarchy.
   Every item inside is a semantic tag, which can have attributes like a class or an ID.
 
   \SinglePageApplication{}s using \ajax{} aim on changing those tags dynamically without having to load a full new page.
   When e.g. clicking a link, JavaScript will prevent the default browser action for clicking a link, a request of a new website, but it will do it internally.
-  It requests a special URL to retrieve some data, most often JSON, which is then interpreted and rendered, often into a front-end template, using JavaScript.
+  It requests a special URL to retrieve some data, most often JSON, which is then interpreted and rendered, often into a frontend template, using JavaScript.
 
   Introducing HTML 5 on 28th October 2014 W3C released a new standard for HTML and associated APIs. 
-  This release introduced officially the History-API.
+  This release introduced officially the History API.
   
 \section{\pjaxr{}}
-  \pjaxr{}, based on \ajax{}, uses the History-API of HTML 5.
-  Part of that are the JavaScript-functions pushState, replaceState and a state-object.
-  To load a page, the first request is a normal HTTP-Request, followed by a JavaScript initializing the \jqueryPjaxr{} module.
+  \pjaxr{}, based on \ajax{}, uses the History API of HTML 5.
+  Part of that are the JavaScript functions pushState, replaceState and history state objects.
+  To load a page, the first request is a normal \httpRequest{} followed by a JavaScript initializing the \jqueryPjaxr{} module.
   Further requests to the same host are then interpreted by \jqueryPjaxr{}.
-  The content delivered by a \pjaxr{}-backend is interpreted and replaces tags with matching IDs.
-  \pjaxr{} in combination with the History-API makes it then possible to update the content and change the URL, like it would be made by normal requests.
+  The content delivered by a \pjaxr{} backend is interpreted and replaces tags with matching IDs.
+  \pjaxr{} in combination with the History API makes it then possible to update the content and change the URL, like it would be made by normal requests.
   Also the back- and forward-buttons in a browser will work as it were a full request.
   
   Additionally when requesting an URL, which is requested by \jqueryPjaxr{}, a full page will be responded.
-  This is possible with using a \pjaxr{}-backend at the web-server and a well-structured HTML-hierarchy.
+  This is possible with using a \pjaxr{} backend at the webserver and a well structured HTML hierarchy.
   \ajax{} usually requests URLs pointing to JSON or other formatted data, not representing a full website, even on non-\ajax{} requests.
   This makes it possible for users to save bookmarks of the website with the current content.
 
 \section{Implementation}
   Part of the thesis and to evaluate \pjaxr{} a sample web application will be implemented, which will provide non-\ajax{}, \ajax{}-based and \pjaxr{}-based endpoints.
-  This will especially include an implementation of a \pjaxr{}-backend for PHP. As another part \jqueryPjaxr{} will be adjusted to fulfil the requirements for a PHP-backend.
+  This will especially include an implementation of a \pjaxr{} backend for PHP. As another part \jqueryPjaxr{} will be adjusted to fulfil the requirements for a PHP backend.
 
 \section{Evaluation}
-  As one traditional testing model, we will evaluate the \pjaxr{} sample application via black-box tests.
+  As one traditional testing model, we will evaluate the \pjaxr{} sample application via blackbox tests.
   Testing \ajax{} is not trivial due to multiple programming- and markup-languages influencing it. 
   One possibility to test web applications, as suggested in \cite{lundmark11}, is Selenium\footnote{http://www.seleniumhq.org/}.
   With this tool it is possible to generate automated tests for web applications.
@@ -156,15 +164,14 @@
   \end{enumerate}
   \item State of the art
   \begin{enumerate}[label*=\arabic*.]
-    \item \ajax{}
     \item Hijax
     \item Hash-Bang URLs
   \end{enumerate}
   \item \pjaxr{}
   \begin{enumerate}[label*=\arabic*.]
     \item Introduction
-      \item Functionality
-    \item \jqueryPjaxr{}
+    \item Concept
+    \item Functionality
     \item Usage
     \item \pjaxr{}-backends
   \end{enumerate}
