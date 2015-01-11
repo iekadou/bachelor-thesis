@@ -32,7 +32,7 @@
 
 \title{\pjaxr{} - A new technology for stateful \singlePageApplication{}s}
 
-\degreecourse{Informatik}
+\degreecourse{Computervisualistik}
 
 \firstreviewer{Prof. Dr. Steffen Staab}
 \firstreviewerinfo{Institute for Web Science and Technologies}
@@ -167,7 +167,11 @@
   One possibility to test web applications, as suggested in \cite{lundmark11}, is Selenium\footnote{http://www.seleniumhq.org/}.
   With this tool it is possible to generate automated tests for web applications.
 
-  To evaluate whether the application is crawlable or not is the biggest criteria of \pjaxr{}.
+  To evaluate whether the application is crawlable or not is an important criteria whether \pjaxr{} fulfills it goals.
+  Finding all the content delivered in all different URLs in the sitemap should be the target to acquire.
+  The crawled content should be similar to a non-dynamic HTML file, defined for every URL.
+  Content which is not directly provided via an URL but asynchronously, like via an autocompletion, should not be relevant.
+
   One way to crawl \ajax{} web applications, recommended in \cite{crawljax:tweb12} is to use Crawljax\footnote{http://crawljax.com/}. 
   It explores \ajax{}-based web applications by following every link recursively and saving the associated content. In this thesis the three endpoints of the sample project will be crawled by Crawljax to see whether all endpoints provide the same content or not.
   
