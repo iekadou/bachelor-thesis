@@ -153,7 +153,7 @@
   The webserver using a \pjaxr{} backend detects the first namespace of the requested resource not matching the namespace of the HTTP header.
   It then decides which data is needed to be gathered and which template should be used to render those.
   The content delivered by the \pjaxr{} backend enriched web server is interpreted by the frontend module and replaces the related containers.
-  This replacement is implemented using the ID-attribute.
+  This replacement is implemented using the ID attribute.
   Other methods identifying corresponding containers like e.g. the XPath are not as generic in it's position on the page as the ID.
   This is important because \singlePageApplication{}s should be able to include content dynamically in every position on the page.
   \pjaxr{} in combination with the History API makes it then possible to update the content and change the URL like it would be made by normal requests.
