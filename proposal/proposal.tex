@@ -66,19 +66,19 @@
   At the beginning of the World Wide Web websites were self-contained. The content which was initially loaded was not changed until a new URL was requested by the user.
   One big change was the invention of \ajax{}. It introduced the possibility to change content without the need of requesting a new URL.
   This approach only loading one website initially and then changing its content interactively is called \singlePageApplication{}.
-  \SinglePageApplication{}s are more user-friendly than the common designs, e.g. due to lower load times in combination of not being able to indicate clearly that a new website is being loaded.
-  A big disadvantage of those are that users are not able to save their websites as a bookmark, because while surfing on this page, the URL never changes.
-  This technique is available in nearly every browser which is a reason that a lot of different frameworks gain this functionality, improving and enhancing it.
+  \SinglePageApplication{}s are more user-friendly than the common designs, e.g. due to lower load times in combination with not being able to indicate clearly that a new website is being loaded.
+  A big disadvantage is that users are not able to save their websites as a bookmark, because while surfing on this page, the URL never changes.
+  \ajax{} is available in nearly every browser which is a reason that a lot of different frameworks gain this functionality, improving and enhancing it.
 
   \SinglePageApplication{}s have a problem in the current time: Search engines and other crawlers trying to examine websites will find nothing more than content which was provided initially. Every further change of content is not easily accessible.
   As Google is the most used search engine in the World Wide Web they have a design pattern\footnote{https://developers.google.com/webmasters/ajax-crawling/docs/getting-started} for implementing a crawlable \ajax{} web application. 
   In this guideline it is recommended to have snapshots available under non-user-friendly URLs, called Hash-Bang URLs.
 
   In this thesis we will improve and evaluate a new technology called \pjaxr{}. 
-  Together with Stephan Groß we developed this technique for using \ajax{} with it's advantages but trying to avoid the disadvantages explained before.
-  The result of that cooperation is the frontend-side implementation called \emph{\jqueryPjaxr{}}.
-  As \pjaxr{} also needs a backend to be implemented, we developed the first \pjaxr{} backend called \emph{\djangoPjaxr{}}.
-  Additionally in this thesis we will introduce a new \pjaxr{} backend for PHP, \emph{\phpPjaxr{}}.
+  Together with Stephan Gro{\ss} we developed this technique for using \ajax{} with it's advantages but trying to avoid the disadvantages explained before.
+  The result of cooperation is the frontend-side implementation called \emph{\jqueryPjaxr{}}.
+  As \pjaxr{} also needs a backend to be implemented, I developed the first \pjaxr{} backend called \emph{\djangoPjaxr{}}.
+  Additionally in this thesis I will introduce a new \pjaxr{} backend for PHP, \emph{\phpPjaxr{}}.
   
   
 \section{Fundamentals}
@@ -99,18 +99,20 @@
   This release introduced officially the History API.
 
 \section{State of the art}
-  \ajax{} is a widely used technique in the internet to build web applications because of the UX improvements it brings.
+  \ajax{} is a widely used technique in the internet to build web applications because of the user experience improvements it brings.
   In \cite{roodt06} is mentioned that \ajax{} applications have a better usability than non-\ajax{} websites.
   The same conclusion is made in \cite{klugeKarglWeber07}, despite of the lack of browser navigation support.
   Beside the navigation problem another disadvantage is, as presented in \cite{mesbah09}, crawling \ajax{} applications is not trivial.
   One solution of this task is finding clickables and navigating to every page found by this.
   Nevertheless \cite{mesbah09} states also that this only generates a snapshot of the full application.
-  This difficulty of crawling those websites is additionally presented by search engines, avoiding this problem.\cite{matter08}, page 81
-  Currently the task of building a crawlable \singlePageApplication{} using \ajax{} is often being avoided, instead crawling algorithms are getting improved and in focus of research.
+  Even search engines are avoiding to crawl websites because of it's difficulty.\cite{matter08}, page 81
+  Currently the task of building a crawlable \singlePageApplication{} using \ajax{} is often avoided, instead crawling algorithms are getting improved and in focus of research.
 
   A common way to implement \ajax{} in websites is to use the pattern of HIJAX.
-  It says to plan with \ajax{} from the start of building the website but build it without and after the website is finished without \ajax{} you add it afterwards.
-  This should then be done by \emph{hijacking} an event like a click to then handle it by an additional script.
+  It encourages developers to have \ajax{} in mind from the start of building the website. 
+  But when they start to implement the \singlePageApplication{} they should do not implement \ajax{}.
+  This should only be done after the website is finished without \ajax{}.
+  This could then be done by \emph{hijacking} an event like a click to then handle ihierarchicallyt by an additional script.
 
   
 \section{\pjaxr{}}
@@ -130,15 +132,15 @@
     \label{fig:pjaxr_html}
   \end{figure}
 
-  Every \singlePageApplication{} which uses \pjaxr{} has a hierachically namespace structure.
+  Every \singlePageApplication{} which uses \pjaxr{} has a hierachical namespace structure.
   Typically the namespace consists of a prefix, a site id, a page id, a content id and an inner-content id.
   Every level in the hierarchy has it's counterpart on the website as shown in figure \ref{fig:pjaxr_html}, a container with an id telling which part of the namespace it belongs to.
   After the \pjaxr frontend is initialized it hijacks events like clicks on links and enriches the request with the current website's namespace.
   A \pjaxr{} backend analyzes the namespace of the requested website and the one sent in the request.
-  The most top-level part of the namespaces not matching is the decisive one.
-  The containers according to this namespace will be responded to the request.
-  An optimized web application should only grab the necessary data and render it afterwards.
-  The \pjaxr{} frontend retrieves the response and replaces the according containers at the website and updates the the current namespace.
+  For every hierarchy level it checks if both namespaces match.
+  If on one level the namespaces don't match the containers according to this level will be responded to the request.
+  An optimized web application only grabs the data necessary for those containers and render them afterwards.
+  The \pjaxr{} frontend retrieves the response, replaces the containers at the website and updates the current namespace.
   
   \begin{figure}[H]
     \centering
@@ -147,18 +149,19 @@
   \end{figure}
   
   \subsection{Realization}
-  To load a page, the first request is a normal \httpRequest{} followed by a JavaScript initializing the \pjaxr{} frontend module.
+  To load a page, the first request is a normal \httpRequest{} followed by a JavaScript script initializing the \pjaxr{} frontend module.
   Further requests to the same host are then initated by this module.
-  The HTTP header of those requests are extended by the namespace of the current website.
+  The HTTP headers of these requests are extended by the namespace of the current website.
   The webserver using a \pjaxr{} backend detects the first namespace of the requested resource not matching the namespace of the HTTP header.
   It then decides which data is needed to be gathered and which template should be used to render those.
   The content delivered by the \pjaxr{} backend enriched web server is interpreted by the frontend module and replaces the related containers.
   This replacement is implemented using the ID attribute.
-  Other methods identifying corresponding containers like e.g. the XPath are not as generic in it's position on the page as the ID.
+  Other methods identifying corresponding containers like e.g. XPath are not as generic in it's position on the page as the ID.
   This is important because \singlePageApplication{}s should be able to include content dynamically in every position on the page.
   \pjaxr{} in combination with the History API makes it then possible to update the content and change the URL like it would be made by normal requests.
   This is possible with the use of the pushState method introduced in the History API.
-  Back- and forward-buttons and bookmarks in a browser will work as it were a normal request using this function.
+  Back- and forward-buttons and bookmarks in a browser will work like on a normal request using this function.
+  \todo{last sentence not good?}
   
 \section{Implementation}
   Part of the thesis is to evaluate \pjaxr{}. For that reason a sample web application will be implemented, which will provide non-\ajax{}, \ajax{}-based and \pjaxr{}-based endpoints.
