@@ -111,3 +111,5 @@ sympy-plots-for-*.tex/
 .DS_Store
 proposal.pdf
 proposal/builds
+*.psd
+thesis/builds

@@ -1,0 +1,48 @@
+RewriteEngine On
+
+RewriteCond %{HTTPS} !=on
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R,QSA]
+
+
+RewriteCond %{REQUEST_URI} ^/views/.*$
+RewriteCond %{ENV:REDIRECT_STATUS} ^$
+RewriteRule (.*) / [R=404,L,NC]
+
+RewriteCond %{REQUEST_URI} ^/errors/.*$
+RewriteCond %{ENV:REDIRECT_STATUS} ^$
+RewriteRule (.*) / [R=404,L,NC]
+
+RewriteRule ^$ views/index.php [L]
+RewriteRule ^activate/([^/\.]+)/?$ views/activate.php?activation_key=$1 [L]
+RewriteRule ^code/([^/\.]+)/?$ views/code.php?code_string=$1 [L]
+RewriteRule ^code-activated/?$ views/code_activated.php [L]
+RewriteRule ^imprint/$ views/imprint.php [L]
+RewriteRule ^logout/$ views/logout.php [L]
+RewriteRule ^register/$ views/register.php [L]
+RewriteRule ^tags/$ views/tags.php [L]
+RewriteRule ^tags/([^/\.]+)/?$ views/tags.php?current_char=$1 [L]
+RewriteRule ^tags/([^/\.]+)/([^/\.]+)/?$ views/tags.php?current_char=$1&page=$2 [L]
+
+RewriteRule ^account/$ views/account/index.php [L]
+RewriteRule ^account/contacts/$ views/account/contacts.php [L]
+RewriteRule ^account/codes/$ views/account/codes.php [L]
+RewriteRule ^account/code/?$ views/account/code.php [L]
+RewriteRule ^account/code/([^/\.]+)/?$ views/account/code.php?code_string=$1 [L]
+RewriteRule ^account/profile/$ views/account/profile.php [L]
+
+RewriteRule ^api/activate-code/$ api/activate_code.php [L]
+RewriteRule ^api/code/$ api/code.php [L]
+RewriteRule ^api/login/$ api/login.php [L]
+RewriteRule ^api/profile/$ api/profile.php [L]
+RewriteRule ^api/register/$ api/register.php [L]
+
+RewriteRule ^api/account/code/$ api/account/code.php [L]
+RewriteRule ^classes/.*$ - [R=404,L,NC]
+RewriteRule ^config/.*$ - [R=404,L,NC]
+RewriteRule ^endpoints/.*$ - [R=404,L,NC]
+RewriteRule ^inc/.*$ - [R=404,L,NC]
+RewriteRule ^lib/.*$ - [R=404,L,NC]
+RewriteRule ^templates/.*$ - [R=404,L,NC]
+
+
+ErrorDocument 404 /errors/404.php
