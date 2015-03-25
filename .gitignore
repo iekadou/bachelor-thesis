@@ -113,3 +113,6 @@ proposal.pdf
 proposal/builds
 *.psd
 thesis/builds
+webapp/.idea
+*.ai
+thesis/.texpadtmp
