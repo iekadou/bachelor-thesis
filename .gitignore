@@ -116,3 +116,4 @@ thesis/builds
 webapp/.idea
 *.ai
 thesis/.texpadtmp
+webapp/webapp/vendor

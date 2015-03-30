@@ -1,12 +1,14 @@
 <?php
-
-define("DB_DEBUG", false);
-define("DB_PROFILER", true);
 require_once($PATH."config/db.php");
+
 global $QUERY_COUNT;
-$QUERY_COUNT = 0;
+if (DB_PROFILER && !isset($QUERY_COUNT)) {
+    $QUERY_COUNT = 0;
+}
 global $DB_CONNECTION_COUNT;
-$DB_CONNECTION_COUNT = 0;
+if (DB_PROFILER && !isset($DB_CONNECTION_COUNT)) {
+    $DB_CONNECTION_COUNT = 0;
+}
 
 class DBConnector {
 

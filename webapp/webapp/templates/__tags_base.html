@@ -1,0 +1,32 @@
+{% pjaxr_extends "__base.html" "__pjaxr.html" 'Pjaxr' %}
+{% block page %}
+<div id="page">
+    <div class="home-hero">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 text-center">
+                    <h1>
+                        Tags
+                    </h1>
+                    <h2>
+                        a sample queryset DELICIOUS.
+                    </h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6 text-center">
+                    {% for char, char_count in char_counts %}
+                    <a class="tagLetter {% if current_char == char %} strong{% endif %}" href="{% url 'tags' [char] %}">
+                        {{ char }} ({{char_count}})
+                    </a><br>
+                    {% endfor %}
+                </div>
+                <div class="col-xs-6 text-center">
+                    {% block content %}
+                    {% endblock content %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock page %}

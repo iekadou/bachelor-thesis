@@ -33,12 +33,13 @@ class Pagination
         $this->query_offset = $this->page * $this->page_size;
     }
 
-    public function render() { ?>
+    public function render() { ob_start();
+        ?>
         <ul class="pagination">
         <?php if ($this->page==1) { ?>
-            <li class="disabled"><a href="#"><span class="fa fa-angle-left"></span>&nbsp;<?php echo getTranslation("prev"); ?></a></li>
+            <li class="disabled"><a href="#"><span class="fa fa-angle-left"></span>&nbsp;prev</a></li>
         <?php } else { ?>
-            <li><a href="<?php echo sprintf($this->url, ($this->page-1)); ?>"><span class="fa fa-angle-left"></span>&nbsp;<?php echo getTranslation("prev"); ?></a></li>
+            <li><a href="<?php echo sprintf($this->url, ($this->page-1)); ?>"><span class="fa fa-angle-left"></span>&nbsp;prev</a></li>
         <?php } ?>
         <?php foreach($this->pages as $page_i) {
             echo '<li';
@@ -53,12 +54,16 @@ class Pagination
             echo '>'.$page_i.'</a></li>';
         } ?>
         <?php if ($this->page>=$this->page_count-1) { ?>
-            <li class="disabled"><a href="#"><?php echo getTranslation("next"); ?>&nbsp;<span class="fa fa-angle-right"></span></a></li>
+            <li class="disabled"><a href="#">next&nbsp;<span class="fa fa-angle-right"></span></a></li>
         <?php } else { ?>
-            <li><a href="<?php echo sprintf($this->url, ($this->page+1)); ?>"><?php echo getTranslation("next"); ?>&nbsp;<span class="fa fa-angle-right"></span></a></li>
+            <li><a href="<?php echo sprintf($this->url, ($this->page+1)); ?>">next&nbsp;<span class="fa fa-angle-right"></span></a></li>
         <?php } ?>
         </ul>
-    <?php }
+    <?php
+        $return = ob_get_contents();
+        ob_end_clean();
+        return $return;
+    }
 
     public function get_query_offset() {
         return $this->query_offset;

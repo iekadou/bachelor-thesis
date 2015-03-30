@@ -1,9 +1,10 @@
-<?php $head = new Template(); $head->load("head.php")->display(); ?>
+{% pjaxr_extends "__base.html" "__pjaxr.html" 'Pjaxr' %}
+{% block page %}
 <div id="page">
     <div class="container">
         <div class="row">
             <div class="col-xs-10 col-xs-offset-1">
-                <h1 class="page-header"><?php echo getTranslation('Imprint'); ?></h1>
+                <h1 class="page-header">{% _ "Imprint" %}</h1>
                 <p>Jonas Braun<br>
                     Bienenstück 18<br>
                     56072 Koblenz<br>
@@ -46,4 +47,4 @@
         </div>
     </div>
 </div>
-<?php $footer = new Template(); $footer->load("footer.php")->display();
+{% endblock page %}

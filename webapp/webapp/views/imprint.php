@@ -1,5 +1,5 @@
 <?php
 include("../inc/path.php");
 require_once($PATH."inc/include.php");
-new View('Imprint', getTranslation('Imprint'), "endpoints/imprint.php");
+new View('Imprint', get_translation('Imprint'), "imprint.html");
 View::render();

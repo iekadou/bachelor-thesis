@@ -1,10 +1,10 @@
 <?php
 include("../../inc/path.php");
 require_once($PATH."inc/include.php");
-new View('Profile', getTranslation('Profile'), "endpoints/account/profile.php");
+new View('Profile', get_translation('Profile'), "account/profile.html");
 if (View::get_account()->is_logged_in() != true) {
     raise404();
     die();
 }
-$profile_active = "active";
+View::set_template_var('profile_active', "active");
 View::render();

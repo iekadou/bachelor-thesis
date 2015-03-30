@@ -1,8 +1,8 @@
-<?php $head = new Template(); $head->load("head.php")->display();
-$acc_head = new Template(); $acc_head->load("account_head.php")->display(); ?>
+{% extends "account/__base.html" %}
+{% block content %}
 <div id="content">
-    <h1 class="page-header"><?php echo getTranslation('Dashboard'); ?></h1>
-    <p><?php echo getTranslation('Here you can find a overview of your inventories on Pjaxr.io.'); ?></p>
+    <h1 class="page-header">{% _ "Dashboard" %}</h1>
+    <p>{% _ "Here you can find a overview of your inventories on Pjaxr.io." %}</p>
     <h2 class="sub-header">Kühlschrank</h2>
     <div class="row placeholders">
         <div class="col-xs-6 col-xs-offset-3 col-sm-3 col-sm-offset-0 col-md-2 col-md-offset-0 placeholder text-center">
@@ -12,9 +12,9 @@ $acc_head = new Template(); $acc_head->load("account_head.php")->display(); ?>
             <table class="table table-striped table-vertical-aligned">
                 <thead>
                 <tr>
-                    <th><?php echo getTranslation('Name'); ?></th>
-                    <th><?php echo getTranslation('Current'); ?></th>
-                    <th><?php echo getTranslation('Desired'); ?></th>
+                    <th>{% _ "Name" %}</th>
+                    <th>{% _ "Current" %}</th>
+                    <th>{% _ "Desired" %}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -46,9 +46,9 @@ $acc_head = new Template(); $acc_head->load("account_head.php")->display(); ?>
             <table class="table table-striped table-vertical-aligned">
                 <thead>
                 <tr>
-                    <th><?php echo getTranslation('Name'); ?></th>
-                    <th><?php echo getTranslation('Current'); ?></th>
-                    <th><?php echo getTranslation('Desired'); ?></th>
+                    <th>{% _ "Name" %}</th>
+                    <th>{% _ "Current" %}</th>
+                    <th>{% _ "Desired" %}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -72,5 +72,4 @@ $acc_head = new Template(); $acc_head->load("account_head.php")->display(); ?>
         </div>
     </div>
 </div>
-<?php $acc_footer = new Template(); $acc_footer->load("account_footer.php")->display();
-$footer = new Template(); $footer->load("footer.php")->display();
+{% endblock content %}

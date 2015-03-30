@@ -1,0 +1,17 @@
+<pjaxr-head>
+    <title>{% block title %}{% block inner_title %}{% endblock inner_title %}{% endblock title %}</title>
+    {% block inner_head %}{% endblock inner_head %}
+</pjaxr-head>
+<pjaxr-body>
+    {% block site %}
+        {% block page %}
+            {% block content %}
+                {% block inner_content %}{% endblock inner_content %}
+            {% endblock content %}
+        {% endblock page %}
+    {% endblock site %}
+    {% block additional_pjaxr_includes %}{% endblock additional_pjaxr_includes %}
+    <div id="render_time" class="pull-left">{% rendering_time %} s {{query_count}} queries on {{db_connection_count}} connections</div>
+    {% include "_navbar.html" %}
+</pjaxr-body>
+<pjaxr-namespace>{% block pjaxr_namespace %}{{ pjaxr_namespace }}{% endblock pjaxr_namespace %}</pjaxr-namespace>

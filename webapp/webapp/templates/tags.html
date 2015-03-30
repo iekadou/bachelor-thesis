@@ -1,0 +1,17 @@
+{% pjaxr_extends "__tags_base.html" "__pjaxr.html" 'Pjaxr.Tags' %}
+    {% block content %}
+        <div id="content">
+            {% for object in objects %}
+                {{ object.tag }}<br>
+            {% endfor %}
+            {{ pagination|raw }}
+        </div>
+    {% endblock content %}
+{% block additional_pjaxr_includes %}
+<div id="additional_pjaxr_includes">
+    <script>
+        $('.tagLetter').removeClass('strong');
+        $('.tagLetter[href="/tags/{{current_char}}/"').addClass('strong');
+    </script>
+</div>
+{% endblock additional_pjaxr_includes %}

@@ -1,0 +1,65 @@
+{% pjaxr_extends "__base.html" "__pjaxr.html" 'Pjaxr' %}
+{% block page %}
+<div id="page">
+    <div class="home-hero">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 text-center">
+                    <h1>
+                        {% _ "PJAXR" %}
+                    </h1>
+                    <h2>
+                        {% _ "speeds up your page." %}
+                    </h2>
+                    <img src="/static/img/pjaxr-flow.png" alt="Pjaxr" class="img-responsive" style="display: inline-block;">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row padding-50-0">
+            <div class="col-sm-4 text-center">
+                <p><span class="fa fa-tachometer font-size-120"></span></p>
+                <h2>{% _ "Speed" %}</h2>
+                <p>
+                    {% _ "load times are reduced<br>by pjaxr." %}
+                </p>
+            </div>
+            <div class="col-sm-4 text-center">
+                <p><span class="fa fa-pie-chart font-size-120"></span></p>
+                <h2>{% _ "Traffic" %}</h2>
+                <p>
+                    {% _ "web traffic is reduced<br>by pjaxr." %}
+                </p>
+            </div>
+            <div class="col-sm-4 text-center">
+                <p><span class="fa fa-line-chart font-size-120"></span></p>
+                <h2>{% _ "Requests" %}</h2>
+                <p>
+                    {% _ "less requests are required<br>by pjaxr." %}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row padding-50-0">
+            <div class="col-xs-12 text-center">
+                <h2>
+                    {% _ "This page is powered by" %}
+                </h2>
+            </div>
+            <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-0 text-center">
+                <a href="https://github.com/iekadou/php-pjaxr" target="_blank" class="btn btn-block btn-dark" data-non-pjaxr>php-pjaxr</a>
+            </div>
+            <div class="col-xs-12 visible-xs"><br></div>
+            <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-0 text-center">
+                <a href="https://github.com/iekadou/twig-pjaxr" target="_blank" class="btn btn-block btn-primary" data-non-pjaxr>twig-pjaxr</a>
+            </div>
+            <div class="col-xs-12 visible-xs"><br></div>
+            <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-0 text-center">
+                <a href="https://github.com/minddust/jquery-pjaxr" target="_blank" class="btn btn-block btn-female" data-non-pjaxr>jquery-pjaxr</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock page %}
