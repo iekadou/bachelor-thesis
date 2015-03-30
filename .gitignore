@@ -117,3 +117,4 @@ webapp/.idea
 *.ai
 thesis/.texpadtmp
 webapp/webapp/vendor
+composer.lock
