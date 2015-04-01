@@ -1,6 +1,7 @@
 <?php
-$START_TIME = microtime(true);
-include("../inc/path.php");
-require_once($PATH."inc/include.php");
-new View('Home', get_translation('Home'), 'index.html');
+require_once("../inc/include.php");
+
+use Iekadou\Webapp\View, Iekadou\Webapp\Translation;
+
+new View('Home', Translation::translate('Home'), 'index.html');
 View::render();

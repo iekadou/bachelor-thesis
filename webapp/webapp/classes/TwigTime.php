@@ -1,5 +1,11 @@
 <?php
 
+namespace Iekadou\Webapp;
+use Twig_TokenParser;
+use Twig_Node;
+use Twig_Token;
+use Twig_Compiler;
+
 class Twig_Time_TokenParser extends Twig_TokenParser
 {
     public function parse(Twig_Token $token)

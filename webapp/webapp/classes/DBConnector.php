@@ -1,20 +1,20 @@
 <?php
-require_once($PATH."config/db.php");
+namespace Iekadou\Webapp;
 
-global $QUERY_COUNT;
+use mysqli;
+
 if (DB_PROFILER && !isset($QUERY_COUNT)) {
-    $QUERY_COUNT = 0;
+    Globals::set_var('QUERY_COUNT', 0);
 }
-global $DB_CONNECTION_COUNT;
 if (DB_PROFILER && !isset($DB_CONNECTION_COUNT)) {
-    $DB_CONNECTION_COUNT = 0;
+    Globals::set_var('DB_CONNECTION_COUNT', 0);
 }
 
 class DBConnector {
-
     private $db_connection = null;
 
     public function __construct() {
+        require_once(PATH."config/db.php");
         if (DB_PROFILER) {
             global $DB_CONNECTION_COUNT;
             $DB_CONNECTION_COUNT++;
@@ -27,8 +27,7 @@ class DBConnector {
             echo 'QUERY: '.$sql_statement.'<br>';
         }
         if (DB_PROFILER) {
-            global $QUERY_COUNT;
-            $QUERY_COUNT++;
+            Globals::set_var('DB_CONNECTION_COUNT', Globals::get_var('DB_CONNECTION_COUNT') + 1);
         }
         return $this->db_connection->query($sql_statement);
     }

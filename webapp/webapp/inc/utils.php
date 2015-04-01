@@ -2,9 +2,8 @@
 
 function raise404()
 {
-    global $PATH;
     header("HTTP/1.0 404 Not Found");
-    include($PATH . "views/_errors/404.php");
+    include(PATH."views/_errors/404.php");
 }
 
 function stringify_errors($errors)

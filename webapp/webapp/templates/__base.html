@@ -38,7 +38,7 @@
                     <li><a href="#"><div id="render_time" class="pull-left">{% rendering_time %} s {{query_count}} queries on {{db_connection_count}} connections</div></a></li>
                     <li><a href="#"><?php echo date("d.m.Y - H:i:s", time()); ?></a></li>
                     <li><a href="#">{% _ "Random Tag" %}: <strong>{{tag}}</strong> ({{tag_count}})</a></li>
-                    <li><a href="{% url 'tags' ['p'] %}">tags</a></li>
+                    <li><a href="{% url 'tags' 'p' %}">tags</a></li>
                     {% include "_navbar.html" %}
                 </ul>
             </div>

@@ -1,6 +1,10 @@
 <?php
-include("../inc/path.php");
-include($PATH."inc/include.php");
+
+include("../inc/include.php");
+
+use Iekadou\Webapp\View as View;
+use Iekadou\Webapp\User as User;
+
 new View();
 
 $userid = (isset($_POST['userid']) ? htmlspecialchars($_POST['userid']) : false);
@@ -49,7 +53,7 @@ if (!empty($errors)) {
     $error_output .= "}";
     echo $error_output;
 } else {
-    require_once($PATH."classes/User.php");
+    require_once(PATH."classes/User.php");
     $User = new User();
     $User = $User->get($userid);
     $User = $User->set_username($username)->set_email($email);

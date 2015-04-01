@@ -118,3 +118,4 @@ webapp/.idea
 thesis/.texpadtmp
 webapp/webapp/vendor
 composer.lock
+composer.phar

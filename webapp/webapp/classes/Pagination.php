@@ -1,5 +1,7 @@
 <?php
 
+namespace Iekadou\Webapp;
+
 class Pagination
 {
     private $pages = array();

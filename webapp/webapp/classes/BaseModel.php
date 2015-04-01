@@ -1,6 +1,6 @@
 <?php
 
-require_once($PATH."classes/DBConnector.php");
+use Iekadou\Webapp\DBConnector as DBConnector;
 
 abstract class BaseModel
 {

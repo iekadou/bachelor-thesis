@@ -1,8 +1,6 @@
 <?php
 
-require_once($PATH."classes/DBConnector.php");
-require_once($PATH."classes/User.php");
-
+namespace Iekadou\Webapp;
 
 class Account
 {

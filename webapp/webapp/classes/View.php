@@ -1,5 +1,12 @@
 <?php
 
+namespace Iekadou\Webapp;
+
+use Iekadou\Pjaxr\Pjaxr as Pjaxr;
+use Iekadou\TwigPjaxr\Twig_Pjaxr_TokenParser_PjaxrExtends;
+use Twig_Loader_Filesystem;
+use Twig_Environment;
+
 class View
 {
     static private $id = "";
@@ -13,10 +20,6 @@ class View
     public function __construct($id = '', $name = '', $template = '')
     {
         self::$start_time = microtime(true);
-        global $PATH;
-        require_once($PATH."classes/TwigUrl.php");
-        require_once($PATH."classes/TwigTrans.php");
-        require_once($PATH."classes/TwigTime.php");
 
         self::$id = $id;
         self::$name = $name;
@@ -26,7 +29,7 @@ class View
         self::set_template_var('pjaxr_matching', Pjaxr::get_matching());
         self::set_template_var('pjaxr_namespace', Pjaxr::get_current_namespace());
 
-        require_once($PATH."classes/Account.php");
+        require_once(PATH."classes/Account.php");
 
         self::set_template_var('title', SITE_NAME.' - '.$name);
 
@@ -40,10 +43,8 @@ class View
             self::$template_name = $id.'.html';
         }
 
-        $loader = new Twig_Loader_Filesystem($PATH.'templates');
+        $loader = new Twig_Loader_Filesystem(PATH.'templates');
         self::$template = new Twig_Environment($loader);
-
-        include($PATH."inc/global_vars.php");
 
     }
 

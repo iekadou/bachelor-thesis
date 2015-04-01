@@ -1,4 +1,7 @@
 <?php
+
+namespace Iekadou\Webapp;
+
 class UrlsPy {
     private static $patterns = array();
     public function __construct() {
@@ -31,7 +34,9 @@ class UrlsPy {
                 }
             }
         }
-        return '/';
+        throw new Exception(vsprintf("Url '%s' not found with %s args!", array($name, sizeof($args))));
+//        trigger_error();
+//        return '/';
     }
 }
 

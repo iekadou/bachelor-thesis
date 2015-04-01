@@ -1,6 +1,8 @@
 <?php
-include("../inc/path.php");
-include($PATH."inc/include.php");
+include("../inc/include.php");
+
+use Iekadou\Webapp\User as User;
+use Iekadou\Webapp\Account as Account;
 
 $code_string = (isset($_POST['code_string']) ? htmlspecialchars($_POST['code_string']) : false);
 $username = (isset($_POST['username']) ? htmlspecialchars($_POST['username']) : false);
@@ -37,7 +39,6 @@ if ($username == false || $email == false || $password == false) {
     $error_output .= "}";
     echo $error_output;
 } else {
-    require_once($PATH."classes/User.php");
     $User = new User();
     $User = $User->set_username($username)->set_email($email)->set_password($password);
     if (!$User) {

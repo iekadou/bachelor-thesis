@@ -1,5 +1,7 @@
 <?php
-include("../inc/path.php");
-require_once($PATH."inc/include.php");
-new View('Register', get_translation('Register'), "register.html");
+require_once("../inc/include.php");
+
+use Iekadou\Webapp\View, Iekadou\Webapp\Translation;
+
+new View('Register', Translation::translate('Register'), "register.html");
 View::render();

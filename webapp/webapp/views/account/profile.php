@@ -1,7 +1,9 @@
 <?php
-include("../../inc/path.php");
-require_once($PATH."inc/include.php");
-new View('Profile', get_translation('Profile'), "account/profile.html");
+require_once("../../inc/include.php");
+
+use Iekadou\Webapp\View, Iekadou\Webapp\Translation;
+
+new View('Profile', Translation::translate('Profile'), "account/profile.html");
 if (View::get_account()->is_logged_in() != true) {
     raise404();
     die();

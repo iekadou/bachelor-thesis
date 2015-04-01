@@ -1,6 +1,6 @@
 <?php
 
-require_once($PATH."classes/BaseModel.php");
+namespace Iekadou\Webapp;
 
 class User extends BaseModel
 {

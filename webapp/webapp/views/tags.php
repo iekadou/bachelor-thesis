@@ -1,6 +1,9 @@
 <?php
-include("../inc/path.php");
-require_once($PATH."inc/include.php");
+require_once("../inc/include.php");
+
+use Iekadou\Webapp\DBConnector as DBConnector;
+use Iekadou\Webapp\View, Iekadou\Webapp\Translation;
+use Iekadou\Webapp\Pagination as Pagination;
 
 if (!isset($DB_CONNECTOR)) {
     $DB_CONNECTOR = new DBConnector();
@@ -14,7 +17,7 @@ if (isset($_GET['page']) && preg_match('/^[0-9]+$/', $_GET['page'])) {
     $current_page = $_GET['page'];
 } else { $current_page = '1'; }
 
-new View('Tags.'.$current_char, get_translation('Tags'), 'tags.html');
+new View('Tags.'.$current_char, Translation::translate('Tags'), 'tags.html');
 
 View::set_template_var('current_char', $current_char);
 
@@ -39,8 +42,6 @@ for ($i=0; $i < sizeof($chars); $i++) {
     $char_counts[$char] = $char_count['cnt'];
 }
 View::set_template_var('char_counts', $char_counts);
-
-require_once($PATH."classes/Pagination.php");
 
 $pagination = new Pagination($page=$current_page, $obj_count=$char_counts[$current_char], $page_size=30, $page_offset=1, $url='/tags/'.$current_char.'/%s/');
 

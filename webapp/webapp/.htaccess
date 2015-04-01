@@ -1,8 +1,5 @@
 RewriteEngine On
 
-RewriteCond %{HTTPS} !=on
-RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R,QSA]
-
 # deny direct access to views
 RewriteCond %{REQUEST_URI} ^/views/.*$
 RewriteCond %{ENV:REDIRECT_STATUS} ^$
@@ -27,8 +24,6 @@ RewriteRule ^account/$ views/account/index.php [L]
 RewriteRule ^account/profile/$ views/account/profile.php [L]
 
 # api urls
-RewriteRule ^api/activate-code/$ api/activate_code.php [L]
-RewriteRule ^api/code/$ api/code.php [L]
 RewriteRule ^api/login/$ api/login.php [L]
 RewriteRule ^api/profile/$ api/profile.php [L]
 RewriteRule ^api/register/$ api/register.php [L]

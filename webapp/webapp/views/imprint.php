@@ -1,5 +1,7 @@
 <?php
-include("../inc/path.php");
-require_once($PATH."inc/include.php");
-new View('Imprint', get_translation('Imprint'), "imprint.html");
+require_once("../inc/include.php");
+
+use Iekadou\Webapp\View, Iekadou\Webapp\Translation;
+
+new View('Imprint', Translation::translate('Imprint'), "imprint.html");
 View::render();

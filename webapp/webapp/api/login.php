@@ -1,9 +1,11 @@
 <?php
-include("../inc/path.php");
-include($PATH."inc/include.php");
+include("../inc/include.php");
+
+use Iekadou\Webapp\View as View;
+use Iekadou\Webapp\User as User;
 new View();
 
-require_once($PATH."classes/User.php");
+require_once(PATH."classes/User.php");
 $User = new User();
 
 $identification = (isset($_POST['identification']) ? htmlspecialchars($_POST['identification']) : false);

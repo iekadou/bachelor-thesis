@@ -8,14 +8,22 @@ if (isset($_POST['_method']) && ($_POST['_method'] == 'GET' || $_POST['_method']
 
 session_start();
 
-// configs
-include($PATH."config/webapp.php");
+define('PATH', '/Users/jonas/bachelor-thesis/webapp/webapp/');
 
-require_once($PATH."vendor/autoload.php");
+// configs
+include(PATH."config/webapp.php");
+
+require_once(PATH."vendor/autoload.php");
+require_once(PATH."classes/Globals.php");
+require_once(PATH."classes/DBConnector.php");
 
 // includes
-include($PATH."inc/translations.php");
-include($PATH."inc/utils.php");
-require_once($PATH."classes/View.php");
-require_once($PATH."classes/DBConnector.php");
-require_once($PATH."classes/UrlsPy.php");
+include(PATH."inc/utils.php");
+require_once(PATH."inc/translations.php");
+require_once(PATH."classes/View.php");
+require_once(PATH."classes/Account.php");
+require_once(PATH."classes/UrlsPy.php");
+require_once(PATH."classes/Pagination.php");
+require_once(PATH."classes/TwigUrl.php");
+require_once(PATH."classes/TwigTrans.php");
+require_once(PATH."classes/TwigTime.php");

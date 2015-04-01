@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="col-xs-6 text-center">
                     {% for char, char_count in char_counts %}
-                    <a class="tagLetter {% if current_char == char %} strong{% endif %}" href="{% url 'tags' [char] %}">
+                    <a class="tagLetter {% if current_char == char %} strong{% endif %}" href="{% url 'tags' char %}">
                         {{ char }} ({{char_count}})
                     </a><br>
                     {% endfor %}

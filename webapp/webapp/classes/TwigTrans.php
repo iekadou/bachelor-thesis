@@ -1,5 +1,12 @@
 <?php
 
+namespace Iekadou\Webapp;
+use Twig_TokenParser;
+use Twig_Node;
+use Twig_Token;
+use Twig_Node_Expression_Array;
+use Twig_Compiler;
+
 class Twig_Trans_TokenParser extends Twig_TokenParser
 {
     public function parse(Twig_Token $token)
@@ -35,7 +42,7 @@ class Twig_Trans_Node extends Twig_Node
     {
         $compiler
             ->raw("echo ")
-            ->raw("get_translation('")
+            ->raw("Iekadou\\Webapp\\Translation::translate('")
             ->raw($this->getAttribute('name'))
             ->raw("',")
             ->subcompile($this->getNode('value'))
