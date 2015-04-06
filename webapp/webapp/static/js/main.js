@@ -170,13 +170,6 @@ $(document).pjaxrAlways(function() {
     }
     PjaxrIO.closeNavbar();
 });
-$(document).pjaxrReady(function() {
-    try {
-        PjaxrIO.createMap($('#map'), PjaxrIO.mapOptions);
-    } catch (e) {
-        $('#map').remove();
-    }
-});
 //$(document).on('pjaxr:start', function() {
 //    $('#loading-icon').css('display', 'block');
 //});
