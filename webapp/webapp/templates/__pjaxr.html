@@ -11,7 +11,7 @@
         {% endblock page %}
     {% endblock site %}
     {% block additional_pjaxr_includes %}{% endblock additional_pjaxr_includes %}
-    <div id="render_time" class="pull-left">{% rendering_time %} s {{query_count}} queries on {{db_connection_count}} connections</div>
+    <div id="render_time" class="pull-left">{% rendering_time %} s {{QUERY_COUNT}} queries on {{DB_CONNECTION_COUNT}} connections</div>
     {% include "_navbar.html" %}
 </pjaxr-body>
 <pjaxr-namespace>{% block pjaxr_namespace %}{{ pjaxr_namespace }}{% endblock pjaxr_namespace %}</pjaxr-namespace>

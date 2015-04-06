@@ -10,7 +10,7 @@ class Pagination
     {
         $this->page = $page;
         $this->page_size = $page_size;
-        $this->page_count = floor($obj_count/$this->page_size);
+        $this->page_count = ceil($obj_count/$this->page_size);
         $this->page_offset = $page_offset;
         $this->url = $url;
 
@@ -32,7 +32,7 @@ class Pagination
             }
             array_push($this->pages, $this->page_count);
         }
-        $this->query_offset = $this->page * $this->page_size;
+        $this->query_offset = ($this->page-1) * $this->page_size;
     }
 
     public function render() { ob_start();
@@ -55,7 +55,7 @@ class Pagination
             }
             echo '>'.$page_i.'</a></li>';
         } ?>
-        <?php if ($this->page>=$this->page_count-1) { ?>
+        <?php if ($this->page==$this->page_count) { ?>
             <li class="disabled"><a href="#">next&nbsp;<span class="fa fa-angle-right"></span></a></li>
         <?php } else { ?>
             <li><a href="<?php echo sprintf($this->url, ($this->page+1)); ?>">next&nbsp;<span class="fa fa-angle-right"></span></a></li>

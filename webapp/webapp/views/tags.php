@@ -58,4 +58,5 @@ if ($current_char == '-') {
 for ($objects = array(); $tmp = $queryset->fetch_array(MYSQLI_ASSOC);) $objects[] = $tmp;
 View::set_template_var('objects', $objects);
 
+
 View::render();

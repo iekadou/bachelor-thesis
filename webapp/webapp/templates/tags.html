@@ -2,7 +2,7 @@
     {% block content %}
         <div id="content">
             {% for object in objects %}
-                {{ object.tag }}<br>
+                {{ object.tag|raw }}<br>
             {% endfor %}
             {{ pagination|raw }}
         </div>

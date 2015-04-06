@@ -3,10 +3,10 @@ namespace Iekadou\Webapp;
 
 use mysqli;
 
-if (DB_PROFILER && !isset($QUERY_COUNT)) {
+if (DB_PROFILER) {
     Globals::set_var('QUERY_COUNT', 0);
 }
-if (DB_PROFILER && !isset($DB_CONNECTION_COUNT)) {
+if (DB_PROFILER) {
     Globals::set_var('DB_CONNECTION_COUNT', 0);
 }
 
@@ -16,8 +16,7 @@ class DBConnector {
     public function __construct() {
         require_once(PATH."config/db.php");
         if (DB_PROFILER) {
-            global $DB_CONNECTION_COUNT;
-            $DB_CONNECTION_COUNT++;
+            Globals::set_var('DB_CONNECTION_COUNT', Globals::get_var('DB_CONNECTION_COUNT') + 1);
         }
         $this->db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
     }
@@ -27,7 +26,7 @@ class DBConnector {
             echo 'QUERY: '.$sql_statement.'<br>';
         }
         if (DB_PROFILER) {
-            Globals::set_var('DB_CONNECTION_COUNT', Globals::get_var('DB_CONNECTION_COUNT') + 1);
+            Globals::set_var('QUERY_COUNT', Globals::get_var('QUERY_COUNT') + 1);
         }
         return $this->db_connection->query($sql_statement);
     }

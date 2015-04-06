@@ -72,10 +72,9 @@ class View
     }
 
     public static function render() {
-        global $QUERY_COUNT, $DB_CONNECTION_COUNT;
         self::$template_vars += Globals::get_vars();
-        self::set_template_var('query_count', $QUERY_COUNT);
-        self::set_template_var('db_connection_count', $DB_CONNECTION_COUNT);
+        self::set_template_var('QUERY_COUNT', Globals::get_var('QUERY_COUNT'));
+        self::set_template_var('DB_CONNECTION_COUNT', Globals::get_var('DB_CONNECTION_COUNT'));
         self::set_template_var('account', self::$account);
         self::$template->addTokenParser(new Twig_Pjaxr_TokenParser_PjaxrExtends());
         self::$template->addTokenParser(new Twig_Url_TokenParser());
