@@ -119,3 +119,7 @@ thesis/.texpadtmp
 webapp/webapp/vendor
 composer.lock
 composer.phar
+selenium/venv
+selenium/.idea
+*.pyc
+distribute-0.6.34.tar.gz
