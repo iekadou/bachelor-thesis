@@ -3,7 +3,7 @@
 namespace Iekadou\Webapp;
 
 use Iekadou\Pjaxr\Pjaxr as Pjaxr;
-use Iekadou\TwigPjaxr\Twig_Pjaxr_TokenParser_PjaxrExtends;
+use Iekadou\TwigPjaxr\Twig_Pjaxr_Extension;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
 
@@ -44,8 +44,9 @@ class View
         }
 
         $loader = new Twig_Loader_Filesystem(PATH.'templates');
-        self::$template = new Twig_Environment($loader);
-
+        self::$template = new Twig_Environment($loader, array(
+            'cache' => PATH.'cached_templates',
+        ));
     }
 
     public static function get_account() {
@@ -76,7 +77,7 @@ class View
         self::set_template_var('QUERY_COUNT', Globals::get_var('QUERY_COUNT'));
         self::set_template_var('DB_CONNECTION_COUNT', Globals::get_var('DB_CONNECTION_COUNT'));
         self::set_template_var('account', self::$account);
-        self::$template->addTokenParser(new Twig_Pjaxr_TokenParser_PjaxrExtends());
+        self::$template->addExtension(new Twig_Pjaxr_Extension());
         self::$template->addTokenParser(new Twig_Url_TokenParser());
         self::$template->addTokenParser(new Twig_Trans_TokenParser());
         self::$template->addTokenParser(new Twig_Time_TokenParser());

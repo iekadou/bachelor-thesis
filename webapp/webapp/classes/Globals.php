@@ -30,7 +30,7 @@ class Globals {
                 Globals::set_var('tag_count', $cnt['cnt']);
             }
         }
-
+        Globals::set_var('PJAXR', PJAXR);
         Globals::set_var('version', "1.0.0a");
         return self::$vars;
     }

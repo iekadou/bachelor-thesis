@@ -9,6 +9,7 @@ if (isset($_POST['_method']) && ($_POST['_method'] == 'GET' || $_POST['_method']
 session_start();
 
 define('PATH', '/Users/jonas/bachelor-thesis/webapp/webapp/');
+define('PJAXR', true);
 
 // configs
 include(PATH."config/webapp.php");

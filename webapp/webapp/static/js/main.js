@@ -160,19 +160,18 @@
     }
 
 }(window.PjaxrIO = window.PjaxrIO || {}, jQuery));
-
-$(document).pjaxrAlways(function() {
-    PjaxrIO.register_api_forms();
-    if ($.support.pjaxr) {
-        $('a').not('[data-non-pjaxr]').on('click', function(event) {
-            $(document).pjaxr.click(event, {timeout: 2500});
-        });
-    }
-    PjaxrIO.closeNavbar();
-});
-//$(document).on('pjaxr:start', function() {
-//    $('#loading-icon').css('display', 'block');
-//});
-//$(document).on('pjaxr:done', function() {
-//    $('#loading-icon').css('display', 'none');
-//});
+if (PjaxrIO.PJAXR == true) {
+    $(document).pjaxrAlways(function() {
+        PjaxrIO.register_api_forms();
+        if ($.support.pjaxr) {
+            $('a').not('[data-non-pjaxr]').on('click', function(event) {
+                $(document).pjaxr.click(event, {timeout: 2500});
+            });
+        }
+        PjaxrIO.closeNavbar();
+    });
+} else {
+    $(document).ready(function() {
+        PjaxrIO.register_api_forms();
+    });
+}
