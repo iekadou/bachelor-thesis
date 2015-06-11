@@ -1,0 +1,93 @@
+\section{State of the art}
+\ajax{} is a widely used technique in the internet to build web applications because of the user experience improvements it brings.
+In \cite{roodt06} is mentioned that \ajax{} applications have a better usability than non-\ajax{} websites.
+The same conclusion is made in \cite{klugeKarglWeber07}, despite of the lack of browser navigation support.
+Beside the navigation problem another disadvantage is, as presented in \cite{mesbah09}, crawling \ajax{} applications is not trivial.
+One solution of this task is finding clickables and navigating to every page found by this.
+Nevertheless \cite{mesbah09} states also that this only generates a snapshot of the full application.
+Even search engines are avoiding to crawl websites because of it's difficulty.\cite{matter08}, page 81
+Currently the task of building a crawlable \singlePageApplication{} using \ajax{} is often avoided, instead crawling algorithms are getting improved and in focus of research.
+
+\subsection{Client-side templates\label{clientSideTemplates}}
+When building an asynchronous web application, a decision has to be made where to render data.
+A lot of \ajax{} applications use a JSON API which already predefines the outcome of this decision:
+JSON has to be interpreted by the \ajax{}-engine and rendered into HTML.
+As plain string modifications are difficult to maintain and on large applications not very handy, client-side templates become more and more widespread.
+Another advantage of this practice is the strong separation of the logic on the server and views on the client-side.
+
+Besides their benefits, a few disadvantages come with them:
+After interpreting the first \httpRequest{} other requests have to be made to load the templating engine and the data which should be rendered into the template.
+This means you have to make three requests:
+\begin{itemize}
+    \item First an HTML file containing a link to the AJAX engine and the templates.
+    \item Second the AJAX engine itself.
+    \item Third the data which should be rendered into the templates, requested by the AJAX engine.
+\end{itemize}
+
+To avoid the need to wait on the third request, sometimes the initial requests already contains initial data, which results in the need of backend templates to render it and the client templates for further usage.
+
+Another problem that needs to be solved is the SEO of those pages.
+\WebPage{}s implemented with client-side templates need a method to be visible for search engines.
+A common way to achieve that is using prerendered sites which are visible to search bots like the Googlebot.
+Even though Google interprets JavaScript generated content since May 2014\footnote{http://googlewebmastercentral.blogspot.no/2014/05/understanding-web-pages-better.html} they still give the advice to degrade graceful when it comes to JavaScript compatibility.
+
+\subsubsection{Load time analysis}
+With client-side templating, even with the improvement of initial data, a client needs at least two requests for being able to render data.
+When further data is needed, it can be requested asynchronous, when not using a client-side MVC like in \ref{clientSideMVC}.
+So the client has to wait at least two round trip times or four delays.
+Additionally the frontend rendering time is relevant.
+Other than at server-side rendering the frontend rendering can not be cached.
+
+Any further request is then made by the \ajax{} engine itself.
+An efficient web application which uses client-side rendering requests one url on which the response contains all needed data.
+In more complex projects it can happen that multiple requests have to be made until every needed data to render is available.
+
+More requests can be required if more complexity is stored in the client.
+
+
+\subsection{\ClientSideMVC{}\label{clientSideMVC}}
+In addition to only outsource the templating to the frontend, there are complete client-side MVC frameworks.
+Those frameworks use the model view controller pattern, where the controller has a connection to the web server.
+
+Built on REST APIs they move all logic into the client-side.
+This approach is built primarily on the motivation to reduce the web server load and traffic.
+
+In most cases, similar to simple client-side templates, mentioned in \ref{clientSideTemplates}, client-side MVCs need three requests to render the first page.
+
+Further requests then are not made to request URLs in the old fashioned way, but to retrieve objects through a REST API. 
+Object manipulation, logical methods and everything, normally implemented in a server backend should be in the frontend in those frameworks.
+
+Using this pattern, you will still have the same problems as with client-side templates, but on another level.
+The web server will not gather all information which is needed, send it to the templating engine which then renders those.
+The client itself decides which information it needs and requests it from the server.
+
+Load and traffic of the server in this pattern is relatively low, because it will only create, update, delete or display objects in the database. 
+More logical functions on the server-side are not needed.
+
+Clients, especially mobile devices and slow computers, might struggle with the load of work instead.
+
+\subsubsection{load time analysis}
+As shown before, this methods needs 3 requests to display the initial \webPage{}.
+To get into more detail, the client needs to wait for the first request to be completed and then the \ajax{} engine has to be loaded completely.
+After this third request by the client is made.
+He then waited three round trip times, or six delays, plus the load time by the server and download time of those three requests.
+
+Any further request is then made by the \ajax{} engine itself.
+Normally on strict \clientSideMVC{}s per \webPage{} multiple small requests have to be made.
+On each of this method strikes the delay two times.
+ 
+
+\subsection{Hash-Bang URLs}
+\todo{explain hash bang URLs}
+
+\subsection{\hijax{}}
+One way to implement \ajax{} in websites is to use the pattern of HIJAX.
+It encourages developers to have \ajax{} in mind from the start of building the website. 
+But when they start to implement the \singlePageApplication{} they should do not implement \ajax{}.
+This should only be done after the website is finished without \ajax{}.
+This could then be done by \emph{hijacking} an event like a click to then handle it by an additional script.
+
+\subsection{PJAX\label{pjax}}
+PJAX, introduced 2011 by Chris Wanstrath, is a jQuery plugin that uses AJAX and pushState to deliver a fast browsing experience with real permalinks, page titles, and a working back button.\footnote{https://github.com/defunkt/jquery-pjax\#introduction}
+
+PJAX only has the opportunity to either request a full page, or request a per URL defined list of containers.

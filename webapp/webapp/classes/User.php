@@ -96,13 +96,13 @@ class User extends BaseModel
     }
     
     public function send_activation_email() {
-        $subject = 'Your account at Pjaxr.io';
+        $subject = 'Your account at Lare.io';
         $content = 'Hey '.$this->user_name.',
 you can activate your account by clicking the following link:
-https://pjaxr.io/activate/'.$this->activation_key.'
+https://lare.io/activate/'.$this->activation_key.'
 
-Thank you for using Pjaxr.io';
-        $header = 'From: noreply@pjaxr.io';
+Thank you for using Lare.io';
+        $header = 'From: noreply@lare.io';
         if (mail($this->user_email, $subject, $content, $header)) { 
             return true; 
         } else {

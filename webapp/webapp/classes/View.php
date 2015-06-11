@@ -2,8 +2,8 @@
 
 namespace Iekadou\Webapp;
 
-use Iekadou\Pjaxr\Pjaxr as Pjaxr;
-use Iekadou\TwigPjaxr\Twig_Pjaxr_Extension;
+use Iekadou\Lare\Lare as Lare;
+use Iekadou\TwigLare\Twig_Lare_Extension;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
 
@@ -24,10 +24,10 @@ class View
         self::$id = $id;
         self::$name = $name;
 
-        // pjaxr
-        Pjaxr::set_current_namespace('Pjaxr.'.$id);
-        self::set_template_var('pjaxr_matching', Pjaxr::get_matching());
-        self::set_template_var('pjaxr_namespace', Pjaxr::get_current_namespace());
+        // Lare
+        Lare::set_current_namespace('Lare.'.$id);
+        self::set_template_var('lare_matching', Lare::get_matching_count());
+        self::set_template_var('lare_current_namespace', Lare::get_current_namespace());
 
         require_once(PATH."classes/Account.php");
 
@@ -44,9 +44,13 @@ class View
         }
 
         $loader = new Twig_Loader_Filesystem(PATH.'templates');
-        self::$template = new Twig_Environment($loader, array(
-            'cache' => PATH.'cached_templates',
-        ));
+        if (TEMPLATE_CACHING) {
+            self::$template = new Twig_Environment($loader, array(
+                'cache' => PATH.'cached_templates',
+            ));
+        } else {
+            self::$template = new Twig_Environment($loader, array());
+        }
     }
 
     public static function get_account() {
@@ -77,7 +81,7 @@ class View
         self::set_template_var('QUERY_COUNT', Globals::get_var('QUERY_COUNT'));
         self::set_template_var('DB_CONNECTION_COUNT', Globals::get_var('DB_CONNECTION_COUNT'));
         self::set_template_var('account', self::$account);
-        self::$template->addExtension(new Twig_Pjaxr_Extension());
+        self::$template->addExtension(new Twig_Lare_Extension());
         self::$template->addTokenParser(new Twig_Url_TokenParser());
         self::$template->addTokenParser(new Twig_Trans_TokenParser());
         self::$template->addTokenParser(new Twig_Time_TokenParser());

@@ -1,0 +1,105 @@
+\section{Implementation}
+
+\todo{decisions Lare Object}
+We decided to implement the \lare{} backend in two parts.
+Considering the MVC pattern we have all logic in one object, in this case the Lare object.
+It is a singleton in the request scope.
+When receiving a request the server creates it and analyzes if the current request is a \lare{} request and checks if there is a namespace.
+
+
+\subsection{\phpLare{}}
+\phpLare{} is a general \lare{} backend to used in PHP.
+It builds the base of every other Lare module in PHP, especially for template engines.
+
+\lare{} is a implemented as a request-scoped Singleton.
+In PHP a singleton is implemented as a class, which provides only static methods and static attributes.
+
+\subsubsection{API}
+
+When including the Lare.php automatically a Singleton named Lare will be created.
+\begin{itemize}
+\item Lare::is\_enabled()
+
+Returns true if the current request is a Lare request, otherwise false.
+\item Lare::set\_current\_namespace(\$namespace)
+
+Sets the namespace of the current request to \$namespace.
+\item Lare::get\_current\_namespace()
+
+Returns the namespace of the current request.
+\item Lare::get\_matching(\$extension\_namespace = null)
+
+\$extension\_namespace is an optional paramenter, to check the matching to a given namespace. If \$extension\_namespace is not given, the matching will be done against the namespace of the current request.
+
+Returns the most specific matching namespace level.
+\item Lare::matches(\$extension\_namespace = null)
+
+\$extension\_namespace is an optional paramenter, to check the matching to a given namespace. If \$extension\_namespace is not given, the matching will be done against the namespace of the current request.
+
+Returns true if the whole namespace is matching, otherwise false.
+\end{itemize}
+    
+\subsection{\twigLare{}}
+Twig-Lare brings Lare functionality to the template engine Twig\footnote{http://twig.sensiolabs.org/}.
+Twig is used by Symfony, a framework which is used in e.g. Drupal 8, eZPublish, phpBB and Sylius.
+
+Twig-Lare is a implemented as a Twig extension.
+It consists of a TwigTokenParser, a anonymous TwigSimpleFunction and a global variable.
+The TwigTokenParser Twig\_Lare\_TokenParser\_LareExtends is the heart of the extension.
+It provides the possibility to use the tag \{\% lare\_extends \%\} in the way it may be used in django.
+To prevent multiple extend tags, including the default twig tag \emph{\{\% extends \%\}} it throws a Error if either the default tag or \{\% lare\_extends \%\} was already used.
+Additionally we ensure that it is not called inside a block tag.
+
+\begin{minipage}[c]{0.95\linewidth}
+\begin{lstlisting}
+{% lare_extends "::__base.twig" "Lare.Namespace" "::__lare.twig" %}
+{% block page %}
+  <div id="page">
+    ...
+  </div>
+{% endblock page %}
+{% block lare-namespace %}{{ current_lare_namespace }}{% endblock lare-namespace %}
+\end{lstlisting}
+\end{minipage}
+
+The example above shows the usage of this tag.
+When the current namespace is not inside Lare.Namespace it extends to the \:\:\_\_base.twig template because the second namespace does not match then.
+But when the current namespace is \emph{Lare.Namespace}, then it extends \:\:\_\_lare.twig.
+
+As the namespace matching occurs on the second level in this example, the overriden block should be the second, with the naming in this thesis \emph{page}.
+Inside this block a <div> container with the according ID has to be placed.
+
+\subsubsection{API}
+
+\begin{itemize}
+\item \{\% lare\_extends \$default\_template \%\}
+
+Extends \$default\_template like the original \{\% extends \$default\_template \%\}.
+\item \{\% lare\_extends \$default\_template \$lare\_namespace \%\}
+
+Extends ::\_\_lare.html if \$lare\_namespace is matching, otherwise it extends \$default\_template.
+\item \{\% lare\_extends \$default\_template \$lare\_template \$lare\_namespace \%\}
+
+Extends \$lare\_template if \$lare\_namespace is matching, otherwise it extends \$default\_template.
+\end{itemize}
+
+
+\subsection{\djangoLare{}}
+
+\djangoLare{} was the first backend of \lare{}.
+It was introduced as a single object containing logic and template tools.
+After implementing \phpLare{} we decided to change the structure of the django backend towards the new segmentation.
+
+Similar to the combination of \phpLare{} and \twigLare{}, \djangoLare{} consists of a Lare object as in the PHP backend and implements the same templating tools as the Twig extension.
+Still as one package it is available via \emph{pip install django-lare} command.
+
+\subsection{\lareJS{}}
+\lareJS{}, as successor of jquery-pjaxr, is the frontend engine for \lare{}, using AJAX to communicate to the server.
+jQuery-pjaxr was introduced as an extended version of jquery-pjax, allowing to replace multiple containers with one request, instead of only one.
+Matching by the ID of an container it was not the job of the frontend to define which container should be replaced, but the backend with giving the correct IDs.
+
+Introducing \lareJS{} achieved the ability differ the current page via namespaces.
+\todo{describe \lareJS{}}
+
+
+\subsection{concluding remarks}

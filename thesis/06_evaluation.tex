@@ -1,0 +1,123 @@
+\section{Evaluation}
+\lare{} is tested based on a sample web application.
+It provides different type of sites which are designed to perform the different aspects of this evaluation.
+
+To evaluate \lare{} we first test it's functionality.
+We check if the desired content is delivered and if \lare{} is actually performing like expected.
+
+It is not easy to test \ajax{} \webApplication{}s.
+As seen in \footnote{http://selab.fbk.eu/tonella/papers/wqvv2007.pdf} there is a lack of good testing tools, especially when it comes to white-box testing.
+For black-box testing a good tool is selenium.
+
+In \footnote{http://selab.fbk.eu/tonella/papers/icst2008.pdf} the same authors introduce a new automated testing technique, again based on selenium.
+
+As to evaluate \lare{} there is no need to actually test the whole application, but only to check whether \lare{} works, selenium in our case is sufficient.
+
+We make specific requests and want an specific answer of it.
+Especially we want to have the same content rendered through \lare{} as through normal \httpRequest{}s.
+
+Selenium additionally makes it possible to use different WebDrivers, in this thesis FireFox and Chrome are used.
+This is important because of the different implementations of browsers' features.
+
+To test the performance, we will use two technologies.
+\footnote{http://swerl.tudelft.nl/twiki/pub/Main/TechnicalReports/TUD-SERG-2008-009.pdf}.
+First of all curl-based tests will be done.
+Those tests will focus on the first response, containing the markup.
+This will show how \lare{} influences the webserver.
+
+Additionially the webapp will be benchmarked by using the Chrome Network Tools.
+This method provides the possiblity to check whether further requests for scripts, images, etc. are influenced.
+The Chrome Network Tools will show the actual load time the user has to wait for, until the whole page is loaded.
+
+To make the tests as representive as possible, caching in every dimension will be enabled and disabled to see whether it influences the results or not.
+As I use Mysql as database I will enable and disable the query caching.
+Twig, the template engine allows caching, which will be enabled and disabled as well.
+Additionally all tests are performed on a local machine and a remote server, to see whether the latency takes effect in the performance of \lare{}.
+
+We will not do load tests with multiple users as the amount of concurrent users should be up to 10000 to be representative\footnote{http://swerl.tudelft.nl/twiki/pub/Main/TechnicalReports/TUD-SERG-2008-009.pdf}.
+In this thesis this we will not be able to do that, due to the lack of a Supercomputer such as used in \footnote{http://swerl.tudelft.nl/twiki/pub/Main/TechnicalReports/TUD-SERG-2008-009.pdf}.
+
+We will distinguish between static pages without database queries and dynamic pages which have those.
+Every page relevant for the test will be requested in different modes.
+First of all every site will be requested normally.
+After that it will be requested with \lare{} enabled.
+As \lare{} should only influence subsequent requests, every page will be tested with \http{} headers from different sources, imitating those requests.
+
+%As one traditional testing model, we will evaluate the \pjaxr{} sample application via blackbox tests.
+%Testing \ajax{} is not trivial due to multiple programming- and markup-languages influencing it. 
+%One possibility to test web applications, as suggested in \cite{lundmark11}, is Selenium\footnote{http://www.seleniumhq.org/}.
+%With this tool it is possible to generate automated tests for web applications.
+%
+%To evaluate whether the application is crawlable or not is an important criteria whether \pjaxr{} fulfills it goals.
+%Finding all the content delivered in all different URLs in the sitemap should be the target to acquire.
+%The crawled content should be similar to a non-dynamic HTML file, defined for every URL.
+%Content which is not directly provided via an URL but asynchronously, like via an autocompletion, should not be relevant.
+%
+%One way to crawl \ajax{} web applications, recommended in \cite{crawljax:tweb12} is to use Crawljax\footnote{http://crawljax.com/}. 
+%It explores \ajax{}-based web applications by following every link recursively and saving the associated content. In this thesis the three endpoints of the sample project will be crawled by Crawljax to see whether all endpoints provide the same content or not.
+%
+%Another way to evaluate whether \pjaxr{} fulfils its goals, is testing if the Googlebot\footnote{http://google.com/bot.html} will discover all the content provided.
+%Again, all three endpoints will be tested to check, if all data is found by this technique.
+%While Crawljax is intended to find not easily accessible content, Googlebot is intended to find content, matching design patterns\footnote{https://developers.google.com/webmasters/ajax-crawling/} by Google. This fact makes it more challenging for \pjaxr{}, not implementing these, to have good results in this test.
+
+
+\subsection{Sample web application}
+
+The sample web application used to test \lare{} in this thesis is implemented in PHP.
+We use the MVC design pattern, but with a slightly different naming.
+The Models are called Classes.
+
+
+\subsection{test layout}
+
+\begin{itemize}
+\item Initial-Requests:
+\begin{itemize}
+  \item Static:
+    \begin{itemize}
+      \item /
+      \item /imprint/
+    \end{itemize}
+    \item Dynamic:
+    \begin{itemize}
+      \item /tags/p/
+      \item /tags/p/2/
+    \end{itemize}
+\end{itemize}
+
+\newpage{}
+\item Site-to-site Requests:
+
+\begin{itemize}
+  \item Self:
+    \begin{itemize}
+      \item /
+      \item /imprint/
+    \end{itemize}
+  \item Static page matching Site-Namespace:
+    \begin{itemize}
+      \item / to /imprint/
+    \end{itemize}
+  \item Dynamic page matching Site-Namespace:
+    \begin{itemize}
+      \item / to /tags/p/
+    \end{itemize}
+  \item Dynamic page matching Page-Namespace:
+    \begin{itemize}
+      \item /tags/p/ to /tags/p/2/
+    \end{itemize}
+\end{itemize}
+\end{itemize}
+
+\subsection{Selenium}
+\todo{describe selenium tests}
+
+\subsection{Curl}
+\todo{describe curl test}
+
+\subsection{Chrome Network Tools}
+\todo{describe chrome network tools}
+
+\subsection{Results}
+
+\subsection{concluding remarks}

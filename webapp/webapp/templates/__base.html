@@ -14,24 +14,23 @@
     <link href="/static/css/main.css" rel="stylesheet">
     <link href="/static/css/dashboard.css" rel="stylesheet">
 </head>
-<body data-pjaxr-namespace="{{ pjaxr_namespace }}">
+<body data-lare-namespace="{{ lare_current_namespace }}">
     {% block site %}
     <div id="site">
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#pjaxr-navbar">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#lare-navbar">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/"><img src="/static/img/pjaxr.png" alt="Pjaxr.io Logo"></a>
+                    <a class="navbar-brand" href="/"><img src="/static/img/lare.png" alt="Lare.io Logo"></a>
                 </div>
-                <ul id="pjaxr-navbar" class="nav navbar-nav navbar-collapse collapse navbar-right">
+                <ul id="lare-navbar" class="nav navbar-nav navbar-collapse collapse navbar-right">
                     <li><a href="#"><div id="render_time" class="pull-left">{% rendering_time %} s {{QUERY_COUNT}} queries on {{DB_CONNECTION_COUNT}} connections</div></a></li>
-                    <li><a href="#"><?php echo date("d.m.Y - H:i:s", time()); ?></a></li>
-                    <li><a href="#" id="random_tag">{% _ "Random Tag" %}: <strong>{{tag}}</strong> ({{tag_count}})</a></li>
+                    <li><a href="#">{{ current_time }}</a></li>
                     <li><a href="{% url 'tags' 'p' %}">tags</a></li>
                     {% include "_navbar.html" %}
                 </ul>
@@ -48,19 +47,19 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script src="/static/js/jquery-1.11.2.min.js"></script>
-    {% if PJAXR %}<script src="/static/js/jquery.pjaxr.min.js"></script>{% endif %}
+    <script src="/static/js/lare.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/js/toastr.min.js"></script>
     <script>
-        (function(PjaxrIO, $, undefined) {
-            PjaxrIO.error_label = '{% _ "An error occurred" %}';
-            PjaxrIO.error_title = '{% _ "Whoops!" %}';
-            PjaxrIO.PJAXR = {% if PJAXR %}true{% else %}false{% endif %};
-        }(window.PjaxrIO = window.PjaxrIO || {}, jQuery));
+        (function(LareIO, $, undefined) {
+            LareIO.error_label = '{% _ "An error occurred" %}';
+            LareIO.error_title = '{% _ "Whoops!" %}';
+            LareIO.Lare = {% if Lare %}true{% else %}false{% endif %};
+        }(window.LareIO = window.LareIO || {}, jQuery));
     </script>
     <script src="/static/js/main.js"></script>
     </div>
     {% endblock site %}
-{% block additional_pjaxr_includes %}<div id="additional_pjaxr_includes"></div>{% endblock additional_pjaxr_includes %}
+{% block additional_lare_includes %}<div id="additional_lare_includes"></div>{% endblock additional_lare_includes %}
 </body>
 </html>

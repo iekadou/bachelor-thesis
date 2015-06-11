@@ -14,24 +14,47 @@
 \usepackage{glossaries}
 \usepackage{xcolor}
 \usepackage{float}
+
+\usepackage{listings}
+\lstdefinelanguage{HTML5}{
+  language=HTML,
+  morecomment=[s]{<!-}{-->},
+  tag=[s],
+  otherkeywords={lare-head, lare-body, lare-namespace}
+}
+\lstset{language=HTML5}
+
 \makeglossaries
 
-\def \ajax {AJAX}
-\def \pjaxr {PJAXR}
-\def \jqueryPjaxr {jquery-pjaxr}
-\def \djangoPjaxr {django-pjaxr}
-\def \phpPjaxr {php-pjaxr}
-\def \twigPjaxr {twig-pjaxr}
-\def \twig {twig}
-\def \hijax {HIJAX}
-\def \httpRequest {HTTP request}
-\def \html {HTML}
-\def \singlePageApplication {single-page application}
-\def \SinglePageApplication {Single-page application}
+\include{glossaries}
+
+
+% terminology definitions
+\def \ajax {\gls{ajax}}
+\def \clientSideMVC{client-side MVC}
+\def \ClientSideMVC{Client-side MVC}
+\def \djangoLare {\gls{djangoLare}}
+\def \hijax {\gls{hijax}}
+\def \html {\gls{html}}
+\def \http {HTTP}
+\def \httpRequest {\gls{httpRequest}}
+\def \lareJS {\gls{lareJS}}
+\def \LareJS {\Gls{lareJS}}
+\def \lare {\gls{lare}}
+\def \phpLare{\gls{phpLare}}
+\def \singlePageApplication {\gls{singlePageApplication}}
+\def \SinglePageApplication {\Gls{singlePageApplication}}
+\def \twig {\gls{twig}}
+\def \twigLare {\gls{twigLare}}
+\def \webApplication {\gls{webApplication}}
+\def \webPage {\gls{webPage}}
+\def \WebPage {\Gls{webPage}}
+\def \webSite {\gls{webSite}}
+
 
 \author{Jonas Braun}
 
-\title{\pjaxr{} - A new technology for stateful \singlePageApplication{}s}
+\title{\lare{} - A new technology for stateful \singlePageApplication{}s}
 
 \degreecourse{Informatik}
 
@@ -62,275 +85,33 @@
 
 \newcommand\todo[1]{\textcolor{red}{#1}}
 
-\section{Introduction}
-At the beginning of the World Wide Web websites were self-contained. The content which was initially loaded was not changed until a new URL was requested by the user.
-One big change was the invention of \ajax{}. It introduced the possibility to change content without the need of requesting a new URL.
-This approach only loading one website initially and then changing its content interactively is called \singlePageApplication{}.
-\SinglePageApplication{}s are more user-friendly than the common designs, e.g. due to lower load times in combination with not being able to indicate clearly that a new website is being loaded.
-A big disadvantage is that users are not able to save their websites as a bookmark, because while surfing on this page, the URL never changes.
-\ajax{} is available in nearly every browser which is a reason that a lot of different frameworks gain this functionality, improving and enhancing it.
+\include{01_introduction}
 
-\SinglePageApplication{}s have a problem in the current time: Search engines and other crawlers trying to examine websites will find nothing more than content which was provided initially. Every further change of content is not easily accessible.
-As Google is the most used search engine in the World Wide Web they have a design pattern\footnote{https://developers.google.com/webmasters/ajax-crawling/docs/getting-started} for implementing a crawlable \ajax{} web application. 
-In this guideline it is recommended to have snapshots available under non-user-friendly URLs, called Hash-Bang URLs.
+\newpage{}
 
-In this thesis we will evaluate the performance of a new technology called \pjaxr{}. 
-Together with Stephan Gro{\ss} I developed this technique for using \ajax{} with it's advantages but trying to avoid the disadvantages explained before.
-The result of this cooperation is the frontend-side implementation called \emph{\jqueryPjaxr{}}.
-As \pjaxr{} also needs a backend to be implemented, I developed the first \pjaxr{} backend called \emph{\djangoPjaxr{}}.
-Additionally in this thesis I will introduce a new \pjaxr{} backend for PHP, \emph{\phpPjaxr{}} and \emph{\twigPjaxr{}} an extension for the \twig{}\footnote{http://twig.sensiolabs.org/} template-engine.
+\include{02_fundamentals}
 
-\subsection{Background and motivation}
-\todo{explain}
+\newpage{}
 
-\subsection{Goals of this thesis}
-\todo{explain}
+\include{03_state_of_the_art}
 
-\subsection{Thesis outline}
-\todo{explain}
+\newpage{}
 
-\section{Fundamentals}
-\subsection{\httpRequest{}}
-The world wide web has one main protocol to let web-browsers and web-servers communicate, the Hypertext Transfer Protocol (HTTP), which is built on top of the Transmission Control Protocol (TCP).
-TCP and so \httpRequest{}s always start with a handshake to establish a connection before data is transferred.
-After this handshake, the client sends the request data to the web-server.
-This recognizes and interprets the request and if the requested resource is available, sends the according data back, otherwise it sends an error.
-Typically it renders data out of a database into a HTML-Template or to JSON and sends it back as the response.
-Afterwards the browser receives, interprets and displays the response data, which is most of the time HTML, CSS, images or scripts.
+\include{04_lare}
 
-\subsection{\html{}}
-\todo{explain}
+\newpage{}
 
-\subsection{\SinglePageApplication{}}
-\todo{explain}
+\include{05_implementation}
 
-\subsection{\ajax{}}
-\todo{explain}
+\newpage{}
 
-\subsection{History API}
-\todo{explain}
+\include{06_evaluation}
 
-\section{State of the art}
-\ajax{} is a widely used technique in the internet to build web applications because of the user experience improvements it brings.
-In \cite{roodt06} is mentioned that \ajax{} applications have a better usability than non-\ajax{} websites.
-The same conclusion is made in \cite{klugeKarglWeber07}, despite of the lack of browser navigation support.
-Beside the navigation problem another disadvantage is, as presented in \cite{mesbah09}, crawling \ajax{} applications is not trivial.
-One solution of this task is finding clickables and navigating to every page found by this.
-Nevertheless \cite{mesbah09} states also that this only generates a snapshot of the full application.
-Even search engines are avoiding to crawl websites because of it's difficulty.\cite{matter08}, page 81
-Currently the task of building a crawlable \singlePageApplication{} using \ajax{} is often avoided, instead crawling algorithms are getting improved and in focus of research.
+\newpage{}
 
-A common way to implement \ajax{} in websites is to use the pattern of HIJAX.
-It encourages developers to have \ajax{} in mind from the start of building the website. 
-But when they start to implement the \singlePageApplication{} they should do not implement \ajax{}.
-This should only be done after the website is finished without \ajax{}.
-This could then be done by \emph{hijacking} an event like a click to then handle it by an additional script.
-
-\subsection{\hijax{}}
-\todo{explain}
-
-\subsection{Hash-Bang URLs}
-\todo{explain}
-
-\section{\pjaxr{}}
-\subsection{Introduction}
-\todo{explain}
-
-\subsubsection{Requirements}
-The idea of \pjaxr{} is to have the advantages of \ajax{} while trying to avoid it's disadvantages.
-This means it should have the same UX improvements, and reduced load times as classical \ajax{}.
-On the other hand \singlePageApplication{}s using \pjaxr{} should be easily crawlable by the most used crawlers without additional efforts.
-E.g. it should not be necessary to have several endpoints with the same content for crawlers and normal users.
-Additionally \pjaxr{} should be a generic solution for \singlePageApplication{}s, not just for one specific.
-
-\subsection{Concept}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=13cm]{images/pjaxr_html.png}
-\caption[pjaxr_html]{Basic HTML structure of a web application using \pjaxr{}}
-\label{fig:pjaxr_html}
-\end{figure}
-
-Every \singlePageApplication{} which uses \pjaxr{} has a hierachical namespace structure.
-Typically the namespace consists of a prefix, a site id, a page id, a content id and an inner-content id.
-Every level in the hierarchy has it's counterpart on the website as shown in figure \ref{fig:pjaxr_html}, a container with an id telling which part of the namespace it belongs to.
-After the \pjaxr frontend is initialized it hijacks events like clicks on links and enriches the request with the current website's namespace.
-A \pjaxr{} backend analyzes the namespace of the requested website and the one sent in the request.
-For every hierarchy level it checks if both namespaces match.
-If on one level the namespaces don't match the containers according to this level will be responded to the request.
-An optimized web application only grabs the data necessary for those containers and render them afterwards.
-The \pjaxr{} frontend retrieves the response, replaces the containers at the website and updates the current namespace.
-
-\begin{figure}[H]
-\centering
-\includegraphics[height=10cm]{images/pjaxr.png}
-\caption[pjaxr_components]{Component and communication diagram of \pjaxr{}}
-\end{figure}
-
-\subsection{Realization}
-To load a page, the first request is a normal \httpRequest{} followed by a JavaScript script initializing the \pjaxr{} frontend module.
-Further requests to the same host are then initated by this module.
-The HTTP headers of these requests are extended by the namespace of the current website.
-The webserver using a \pjaxr{} backend detects the first namespace of the requested resource not matching the namespace of the HTTP header.
-It then decides which data is needed to be gathered and which template should be used to render those.
-The content delivered by the \pjaxr{} backend enriched web server is interpreted by the frontend module and replaces the related containers.
-This replacement is implemented using the ID attribute.
-Other methods identifying corresponding containers like e.g. XPath are not as generic in it's position on the page as the ID.
-This is important because \singlePageApplication{}s should be able to include content dynamically in every position on the page.
-\pjaxr{} in combination with the History API makes it then possible to update the content and change the URL like it would be made by normal requests.
-This is possible with the use of the pushState method introduced in the History API.
-Back- and forward-buttons and bookmarks in a browser will work like on a normal request using this function.
-
-\subsection{Usage}
-
-\subsection{\pjaxr{} backends}
-
-\section{Implementation}
-
-\subsection{\phpPjaxr{}}
-PHP-Pjaxr is a general Pjaxr-backend to used in PHP.
-It builds the base of every other PHP-Pjaxr module, especially for template engines.
-
-Pjaxr is a implemented as a request-scoped Singleton.
-In PHP a singleton is implemented as a class, which provides only static methods and static attributes.
-
-\subsubsection{API}
-
-When including the Pjaxr.php automatically a Singleton named Pjaxr will be created.
-\begin{itemize}
-\item Pjaxr::is\_enabled()
-
-Returns true if the current request is a Pjaxr request, otherwise false.
-\item Pjaxr::set\_current\_namespace(\$namespace)
-
-Sets the namespace of the current request to \$namespace.
-\item Pjaxr::get\_current\_namespace()
-
-Returns the namespace of the current request.
-\item Pjaxr::get\_matching(\$extension\_namespace = null)
-
-\$extension\_namespace is an optional paramenter, to check the matching to a given namespace. If \$extension\_namespace is not given, the matching will be done against the namespace of the current request.
-
-Returns the most specific matching namespace level.
-\item Pjaxr::matches(\$extension\_namespace = null)
-
-\$extension\_namespace is an optional paramenter, to check the matching to a given namespace. If \$extension\_namespace is not given, the matching will be done against the namespace of the current request.
-
-Returns true if the whole namespace is matching, otherwise false.
-\end{itemize}
-    
-\subsection{\twigPjaxr{}}
-Twig-Pjaxr brings Pjaxr functionality to the template engine Twig\footnote{http://twig.sensiolabs.org/}.
-Twig is used by Symfony, a framework which is used in e.g. Drupal 8, eZPublish, phpBB and Sylius.
-
-Twig-Pjaxr is a implemented as a Twig extension.
-It consists of a TwigTokenParser, a anonymous TwigSimpleFunction and a global variable.
-The TwigTokenParser Twig\_Pjaxr\_TokenParser\_PjaxrExtends is the heart of the extension.
-It provides the possibility to use the tag \{\% pjaxr\_extends \%\} in the way it may be used in django.
-To prevent multiple extend tags, including the default twig tag \emph{\{\% extends \%\}} it throws a Error if either the default tag or \{\% pjaxr\_extends \%\} was already used.
-Additionally we ensure that it is not called inside a block tag.
-
-\subsubsection{API}
-
-\begin{itemize}
-\item \{\% pjaxr\_extends \$default\_template \%\}
-
-Extends \$default\_template like the original \{\% extends \$default\_template \%\}.
-\item \{\% pjaxr\_extends \$default\_template \$pjaxr\_namespace \%\}
-
-Extends ::\_\_pjaxr.html if \$pjaxr\_namespace is matching, otherwise it extends \$default\_template.
-\item \{\% pjaxr\_extends \$default\_template \$pjaxr\_template \$pjaxr\_namespace \%\}
-
-Extends \$pjaxr\_template if \$pjaxr\_namespace is matching, otherwise it extends \$default\_template.
-\end{itemize}
-
-\subsection{\jqueryPjaxr{} adjustments}
-
-\subsection{concluding remarks}
-
-\section{Evaluation}
-I will evaluate \pjaxr{} based on a sample web application.
-It provides different type of sites which are designed to perform the different aspects of this evaluation.
-
-To evaluate \pjaxr{} we will first test it's functionality.
-We will check if the desired content is delivered and if \pjaxr{} is actually used.
-To make the test as realistic as possible I will use selenium.
-We will test if the webapp delivers the same content using \pjaxr{} as without using it.
-Selenium additionally makes it possible to use different WebDrivers, in this thesis FireFox and Chrome will be used.
-
-To test the performance, I will use two technologies.
-First of all curl-based tests will be done.
-Those tests will focus on the first response, containing the markup.
-This will show how \pjaxr{} influences the webserver.
-
-Additionially the webapp will be benchmarked by using the Chrome Network Tools.
-This method provides the possiblity to check whether further requests for scripts, images, etc. are influenced.
-The Chrome Network Tools will show the actual load time the user has to wait for, until the whole page is loaded.
-
-To make the tests as representive as possible, caching in every dimension will be enabled and disabled to see whether it influences the results or not.
-As I use Mysql as database I will enable and disable the query caching.
-Twig, the template engine allows caching, which will be enabled and disabled as well.
-Additionally all tests are performed on a local machine and a remote server, to see whether the latency takes effect in the performance of \pjaxr{}.
+\include{07_conclusion}
 
 
-I will distinguish between static pages without database queries and dynamic pages which have those.
-Every page relevant for the test will be requested in different modes.
-First of all every site will be requested with \pjaxr{} disabled.
-After that it will be requested with \pjaxr{} enabled.
-As \pjaxr{} should only influence subsequent requests, every page will be tested with \pjaxr{} headers from different sources, imitating those requests.
-
-\subsection{test layout}
-  Initial-Requests:
-    Static:
-      - /
-      - /imprint/
-    Dynamic:
-      - /tags/p/
-      - /tags/p/2/
-
-  Site-to-site Requests:
-    Self
-      - / to /
-      - /tags/p/ to /tags/p/
-    Static page matching Site-Namespace
-      - / to /imprint/
-    Dynamic page matching Site-Namespace
-      - / to /tags/p/
-    Dynamic page matching Page-Namespace
-      - /tags/p/ to /tags/p/2/
-
-%As one traditional testing model, we will evaluate the \pjaxr{} sample application via blackbox tests.
-%Testing \ajax{} is not trivial due to multiple programming- and markup-languages influencing it. 
-%One possibility to test web applications, as suggested in \cite{lundmark11}, is Selenium\footnote{http://www.seleniumhq.org/}.
-%With this tool it is possible to generate automated tests for web applications.
-%
-%To evaluate whether the application is crawlable or not is an important criteria whether \pjaxr{} fulfills it goals.
-%Finding all the content delivered in all different URLs in the sitemap should be the target to acquire.
-%The crawled content should be similar to a non-dynamic HTML file, defined for every URL.
-%Content which is not directly provided via an URL but asynchronously, like via an autocompletion, should not be relevant.
-%
-%One way to crawl \ajax{} web applications, recommended in \cite{crawljax:tweb12} is to use Crawljax\footnote{http://crawljax.com/}. 
-%It explores \ajax{}-based web applications by following every link recursively and saving the associated content. In this thesis the three endpoints of the sample project will be crawled by Crawljax to see whether all endpoints provide the same content or not.
-%
-%Another way to evaluate whether \pjaxr{} fulfils its goals, is testing if the Googlebot\footnote{http://google.com/bot.html} will discover all the content provided.
-%Again, all three endpoints will be tested to check, if all data is found by this technique.
-%While Crawljax is intended to find not easily accessible content, Googlebot is intended to find content, matching design patterns\footnote{https://developers.google.com/webmasters/ajax-crawling/} by Google. This fact makes it more challenging for \pjaxr{}, not implementing these, to have good results in this test.
-
-
-\subsection{Sample web application}
-
-\subsection{Selenium}
-
-\subsection{Curl}
-
-\subsection{Chrome Network Tools}
-
-\subsection{Results}
-
-\subsection{concluding remarks}
-
-\section{Conclusion and future work}
 
 \begin{thebibliography}{9}
 
@@ -429,18 +210,7 @@ As \pjaxr{} should only influence subsequent requests, every page will be tested
 %      \end{itemize}
 %
 %    
-%  \subsection[\ajax]{\ajax{}\footnote{\url{https://developer.mozilla.org/de/docs/AJAX}}\label{ajax}}
-%    \includegraphics[width=13cm]{images/client_server_vs_ajax}\\
-%    As shown in \ref{clientServerModel} the Client-server model forces the requests always to be synchronous, which means that the client has to wait for a fully loaded page on every request.\\
-%    Through the \enquote{Asynchronous JavaScript and XML}, short \ajax{}, this can be improved. The data flow in AJAX is very similar to the Client-server model, but is using a new, third layer: the \enquote{\ajax{}-engine}.
-%    The first request to a web-server using \ajax{} is the complete same as one without \ajax{} with the exception, that one of the requested sources is a Javascript, which instantiates a \ajax{}-engine. The following requests now are handled by this \ajax{}-engine, allowing to request web-sources asynchronously.\\
-%    Without using \ajax{} after receiving HTML, the browser renders the whole page, even if there are only small changes to the page it rendered before. \ajax{} instead only requests small parts of a website, most of the time in XML or JSON format, interprets it and then only adds, replaces or appends old content with the newly received.
-%    \subsubsection{Load time analysis}
-%      The first request takes the same time as the classic Client-server-model. For every further request it takes the time of a network delay, plus the backend-query load time. In this case the backend queries are optimized to only fetch what is needed, which in most cases results in a total load time of 50ms.\\
-%      Having a lot of features getting updated results in multiple occurrences of network delay, which shows that it's better to update every content which is needed in only one \ajax{}-request.
-%    
-%    \subsubsection{Requirements}
-%    \ajax{}-requests need an extra API, where the asynchronous requests are handled. This API's response is often a JSON-Object, which then needs a client-side interpretation and rendering to inject into the website's current DOM. Because not all objects have the same structure or template the interpreter often grows bigger with every API-endpoint you contact to customize it, fitting for every object. It is useful to use a client-side template-engine to render the interpreted objects into the DOM.
+
 %
 %    \subsubsection{Example}
 %    TODO

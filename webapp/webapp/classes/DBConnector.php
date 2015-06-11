@@ -19,6 +19,11 @@ class DBConnector {
             Globals::set_var('DB_CONNECTION_COUNT', Globals::get_var('DB_CONNECTION_COUNT') + 1);
         }
         $this->db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+        if (DB_CACHING) {
+            $this->db_connection->query("SET SESSION query_cache_type=1;");
+        } else {
+            $this->db_connection->query("SET SESSION query_cache_type=0;");
+        }
     }
 
     public function query($sql_statement) {

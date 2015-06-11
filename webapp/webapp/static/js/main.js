@@ -1,5 +1,5 @@
-(function(PjaxrIO, $, undefined) {
-    PjaxrIO.resolveMethodName = function(string) {
+(function(LareIO, $, undefined) {
+    LareIO.resolveMethodName = function(string) {
         // splitting the strings at dots to be able to resolve method names in namespaces
         // setting Pointer to window to be in the root of namespaces
         try {
@@ -19,12 +19,12 @@
         return function() {};
     };
 
-    PjaxrIO.toastr_opts = { closeButton: true,
+    LareIO.toastr_opts = { closeButton: true,
                             closeHtml: '<button><span class="fa fa-times"></span></button>', 
                             positionClass: 'toast-top-left',
                             hideDuration: 300 };
 
-    PjaxrIO.register_api_forms = function() {
+    LareIO.register_api_forms = function() {
         $('.api-form').off('submit').on('submit', function(e) {
             e.preventDefault();
             var $form = $(this);
@@ -42,20 +42,20 @@
                 success: function(data, successCode, jqXHR) {
                     $form.find('.form-group').removeClass('has-error');
                     if (data.url !== undefined) {
-                      $(document).pjaxr.request(data.url);
+                      $(document).lare.request(data.url);
                     } else {
                         for (var field in data) {
                             if (field == 'error_msgs') {
                                 for (var msg_index in data[field]) {
-                                    toastr.error(data[field][msg_index][0],data[field][msg_index][1], PjaxrIO.toastr_opts);
+                                    toastr.error(data[field][msg_index][0],data[field][msg_index][1], LareIO.toastr_opts);
                                 }
                             } else if (field == 'info_msgs') {
                                 for (var msg_index in data[field]) {
-                                    toastr.error(data[field][msg_index][0],data[field][msg_index][1], PjaxrIO.toastr_opts);
+                                    toastr.error(data[field][msg_index][0],data[field][msg_index][1], LareIO.toastr_opts);
                                 }
                             } else if (field == 'success_msgs') {
                                 for (var msg_index in data[field]) {
-                                    toastr.error(data[field][msg_index][0],data[field][msg_index][1], PjaxrIO.toastr_opts);
+                                    toastr.error(data[field][msg_index][0],data[field][msg_index][1], LareIO.toastr_opts);
                                 }
                             } else {
                                 if (data[field] == 'error') {
@@ -64,11 +64,11 @@
                             }
                         }
                     }
-                    PjaxrIO.resolveMethodName($form.attr('successCallback'))();
+                    LareIO.resolveMethodName($form.attr('successCallback'))();
                 },
                 error: function(jqXHR, errorCode, errorThrown) {
-                    PjaxrIO.resolveMethodName($form.attr('errorCallback'))();
-                    toastr.error(PjaxrIO.error_label, PjaxrIO.error_title, PjaxrIO.toastr_opts);
+                    LareIO.resolveMethodName($form.attr('errorCallback'))();
+                    toastr.error(LareIO.error_label, LareIO.error_title, LareIO.toastr_opts);
                 },
                 complete: function(jqXHR, statusCode) {
                     try {
@@ -77,15 +77,15 @@
                             for (var field in data) {
                                 if (field == 'error_msgs') {
                                     for (var msg_index in data[field]) {
-                                        toastr.error(data[field][msg_index][0],data[field][msg_index][1], PjaxrIO.toastr_opts);
+                                        toastr.error(data[field][msg_index][0],data[field][msg_index][1], LareIO.toastr_opts);
                                     }
                                 } else if (field == 'info_msgs') {
                                     for (var msg_index in data[field]) {
-                                        toastr.error(data[field][msg_index][0],data[field][msg_index][1], PjaxrIO.toastr_opts);
+                                        toastr.error(data[field][msg_index][0],data[field][msg_index][1], LareIO.toastr_opts);
                                     }
                                 } else if (field == 'success_msgs') {
                                     for (var msg_index in data[field]) {
-                                        toastr.error(data[field][msg_index][0],data[field][msg_index][1], PjaxrIO.toastr_opts);
+                                        toastr.error(data[field][msg_index][0],data[field][msg_index][1], LareIO.toastr_opts);
                                     }
                                 } else {
                                     if (data[field] == 'error') {
@@ -96,7 +96,7 @@
                         }
                     } catch (e) {
                     }
-                    PjaxrIO.resolveMethodName($form.attr('completeCallback'))();
+                    LareIO.resolveMethodName($form.attr('completeCallback'))();
                     $form.find('.btn-primary').removeClass('disabled');
                 }
             });
@@ -109,25 +109,25 @@
         });
     };
 
-    PjaxrIO.closeNavbar = function() {
+    LareIO.closeNavbar = function() {
         $('#inner_navbar.dropdown.open .dropdown-toggle').dropdown('toggle');
     };
 
-    PjaxrIO.defaultUserCenter = { 'latitude': 50.36232, 'longitude': 7.5608 };
+    LareIO.defaultUserCenter = { 'latitude': 50.36232, 'longitude': 7.5608 };
     try {
-        PjaxrIO.userCenter = new google.maps.LatLng(PjaxrIO.defaultUserCenter.latitude, PjaxrIO.defaultUserCenter.longitude);
+        LareIO.userCenter = new google.maps.LatLng(LareIO.defaultUserCenter.latitude, LareIO.defaultUserCenter.longitude);
     } catch (e) {
 
     }
 
-    PjaxrIO.mapStyleArray = [ { "stylers": [{ "visibility": "off" }] }, { "featureType": "road", "stylers": [{ "visibility": "on" }, { "color": "#ffffff" }] }, { "featureType": "road.arterial", "stylers": [{ "visibility": "on" }, { "color": "#ffffff" }] }, { "featureType": "road.highway", "stylers": [{ "visibility": "on" }, { "color": "#fee379" }] }, { "featureType": "landscape", "stylers": [{ "visibility": "on" }, { "color": "#f3f4f4" }] }, { "featureType": "water", "stylers": [{ "visibility": "on" }, { "color": "#6faecf" }] }, {}, { "featureType": "road", "elementType": "labels", "stylers": [{ "visibility": "off" }] }, { "featureType": "poi.park", "elementType": "geometry.fill", "stylers": [{ "visibility": "on" }, { "color": "#83cead" }] }, { "elementType": "labels", "stylers": [{ "visibility": "on" }] }, { "featureType": "landscape.man_made", "elementType": "geometry", "stylers": [{ "weight": 0.9 }, { "visibility": "off" }] }];
+    LareIO.mapStyleArray = [ { "stylers": [{ "visibility": "off" }] }, { "featureType": "road", "stylers": [{ "visibility": "on" }, { "color": "#ffffff" }] }, { "featureType": "road.arterial", "stylers": [{ "visibility": "on" }, { "color": "#ffffff" }] }, { "featureType": "road.highway", "stylers": [{ "visibility": "on" }, { "color": "#fee379" }] }, { "featureType": "landscape", "stylers": [{ "visibility": "on" }, { "color": "#f3f4f4" }] }, { "featureType": "water", "stylers": [{ "visibility": "on" }, { "color": "#6faecf" }] }, {}, { "featureType": "road", "elementType": "labels", "stylers": [{ "visibility": "off" }] }, { "featureType": "poi.park", "elementType": "geometry.fill", "stylers": [{ "visibility": "on" }, { "color": "#83cead" }] }, { "elementType": "labels", "stylers": [{ "visibility": "on" }] }, { "featureType": "landscape.man_made", "elementType": "geometry", "stylers": [{ "weight": 0.9 }, { "visibility": "off" }] }];
     try {
-        PjaxrIO.mapOptions = {
+        LareIO.mapOptions = {
             zoom: 15,
             keyboardShortcuts: false,
             disableDefaultUI: true,
-            center: PjaxrIO.userCenter, //localization
-            styles: PjaxrIO.mapStyleArray,
+            center: LareIO.userCenter, //localization
+            styles: LareIO.mapStyleArray,
             scrollwheel: false,
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             mapTypeControl: false,
@@ -141,37 +141,37 @@
             }
         };
     } catch (e) {
-        PjaxrIO.mapOptions = {}
+        LareIO.mapOptions = {}
     }
 
-    PjaxrIO.createMap = function(element, mapOptions) {
+    LareIO.createMap = function(element, mapOptions) {
         var map = new google.maps.Map(element[0], mapOptions);
         google.maps.event.addDomListener(window, 'resize', function() {
-            map.setCenter(PjaxrIO.userCenter);
+            map.setCenter(LareIO.userCenter);
         });
-        PjaxrIO.createMarker(map, {"position": PjaxrIO.userCenter});
+        LareIO.createMarker(map, {"position": LareIO.userCenter});
         return map;
     };
 
-    PjaxrIO.createMarker = function(map, markeroptions) {
+    LareIO.createMarker = function(map, markeroptions) {
         markeroptions.map = map;
         markeroptions.draggable = false;
         return new google.maps.Marker(markeroptions);
     }
 
-}(window.PjaxrIO = window.PjaxrIO || {}, jQuery));
-if (PjaxrIO.PJAXR == true) {
-    $(document).pjaxrAlways(function() {
-        PjaxrIO.register_api_forms();
-        if ($.support.pjaxr) {
-            $('a').not('[data-non-pjaxr]').on('click', function(event) {
-                $(document).pjaxr.click(event, {timeout: 2500});
+}(window.LareIO = window.LareIO || {}, jQuery));
+if (LareIO.Lare == true) {
+    $(document).lareAlways(function() {
+        LareIO.register_api_forms();
+        if ($.support.lare) {
+            $('a').not('[data-non-lare]').on('click', function(event) {
+                $(document).lare.click(event, {timeout: 20000});
             });
         }
-        PjaxrIO.closeNavbar();
+        LareIO.closeNavbar();
     });
 } else {
     $(document).ready(function() {
-        PjaxrIO.register_api_forms();
+        LareIO.register_api_forms();
     });
 }

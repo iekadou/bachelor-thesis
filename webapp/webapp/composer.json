@@ -1,7 +1,8 @@
 {
     "require": {
       "ircmaxell/password-compat": "dev-master",
-      "iekadou/twig_pjaxr": "0.2.0",
+      "twig/twig": "~1.0",
+      "iekadou/twig_lare": "1.0.0",
       "php": ">=5.3.3"
     }
 }

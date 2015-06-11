@@ -22,7 +22,7 @@ new View('Tags.'.$current_char, Translation::translate('Tags'), 'tags.html');
 View::set_template_var('current_char', $current_char);
 
 // get all tag counts, per starting chars
-if (View::get_template_var('pjaxr_matching') < 2) {
+if (View::get_template_var('lare_matching') < 2) {
     $chars = array('-', '0-9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
 } else {
     $chars = array($current_char);

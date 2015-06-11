@@ -1,0 +1,22 @@
+\section{Introduction}
+At the beginning of the World Wide Web \webPage{}s were self-contained. 
+And without a lot of effort they still are. 
+
+The content which is initially loaded is not changed until a new URL is requested by the user.
+One big change brought the invention of \ajax{}. It introduces the possibility to change content without the need of requesting a new URL.
+This approach only loading one website initially and then changing its content interactively is called \singlePageApplication{}.
+\SinglePageApplication{}s are more user-friendly than the common designs, e.g. due to lower load times in combination with not being able to indicate clearly that a new website is being loaded.
+A big disadvantage is that users are not able to save their websites as a bookmark, because while surfing on this page, the URL never changes.
+\ajax{} is available in nearly every browser which is a reason that a lot of different frameworks gain this functionality, improving and enhancing it.
+
+\SinglePageApplication{}s have a problem in the current time: Search engines and other crawlers trying to examine websites will find nothing more than content which was provided initially. Every further change of content is not easily accessible.
+As Google is the most used search engine in the World Wide Web they have a design pattern\footnote{https://developers.google.com/webmasters/ajax-crawling/docs/getting-started} for implementing a crawlable \ajax{} web application. 
+In this guideline it is recommended to have snapshots available under non-user-friendly \gls{url}s, called Hash-Bang URLs.
+
+In this thesis we will improve and evaluate the performance of a new technology called \lare{}. 
+Together with Stephan Gro{\ss} I developed PJAXR, a technique for using \ajax{} with it's advantages but trying to avoid the disadvantages explained before.
+The result of this cooperation was a frontend-side implementation called \emph{jquery-pjaxr}.
+As PJAXR also needs a backend to be implemented, I developed the first PJAXR backend called \emph{django-pjaxr}.
+
+The libraries \lareJS{} and \djangoLare{} are introduced in this thesis as the successors of \emph{jquery-pjaxr} and \emph{django-pjaxr}.
+Additionally in this thesis I will introduce a new \lare{} backend for PHP, \emph{\phpLare{}} and \emph{\twigLare{}} an extension for the \twig{}\footnote{http://twig.sensiolabs.org/} template-engine.

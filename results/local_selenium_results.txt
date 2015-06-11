@@ -1,0 +1,369 @@
+### Template Caching true
+### Query Cache true
+
+------------------------------------------------------------------------------------------------
+Testing dynamic to dynamic
+------------------------------------------------------------------------------------------------
+/tags/p/ to /tags/p/2/
+Average initial request: 71.6274235ms with 10ms TTFB (amonut of requests: 10)
+Average Lare request: 8.0338775ms with 7.9006132ms TTFB (amonut of requests: 1)
+Lare needs 11.2162033861 % of time
+------------------------------------------------------------------------------------------------
+/tags/p/2/ to /tags/p/
+Average initial request: 68.7980696ms with 8ms TTFB (amonut of requests: 10)
+Average Lare request: 6.1603241ms with 6.0202589ms TTFB (amonut of requests: 1)
+Lare needs 8.95421068617 % of time
+
+------------------------------------------------------------------------------------------------
+Testing dynamic to static
+------------------------------------------------------------------------------------------------
+/tags/p/ to /
+Average initial request: 69.4859199ms with 9ms TTFB (amonut of requests: 10)
+Average Lare request: 15.3977327ms with 6.4030128ms TTFB (amonut of requests: 1)
+Lare needs 22.1595004026 % of time
+------------------------------------------------------------------------------------------------
+/tags/p/2/ to /
+Average initial request: 51.2231984ms with 8ms TTFB (amonut of requests: 10)
+Average Lare request: 6.8610024ms with 6.718406ms TTFB (amonut of requests: 1)
+Lare needs 13.3943264269 % of time
+------------------------------------------------------------------------------------------------
+/tags/p/ to /imprint/
+Average initial request: 56.3429839ms with 8ms TTFB (amonut of requests: 10)
+Average Lare request: 5.4214864ms with 5.2636153ms TTFB (amonut of requests: 1)
+Lare needs 9.62229194255 % of time
+------------------------------------------------------------------------------------------------
+/tags/p/2/ to /imprint/
+Average initial request: 64.6221619ms with 9ms TTFB (amonut of requests: 10)
+Average Lare request: 6.259851ms with 6.0819475ms TTFB (amonut of requests: 1)
+Lare needs 9.68684862275 % of time
+
+------------------------------------------------------------------------------------------------
+Testing self
+------------------------------------------------------------------------------------------------
+/ to /
+Average initial request: 70.4956979ms with 5ms TTFB (amonut of requests: 10)
+Average Lare request: 7.1328504ms with 6.9785603ms TTFB (amonut of requests: 1)
+Lare needs 10.1181357338 % of time
+------------------------------------------------------------------------------------------------
+/imprint/ to /imprint/
+Average initial request: 67.3204163ms with 5ms TTFB (amonut of requests: 10)
+Average Lare request: 5.7883378ms with 5.6205865ms TTFB (amonut of requests: 1)
+Lare needs 8.59819073935 % of time
+------------------------------------------------------------------------------------------------
+/tags/p/ to /tags/p/
+Average initial request: 81.5804535ms with 9ms TTFB (amonut of requests: 10)
+Average Lare request: 6.6762559ms with 6.5361084ms TTFB (amonut of requests: 1)
+Lare needs 8.18364646625 % of time
+------------------------------------------------------------------------------------------------
+/tags/p/2/ to /tags/p/2/
+Average initial request: 76.6343155ms with 10ms TTFB (amonut of requests: 10)
+Average Lare request: 6.5385822ms with 6.39658ms TTFB (amonut of requests: 1)
+Lare needs 8.53218581955 % of time
+
+------------------------------------------------------------------------------------------------
+Testing static to dynamic
+------------------------------------------------------------------------------------------------
+/ to /tags/p/
+Average initial request: 61.224584ms with 6ms TTFB (amonut of requests: 10)
+Average Lare request: 11.9689917ms with 11.2245822ms TTFB (amonut of requests: 1)
+Lare needs 19.5493230301 % of time
+------------------------------------------------------------------------------------------------
+/imprint/ to /tags/p/
+Average initial request: 53.4001294ms with 5ms TTFB (amonut of requests: 10)
+Average Lare request: 10.665841ms with 9.9400867ms TTFB (amonut of requests: 1)
+Lare needs 19.9734366187 % of time
+
+------------------------------------------------------------------------------------------------
+Testing static to static
+------------------------------------------------------------------------------------------------
+/ to /imprint/
+Average initial request: 71.264419ms with 6ms TTFB (amonut of requests: 10)
+Average Lare request: 8.5280374ms with 8.3537838ms TTFB (amonut of requests: 1)
+Lare needs 11.9667535632 % of time
+------------------------------------------------------------------------------------------------
+/imprint/ to /
+Average initial request: 57.3834599ms with 6ms TTFB (amonut of requests: 10)
+Average Lare request: 5.8476886ms with 5.7038375ms TTFB (amonut of requests: 1)
+Lare needs 10.1905472591 % of time
+
+
+
+
+
+
+
+### Template Caching true
+### Query Cache false
+
+------------------------------------------------------------------------------------------------
+Testing dynamic to dynamic
+------------------------------------------------------------------------------------------------
+/tags/p/ to /tags/p/2/
+Average initial request: 1051.9900139ms with 980ms TTFB (amonut of requests: 10)
+Average Lare request: 46.0804345ms with 45.9426185ms TTFB (amonut of requests: 1)
+Lare needs 4.38031101922 % of time
+------------------------------------------------------------------------------------------------
+/tags/p/2/ to /tags/p/
+Average initial request: 1028.7079189ms with 985ms TTFB (amonut of requests: 10)
+Average Lare request: 43.9395719ms with 43.7958691ms TTFB (amonut of requests: 1)
+Lare needs 4.27133602189 % of time
+
+------------------------------------------------------------------------------------------------
+Testing dynamic to static
+------------------------------------------------------------------------------------------------
+/tags/p/ to /
+Average initial request: 1038.3454314ms with 982ms TTFB (amonut of requests: 10)
+Average Lare request: 13.4246089ms with 6.394405ms TTFB (amonut of requests: 1)
+Lare needs 1.29288466959 % of time
+------------------------------------------------------------------------------------------------
+/tags/p/2/ to /
+Average initial request: 1020.2762666ms with 977ms TTFB (amonut of requests: 10)
+Average Lare request: 5.24954ms with 5.1165055ms TTFB (amonut of requests: 1)
+Lare needs 0.514521426387 % of time
+------------------------------------------------------------------------------------------------
+/tags/p/ to /imprint/
+Average initial request: 1025.0548574ms with 980ms TTFB (amonut of requests: 10)
+Average Lare request: 5.3975034ms with 5.2479671ms TTFB (amonut of requests: 1)
+Lare needs 0.526557516511 % of time
+------------------------------------------------------------------------------------------------
+/tags/p/2/ to /imprint/
+Average initial request: 1034.7077165ms with 986ms TTFB (amonut of requests: 10)
+Average Lare request: 5.2972415ms with 5.1387199ms TTFB (amonut of requests: 1)
+Lare needs 0.51195534889 % of time
+
+------------------------------------------------------------------------------------------------
+Testing self
+------------------------------------------------------------------------------------------------
+/ to /
+Average initial request: 56.6600914ms with 6ms TTFB (amonut of requests: 10)
+Average Lare request: 6.9027177ms with 6.7730535ms TTFB (amonut of requests: 1)
+Lare needs 12.182680136 % of time
+------------------------------------------------------------------------------------------------
+/imprint/ to /imprint/
+Average initial request: 44.7823643ms with 5ms TTFB (amonut of requests: 10)
+Average Lare request: 5.7009833ms with 5.5429207ms TTFB (amonut of requests: 1)
+Lare needs 12.730420533 % of time
+------------------------------------------------------------------------------------------------
+/tags/p/ to /tags/p/
+Average initial request: 1033.7988945ms with 985ms TTFB (amonut of requests: 10)
+Average Lare request: 44.3205733ms with 44.1766979ms TTFB (amonut of requests: 1)
+Lare needs 4.28715619022 % of time
+------------------------------------------------------------------------------------------------
+/tags/p/2/ to /tags/p/2/
+Average initial request: 1023.0891285ms with 978ms TTFB (amonut of requests: 10)
+Average Lare request: 44.3898573ms with 44.2476021ms TTFB (amonut of requests: 1)
+Lare needs 4.33880646988 % of time
+
+------------------------------------------------------------------------------------------------
+Testing static to dynamic
+------------------------------------------------------------------------------------------------
+/ to /tags/p/
+Average initial request: 58.2967639ms with 5ms TTFB (amonut of requests: 10)
+Average Lare request: 979.9180944ms with 979.4253553ms TTFB (amonut of requests: 1)
+Lare needs 1680.91336267 % of time
+------------------------------------------------------------------------------------------------
+/imprint/ to /tags/p/
+Average initial request: 46.1433732ms with 4ms TTFB (amonut of requests: 10)
+Average Lare request: 983.9891948ms with 983.4522778ms TTFB (amonut of requests: 1)
+Lare needs 2132.46047387 % of time
+
+------------------------------------------------------------------------------------------------
+Testing static to static
+------------------------------------------------------------------------------------------------
+/ to /imprint/
+Average initial request: 57.4408001ms with 5ms TTFB (amonut of requests: 10)
+Average Lare request: 7.4721427ms with 7.3205079ms TTFB (amonut of requests: 1)
+Lare needs 13.0084237806 % of time
+------------------------------------------------------------------------------------------------
+/imprint/ to /
+Average initial request: 43.2545271ms with 4ms TTFB (amonut of requests: 10)
+Average Lare request: 5.4022346ms with 5.2722875ms TTFB (amonut of requests: 1)
+Lare needs 12.4894085364 % of time
+
+
+
+
+
+
+
+### Template Caching false
+### Query Cache false
+
+------------------------------------------------------------------------------------------------
+Testing dynamic to dynamic
+------------------------------------------------------------------------------------------------
+/tags/p/ to /tags/p/2/
+Average initial request: 1083.2601555ms with 1026ms TTFB (amonut of requests: 10)
+Average Lare request: 81.7505025ms with 81.6118109ms TTFB (amonut of requests: 1)
+Lare needs 7.54671000174 % of time
+------------------------------------------------------------------------------------------------
+/tags/p/2/ to /tags/p/
+Average initial request: 1065.7063728ms with 1024ms TTFB (amonut of requests: 10)
+Average Lare request: 79.4448986ms with 79.2895114ms TTFB (amonut of requests: 1)
+Lare needs 7.45467050096 % of time
+
+------------------------------------------------------------------------------------------------
+Testing dynamic to static
+------------------------------------------------------------------------------------------------
+/tags/p/ to /
+Average initial request: 1080.7561757ms with 1024ms TTFB (amonut of requests: 10)
+Average Lare request: 44.5294102ms with 40.4370599ms TTFB (amonut of requests: 1)
+Lare needs 4.12020872064 % of time
+------------------------------------------------------------------------------------------------
+/tags/p/2/ to /
+Average initial request: 1069.6022797ms with 1026ms TTFB (amonut of requests: 10)
+Average Lare request: 40.9049121ms with 40.7565083ms TTFB (amonut of requests: 1)
+Lare needs 3.82431048216 % of time
+------------------------------------------------------------------------------------------------
+/tags/p/ to /imprint/
+Average initial request: 1064.2929375ms with 1021ms TTFB (amonut of requests: 10)
+Average Lare request: 36.877683ms with 36.7067113ms TTFB (amonut of requests: 1)
+Lare needs 3.46499367802 % of time
+------------------------------------------------------------------------------------------------
+/tags/p/2/ to /imprint/
+Average initial request: 1069.0175783ms with 1026ms TTFB (amonut of requests: 10)
+Average Lare request: 36.8245961ms with 36.663101ms TTFB (amonut of requests: 1)
+Lare needs 3.44471380523 % of time
+
+------------------------------------------------------------------------------------------------
+Testing self
+------------------------------------------------------------------------------------------------
+/ to /
+Average initial request: 98.1394222ms with 42ms TTFB (amonut of requests: 10)
+Average Lare request: 39.9938205ms with 39.8503459ms TTFB (amonut of requests: 1)
+Lare needs 40.7520439834 % of time
+------------------------------------------------------------------------------------------------
+/imprint/ to /imprint/
+Average initial request: 82.8832847ms with 40ms TTFB (amonut of requests: 10)
+Average Lare request: 39.2550358ms with 39.0809182ms TTFB (amonut of requests: 1)
+Lare needs 47.3618244524 % of time
+------------------------------------------------------------------------------------------------
+/tags/p/ to /tags/p/
+Average initial request: 1076.4314867ms with 1017ms TTFB (amonut of requests: 10)
+Average Lare request: 78.3527911ms with 78.2055372ms TTFB (amonut of requests: 1)
+Lare needs 7.27893898201 % of time
+------------------------------------------------------------------------------------------------
+/tags/p/2/ to /tags/p/2/
+Average initial request: 1063.8166566ms with 1017ms TTFB (amonut of requests: 10)
+Average Lare request: 78.2894828ms with 78.1216486ms TTFB (amonut of requests: 1)
+Lare needs 7.35930221757 % of time
+
+------------------------------------------------------------------------------------------------
+Testing static to dynamic
+------------------------------------------------------------------------------------------------
+/ to /tags/p/
+Average initial request: 97.2116312ms with 41ms TTFB (amonut of requests: 10)
+Average Lare request: 1027.7555053ms with 1026.2462018ms TTFB (amonut of requests: 1)
+Lare needs 1057.23511952 % of time
+------------------------------------------------------------------------------------------------
+/imprint/ to /tags/p/
+Average initial request: 77.2633674ms with 36ms TTFB (amonut of requests: 10)
+Average Lare request: 1026.4027634ms with 1024.9592409ms TTFB (amonut of requests: 1)
+Lare needs 1328.4468409 % of time
+
+------------------------------------------------------------------------------------------------
+Testing static to static
+------------------------------------------------------------------------------------------------
+/ to /imprint/
+Average initial request: 99.654267ms with 41ms TTFB (amonut of requests: 10)
+Average Lare request: 39.0083689ms with 38.8327599ms TTFB (amonut of requests: 1)
+Lare needs 39.1437015938 % of time
+------------------------------------------------------------------------------------------------
+/imprint/ to /
+Average initial request: 76.7113647ms with 35ms TTFB (amonut of requests: 10)
+Average Lare request: 39.5212212ms with 39.3729175ms TTFB (amonut of requests: 1)
+Lare needs 51.5193822383 % of time
+
+
+
+
+
+
+### Template Caching false
+### Query Cache true
+
+
+------------------------------------------------------------------------------------------------
+Testing dynamic to dynamic
+------------------------------------------------------------------------------------------------
+/tags/p/ to /tags/p/2/
+Average initial request: 112.4146023ms with 55ms TTFB (amonut of requests: 10)
+Average Lare request: 44.7056597ms with 44.5666528ms TTFB (amonut of requests: 1)
+Lare needs 39.7685521145 % of time
+------------------------------------------------------------------------------------------------
+/tags/p/2/ to /tags/p/
+Average initial request: 94.8789046ms with 54ms TTFB (amonut of requests: 10)
+Average Lare request: 41.5802785ms with 41.4398555ms TTFB (amonut of requests: 1)
+Lare needs 43.8245768912 % of time
+
+------------------------------------------------------------------------------------------------
+Testing dynamic to static
+------------------------------------------------------------------------------------------------
+/tags/p/ to /
+Average initial request: 107.9618402ms with 54ms TTFB (amonut of requests: 10)
+Average Lare request: 44.5019152ms with 40.5941595ms TTFB (amonut of requests: 1)
+Lare needs 41.2200413753 % of time
+------------------------------------------------------------------------------------------------
+/tags/p/2/ to /
+Average initial request: 94.0298031ms with 53ms TTFB (amonut of requests: 10)
+Average Lare request: 39.776283ms with 39.6185358ms TTFB (amonut of requests: 1)
+Lare needs 42.3017827206 % of time
+------------------------------------------------------------------------------------------------
+/tags/p/ to /imprint/
+Average initial request: 112.7474647ms with 54ms TTFB (amonut of requests: 10)
+Average Lare request: 36.8401403ms with 36.6723206ms TTFB (amonut of requests: 1)
+Lare needs 32.6749168135 % of time
+------------------------------------------------------------------------------------------------
+/tags/p/2/ to /imprint/
+Average initial request: 115.1731814ms with 55ms TTFB (amonut of requests: 10)
+Average Lare request: 37.5143852ms with 37.3435607ms TTFB (amonut of requests: 1)
+Lare needs 32.5721532947 % of time
+
+------------------------------------------------------------------------------------------------
+Testing self
+------------------------------------------------------------------------------------------------
+/ to /
+Average initial request: 90.8382405ms with 41ms TTFB (amonut of requests: 10)
+Average Lare request: 40.6194143ms with 40.4689503ms TTFB (amonut of requests: 1)
+Lare needs 44.716205506 % of time
+------------------------------------------------------------------------------------------------
+/imprint/ to /imprint/
+Average initial request: 76.4610939ms with 36ms TTFB (amonut of requests: 10)
+Average Lare request: 36.6741373ms with 36.493049ms TTFB (amonut of requests: 1)
+Lare needs 47.964442345 % of time
+------------------------------------------------------------------------------------------------
+/tags/p/ to /tags/p/
+Average initial request: 97.8147177ms with 54ms TTFB (amonut of requests: 10)
+Average Lare request: 41.8758542ms with 41.7259485ms TTFB (amonut of requests: 1)
+Lare needs 42.8114042392 % of time
+------------------------------------------------------------------------------------------------
+/tags/p/2/ to /tags/p/2/
+Average initial request: 95.80929ms with 54ms TTFB (amonut of requests: 10)
+Average Lare request: 41.8581928ms with 41.7132644ms TTFB (amonut of requests: 1)
+Lare needs 43.6890752452 % of time
+
+------------------------------------------------------------------------------------------------
+Testing static to dynamic
+------------------------------------------------------------------------------------------------
+/ to /tags/p/
+Average initial request: 94.6514326ms with 41ms TTFB (amonut of requests: 10)
+Average Lare request: 56.0668725ms with 54.3881426ms TTFB (amonut of requests: 1)
+Lare needs 59.2351018467 % of time
+------------------------------------------------------------------------------------------------
+/imprint/ to /tags/p/
+Average initial request: 77.2277685ms with 37ms TTFB (amonut of requests: 10)
+Average Lare request: 53.9261553ms with 52.3053153ms TTFB (amonut of requests: 1)
+Lare needs 69.827416158 % of time
+
+------------------------------------------------------------------------------------------------
+Testing static to static
+------------------------------------------------------------------------------------------------
+/ to /imprint/
+Average initial request: 99.7250753ms with 41ms TTFB (amonut of requests: 10)
+Average Lare request: 39.1185489ms with 38.9466755ms TTFB (amonut of requests: 1)
+Lare needs 39.2263919404 % of time
+------------------------------------------------------------------------------------------------
+/imprint/ to /
+Average initial request: 75.9476588ms with 36ms TTFB (amonut of requests: 10)
+Average Lare request: 39.2956251ms with 39.1479945ms TTFB (amonut of requests: 1)
+Lare needs 51.7404034843 % of time
