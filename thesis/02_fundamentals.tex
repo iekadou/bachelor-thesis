@@ -1,7 +1,19 @@
 \section{Fundamentals}
 
 To understand how \lare{} works a few technologies are required to know about.
-\todo{fundamentals introduction}
+\html{}, the markup language which is used to create \webPage{}s, is the first technology which is required to know about.
+Afterwards \httpRequest{}s are declared as the fundamental transfer protocol of the World Wide Web.
+Dynamic content and synchronicity are the topics explained next, which is the problem which is addressed by \ajax{} and \singlePageApplication{}s, which are presented subsequently.
+The History API released in October 2014 and required by \lare{} is presented at the end of this chapter.
+
+\subsection{\html{}\label{html}}
+Hypertext Markup Language is the language which is used to create webpages.
+It allows to structure a web document semantically, but not to style it.
+Similar to XML it consists of hierarchically structured tags.
+Each tag may have attributes.
+Allowed attributes are defined per tag, e.g. an anchor tag may have an href attribute, which is not allowed on a div tag.
+There is a special tag, called ID which defines the unique identifier of a tag.
+Each value may not occur more than once on a page.
 
 \subsection{\httpRequest{}\label{httpRequest}}
 The world wide web has one main protocol to let web-browsers and web-servers communicate, the Hypertext Transfer Protocol (\http{}), which is built on top of the Transmission Control Protocol (TCP).
@@ -19,29 +31,11 @@ Subsquently it sends \httpRequest{}s to receive the images, CSS and scripts link
 \end{figure}
 
 \subsection{Dynamic content and synchronicity\label{synchronicity}}
-Dynamic content in websites is content which is changed within an already fully loaded web page, without loading another full page including all resources. The normal \httpRequest{}, which is described in \ref{httpRequest}, does not support dynamic changes of content. To retrieve new information the client has to request another full web page, including all resources and data which is necessary, which makes this model \enquote{synchronous}.
-An \enquote{asynchronous} model is able to change content dynamically without having to load a whole page. \ajax{}, as shown in \ref{ajax}, is the most used technique for asynchronous web platforms.
-
-\subsection{\html{}\label{html}}
-Hypertext Markup Language is the language which is used to create webpages.
-It allows to structure a web document semantically, but not to style it.
-Similar to XML it consists of hierarchically structured tags.
-Each tag may have attributes.
-Allowed attributes are defined per tag, e.g. an anchor tag may have an href attribute, which is not allowed on a div tag.
-There is a special tag, called ID which defines the unique identifier of a tag.
-Each value may not occur more than once on a page.
-
-\subsection{\SinglePageApplication{}s\label{singlePageApplication}}
-A single-page application is a web application or \webSite{} that only needs to one full \webPage{} load.
-Beside this there is no \webPage{} loaded completely at any point in the process anymore.
-Often content changes are made asynchronous and dynamically by \ajax{} in response to user actions.
-A disadvantage of a lot of \singlePageApplication{}s is the lack of browser history support.
-When changing the content the browser does not interpret it as a new page, but only changed content.
-This leads into a missing functionality of forward- and back-buttons in browsers.
-
-Additionally a problem of SPAs is, that it has a huge impact on SEO.
-The \webPage{} is often rendered inside the browser, and not structured into different URLs.
-Those facts make it hard for a search-engine to discover it.
+Dynamic content in websites is content which is changed within an already fully loaded web page, without loading another full page including all resources. 
+The normal \httpRequest{}, which is described in \ref{httpRequest}, does not support dynamic changes of content. 
+To retrieve new information the client has to request another full web page, including all resources and data which is necessary, which makes this model \enquote{synchronous}.
+An \enquote{asynchronous} model is able to change content dynamically without having to load a whole page. 
+\ajax{}, as shown in \ref{ajax}, is the most used technique for asynchronous web platforms.
 
 \subsection{\ajax{}\label{ajax}}
 Asynchronous JavaScript and XML is a technology to implement dynamic \webPage{}s.
@@ -61,6 +55,17 @@ The following requests now are handled by this \ajax{}-engine, allowing to reque
 Without using \ajax{} after receiving \html{}, the browser renders the whole page, even if there are only small changes to the page rendered before.
 \ajax{} instead only requests small parts of a website, most of the time in XML or JSON format, interprets it and then only adds, replaces or appends old content with the newly received.
 
+\subsection{\SinglePageApplication{}s\label{singlePageApplication}}
+A single-page application is a web application or \webSite{} that only needs to one full \webPage{} load.
+Beside this there is no \webPage{} loaded completely at any point in the process anymore.
+Often content changes are made asynchronous and dynamically by \ajax{} in response to user actions.
+A disadvantage of a lot of \singlePageApplication{}s is the lack of browser history support.
+When changing the content the browser does not interpret it as a new page, but only changed content.
+This leads into a missing functionality of forward- and back-buttons in browsers.
+
+Additionally a problem of SPAs is, that it has a huge impact on SEO.
+The \webPage{} is often rendered inside the browser, and not structured into different URLs.
+Those facts make it hard for a search-engine to discover it.
 
 \subsection{History API}
 The history API is part of HTML5 specification by \gls{w3c}.
