@@ -1,6 +1,6 @@
 <?php
 
-use Iekadou\Webapp\DBConnector as DBConnector;
+namespace Iekadou\Webapp;
 
 abstract class BaseModel
 {

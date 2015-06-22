@@ -11,7 +11,6 @@ class View
 {
     static private $id = "";
     static private $name = "";
-    static private $account;
     static private $template;
     static private $start_time;
     static private $template_name = '';
@@ -28,13 +27,7 @@ class View
         Lare::set_current_namespace('Lare.'.$id);
         self::set_template_var('lare_matching', Lare::get_matching_count());
         self::set_template_var('lare_current_namespace', Lare::get_current_namespace());
-
-        require_once(PATH."classes/Account.php");
-
         self::set_template_var('title', SITE_NAME.' - '.$name);
-
-        // account
-        self::$account = new Account();
 
         // template
         if (!empty($template)) {
@@ -51,10 +44,6 @@ class View
         } else {
             self::$template = new Twig_Environment($loader, array());
         }
-    }
-
-    public static function get_account() {
-        return self::$account;
     }
 
     public static function get_template() {
@@ -80,7 +69,6 @@ class View
         self::$template_vars += Globals::get_vars();
         self::set_template_var('QUERY_COUNT', Globals::get_var('QUERY_COUNT'));
         self::set_template_var('DB_CONNECTION_COUNT', Globals::get_var('DB_CONNECTION_COUNT'));
-        self::set_template_var('account', self::$account);
         self::$template->addExtension(new Twig_Lare_Extension());
         self::$template->addTokenParser(new Twig_Url_TokenParser());
         self::$template->addTokenParser(new Twig_Trans_TokenParser());

@@ -1,4 +1,5 @@
 <?php
+
 namespace Iekadou\Webapp;
 
 use mysqli;

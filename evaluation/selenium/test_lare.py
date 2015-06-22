@@ -9,7 +9,7 @@ import time
 class LarePerformanceTestCase(unittest.TestCase):
     request_iterations = 10
     request_timeout = 3
-    domain = "http://lare.iekadou.com"
+    domain = "https://lare.io"
 
     def setUp(self):
         self.browser = webdriver.Firefox()
@@ -25,7 +25,7 @@ class LarePerformanceTestCase(unittest.TestCase):
         while i < self.request_iterations:
 
             # testing normal request
-            self.browser.get("{0}{1}".format(self.domain, site1))
+            self.browser.get("{0}{1}".format(self.domain, site2))
             time.sleep(self.request_timeout)
             response_time_normal = self.browser.execute_script('return window.performance.getEntries()[window.performance.getEntries().length-1].responseEnd')
             request_count_normal = self.browser.execute_script('return window.performance.getEntries().length')

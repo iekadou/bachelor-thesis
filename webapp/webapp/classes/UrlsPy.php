@@ -7,16 +7,7 @@ class UrlsPy {
     public function __construct() {
         UrlsPy::$patterns['home'] = '/';
         UrlsPy::$patterns['imprint'] = '/imprint/';
-        UrlsPy::$patterns['logout'] = '/logout/';
-        UrlsPy::$patterns['register'] = '/register/';
         UrlsPy::$patterns['tags'] = array('/tags/', '/tags/%s/', '/tags/%s/%s/');
-
-        UrlsPy::$patterns['account:dashboard'] = '/account/';
-        UrlsPy::$patterns['account:profile'] = '/account/profile/';
-
-        UrlsPy::$patterns['api_login'] = '/api/login/';
-        UrlsPy::$patterns['api_profile'] = '/api/profile/';
-        UrlsPy::$patterns['api_register'] = '/api/register/';
     }
 
     public static function get_url($name, $args=array()) {
@@ -35,8 +26,6 @@ class UrlsPy {
             }
         }
         throw new Exception(vsprintf("Url '%s' not found with %s args!", array($name, sizeof($args))));
-//        trigger_error();
-//        return '/';
     }
 }
 

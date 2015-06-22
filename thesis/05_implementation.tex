@@ -1,8 +1,7 @@
 \section{Implementation}
 
 \todo{decisions Lare Object}
-We decided to implement the \lare{} backend in two parts.
-Considering the MVC pattern we have all logic in one object, in this case the Lare object.
+Considering the MVC pattern we have all logic in one object, in this case the \emph{Lare} object.
 It is a singleton in the request scope.
 When receiving a request the server creates it and analyzes if the current request is a \lare{} request and checks if there is a namespace.
 
@@ -92,6 +91,21 @@ After implementing \phpLare{} we decided to change the structure of the django b
 
 Similar to the combination of \phpLare{} and \twigLare{}, \djangoLare{} consists of a Lare object as in the PHP backend and implements the same templating tools as the Twig extension.
 Still as one package it is available via \emph{pip install django-lare} command.
+
+
+\subsubsection{API}
+
+\begin{itemize}
+\item \{\% lare\_extends \$default\_template \%\}
+
+Extends \$default\_template like the original \{\% extends \$default\_template \%\}.
+\item \{\% lare\_extends \$default\_template \$lare\_namespace \%\}
+
+Extends ::\_\_lare.html if \$lare\_namespace is matching, otherwise it extends \$default\_template.
+\item \{\% lare\_extends \$default\_template \$lare\_template \$lare\_namespace \%\}
+
+Extends \$lare\_template if \$lare\_namespace is matching, otherwise it extends \$default\_template.
+\end{itemize}
 
 \subsection{\lareJS{}}
 \lareJS{}, as successor of jquery-pjaxr, is the frontend engine for \lare{}, using AJAX to communicate to the server.

@@ -14,6 +14,7 @@
 \usepackage{glossaries}
 \usepackage{xcolor}
 \usepackage{float}
+\usepackage{longtable}
 
 \usepackage{listings}
 \lstdefinelanguage{HTML5}{
@@ -73,6 +74,9 @@
 \maketitle
 \pagenumbering{roman}
 
+
+\include{00_abstract}
+
 \tableofcontents
 
 \varclearpage
@@ -84,6 +88,8 @@
 \pagenumbering{arabic}
 
 \newcommand\todo[1]{\textcolor{red}{#1}}
+
+\newpage{}
 
 \include{01_introduction}
 
@@ -115,32 +121,42 @@
 
 \begin{thebibliography}{9}
 
-\bibitem{roodt06}
+\bibitem{bib:jonsson09}
+    David Jonsson (2009).
+    \emph{Database driven user friendly web application using Ajax}
+    Master Thesis. Ume\aa{} University
+
+\bibitem {bib:gov_uk13}
+  Peter Herlihy (2013).
+  \emph{How many people are missing out on JavaScript enhancement?}
+  https://gds.blog.gov.uk/2013/10/21/how-many-people-are-missing-out-on-javascript-enhancement/
+
+\bibitem{bib:roodt06}
   Youri op't Roodt (2006).
   \emph{The effect of Ajax on performance and usability in web environments}.
   Master Thesis. University of Amsterdam
 
-\bibitem{klugeKarglWeber07}
+\bibitem{bib:klugeKarglWeber07}
   Kluge, Jonas and Kargl, Frank and Weber, Michael (2007).
   \emph{The effects of the AJAX technology on web application usability}.
   WebIST 2007, Barcelona
 
-\bibitem{mesbah09}
+\bibitem{bib:mesbah09}
   Mesbah, Ali (2009).
   \emph{Analysis and Testing of Ajax-based Single-page Web Applications}.
   Ph.D. Thesis. TU Delft
 
-\bibitem{matter08}
+\bibitem{bib:matter08}
   Duda, Cristian and Frey, Gianni and Kossmann, Donald and Matter, Reto and Zhou, Chong (2009).
   \emph{AJAX Crawl: Making AJAX Applications Searchable}.
   Data Engineering, 2009. ICDE '09, Shanghai
   
-\bibitem{lundmark11}
+\bibitem{bib:lundmark11}
   Lundmark, Simon (2011)
   \emph{Automatic Testing of Modern Web Applications in an Agile Environment}
   Bachelor Thesis, Stockholm
 
-\bibitem{crawljax:tweb12}
+\bibitem{bib:crawljax_tweb12}
   Mesbah, Ali and van Deursen, Arie and Lenselink, Stefan
   \emph{Crawling {Ajax}-based Web Applications through Dynamic Analysis of User Interface State Changes}
   ACM Transactions on the Web (TWEB) 2012
@@ -181,7 +197,7 @@
 %      
 %
 %      \subsection{The history object\label{theHistoryObject}}
-%      The window.history\footnote{\url{https://developer.mozilla.org/de/docs/Web/Guide/DOM/Manipulating_the_browser_history}} object is a Javascript object, which represents the current browser history. It is a list containing every site the client visited in the current session. Each item consists of state data, a title and an URL. It has the methods .back(), .forward() and .go() which are needed to navigate in the history, incl.  the back- and forward-buttons of the browser. Additionally the methods .pushState() and .replaceState() give developers the opportunity to add or replace an item of the history list. By default, when loading a new page, the browser automatically invokes .pushState() to append a new item, the new state, to the list. This behavior is not the default behavior on \ajax-requests, so the developer has to use the two latter functions to activate the back- and forward-buttons in an asynchronous environment. \pjax{} and \pjaxr{} already consist of an integration like that.
+%      The window.history\footnote{\url{https://developer.mozilla.org/de/docs/Web/Guide/DOM/Manipulating_the_browser_history}} object is a JavaScript object, which represents the current browser history. It is a list containing every site the client visited in the current session. Each item consists of state data, a title and an URL. It has the methods .back(), .forward() and .go() which are needed to navigate in the history, incl.  the back- and forward-buttons of the browser. Additionally the methods .pushState() and .replaceState() give developers the opportunity to add or replace an item of the history list. By default, when loading a new page, the browser automatically invokes .pushState() to append a new item, the new state, to the list. This behavior is not the default behavior on \ajax-requests, so the developer has to use the two latter functions to activate the back- and forward-buttons in an asynchronous environment. \pjax{} and \pjaxr{} already consist of an integration like that.
 %
 %
 %  \subsection{Client-server model\label{clientServerModel}}

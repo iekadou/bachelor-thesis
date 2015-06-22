@@ -22,7 +22,6 @@ require_once(PATH."classes/DBConnector.php");
 include(PATH."inc/utils.php");
 require_once(PATH."inc/translations.php");
 require_once(PATH."classes/View.php");
-require_once(PATH."classes/Account.php");
 require_once(PATH."classes/UrlsPy.php");
 require_once(PATH."classes/Pagination.php");
 require_once(PATH."classes/TwigUrl.php");

@@ -12,6 +12,5 @@
     {% endblock site %}
     {% block additional_lare_includes %}{% endblock additional_lare_includes %}
     <div id="render_time" class="pull-left">{% rendering_time %} s {{QUERY_COUNT}} queries on {{DB_CONNECTION_COUNT}} connections</div>
-    {% include "_navbar.html" %}
 </lare-body>
 <lare-namespace>{% block lare_namespace %}{{ lare_current_namespace }}{% endblock lare_namespace %}</lare-namespace>
