@@ -1,27 +1,31 @@
 \section{Evaluation}
+\todo{describe test design}
 \lare{} is tested based on a sample web application.
 It provides different type of sites which are designed to perform the different aspects of this evaluation.
+
+%As stated in \cite{bib:palomaeki09} \enquote{proper test definition, execution, reporting and repeatable test results are of utmost importance}.
 
 To evaluate \lare{} we first test it's functionality.
 We check if the desired content is delivered and if \lare{} is actually performing like expected.
 
 It is not easy to test \ajax{} \webApplication{}s.
-As seen in \footnote{http://selab.fbk.eu/tonella/papers/wqvv2007.pdf} there is a lack of good testing tools, especially when it comes to white-box testing.
-For black-box testing a good tool is selenium.
+As seen in \cite{bib:marchetto_tonella_ricca07} there is a lack of good testing tools, especially when it comes to white-box testing.
+\selenium{} is mentioned there as a good tool for black-box testing.
+It is also suggested in \cite{bib:palomaeki09} for a non-abstract HTTP request performance testing, which can represent the requests of a single user.
 
-In \footnote{http://selab.fbk.eu/tonella/papers/icst2008.pdf} the same authors introduce a new automated testing technique, again based on selenium.
+In \cite{bib:marchetto_tonella_ricca08} a new automated testing technique is introduced, again based on \selenium{}.
 
-As to evaluate \lare{} there is no need to actually test the whole application, but only to check whether \lare{} works, selenium in our case is sufficient.
+As to evaluate \lare{} there is no need to actually test the whole application, but only to check whether \lare{} works, \selenium{} in our case is sufficient.
 
 We make specific requests and want an specific answer of it.
 Especially we want to have the same content rendered through \lare{} as through normal \httpRequest{}s.
 
-Selenium additionally makes it possible to use different WebDrivers, in this thesis FireFox and Chrome are used.
+\selenium{} additionally makes it possible to use different \webdriver{}s, in this thesis FireFox and Chrome are used.
 This is important because of the different implementations of browsers' features.
 
 To test the performance, we will use two technologies.
-\footnote{http://swerl.tudelft.nl/twiki/pub/Main/TechnicalReports/TUD-SERG-2008-009.pdf}.
-First of all curl-based tests will be done.
+\cite{bib:bozdag_mesbah_vanDeursen08}
+First of all \curl{} based tests will be done.
 Those tests will focus on the first response, containing the markup.
 This will show how \lare{} influences the webserver.
 
@@ -29,13 +33,14 @@ Additionially the webapp will be benchmarked by using the Chrome Network Tools.
 This method provides the possiblity to check whether further requests for scripts, images, etc. are influenced.
 The Chrome Network Tools will show the actual load time the user has to wait for, until the whole page is loaded.
 
-To make the tests as representive as possible, caching in every dimension will be enabled and disabled to see whether it influences the results or not.
-As I use Mysql as database I will enable and disable the query caching.
+To make the tests as representive as possible caching in the relevant layers will be enabled and disabled if to see whether it influences the results or not.
+Some caching algorithms can not be easily disabled.
+E.g. hardware and hard drive caching will not be disabled in our tests.
+As those caching algorithms will not effect the results much, we let them enabled.
+
+Mysql's caching method Query Caching will be enabled and disabled.
 Twig, the template engine allows caching, which will be enabled and disabled as well.
 Additionally all tests are performed on a local machine and a remote server, to see whether the latency takes effect in the performance of \lare{}.
-
-We will not do load tests with multiple users as the amount of concurrent users should be up to 10000 to be representative\footnote{http://swerl.tudelft.nl/twiki/pub/Main/TechnicalReports/TUD-SERG-2008-009.pdf}.
-In this thesis this we will not be able to do that, due to the lack of a Supercomputer such as used in \footnote{http://swerl.tudelft.nl/twiki/pub/Main/TechnicalReports/TUD-SERG-2008-009.pdf}.
 
 We will distinguish between static pages without database queries and dynamic pages which have those.
 Every page relevant for the test will be requested in different modes.
@@ -122,9 +127,9 @@ The tested pages are available at the URLs:
 \end{itemize}
 
 Additionally the \webPage{}s will be requested via \lare{}.
-To achieve this at curl we extend the request's header with the corresponding \emph{HTTP-X-LARE} namespace.
+To achieve this at \curl{} we extend the request's header with the corresponding \emph{HTTP-X-LARE} namespace.
 
-With Selenium we will later test the pages with real web browsers to get results which are closer to reality.
+With \selenium{} we will later test the pages with real web browsers to get results which are closer to reality.
 The tested page to page requests are:
 
 \begin{itemize}
@@ -159,16 +164,16 @@ The tested page to page requests are:
     \end{itemize}
 \end{itemize}
 
-\subsection{Curl\label{curl}}
+\subsection{\curl{}\label{curl}}
+\todo{curl usage of test design}
+We are using \curl{} to test the plain load times of the initial request of normal \httpRequest{}s and \lare{} requests.
+Those \curl{} requests do not include additional data like images, scripts and stylesheets, just the plain HTML.
 
-We are using curl to test the plain load times of the initial request of normal \httpRequest{}s and \lare{} requests.
-Those curl requests do not include additional data like images, scripts and stylesheets, just the plain HTML.
-
-The bash script \enquote{curl\_tests.sh} provides the functionality to run those curl tests.
+The bash script \enquote{curl\_tests.sh} provides the functionality to run those \curl{} tests.
 To use it run 
 \enquote{/.../evaluation/curl/curl\_tests.sh URL MAX\_RUNS LARE\_NAMESPACE CACERT}.
 
-URL dedicates where the web application is available, e.g. \emph{http://lare.iekadou.com}, MAX\_RUNS defines how many curl requests per page should be made.
+URL dedicates where the web application is available, e.g. \emph{http://lare.iekadou.com}, MAX\_RUNS defines how many \curl{} requests per page should be made.
 LARE\_NAMEPSACE defines the namespace, which should be used when testing the \lare{} requests, e.g. Lare.Tags.p.
 CACERT is the only optional paremeter, which should only be set when requesting an SSL server. It then should be the path to the CACERT file.
 
@@ -271,7 +276,7 @@ In general we can say, that \lare{} has more effect the more time of backend log
 	/tags/p/ & 0.08540 & 0.08230 (96,37\%) & Lare.Tags.Imprint & - & + \\
 	\textbf{/tags/p/2/} & \textbf{0.08390} & \textbf{0.08220 (97,97\%)} & \textbf{Lare.Tags.Imprint} & \textbf{-} & \textbf{+} \\
 	\hline
-\caption{Curl results on a local machine}
+\caption{\curl{} results on a local machine}
 \label{tab:curl_results_local}
 \end{longtable}
 \end{center}
@@ -326,17 +331,18 @@ In general we can say, that \lare{} has more effect the more time of backend log
 	/tags/p/ & 0.21420 & 0.20200 (94,30\%) & Lare.Tags.Imprint & - & + \\
 	\textbf{/tags/p/2/} & \textbf{0.21630} & \textbf{0.22510 (104,07\%)} & \textbf{Lare.Tags.Imprint} & \textbf{-} & \textbf{+} \\
 	\hline
-\caption{Curl results on a external machine}
+\caption{\curl{} results on a external machine}
 \label{tab:curl_results_external}
 \end{longtable}
 \end{center}
 
-\subsection{Selenium}
+\subsection{\selenium{}\label{selenium}}
 
-To benchmark full page loads including all resources we are using selenium.
-This \emph{record and play} tool builds an interface for a usage of multiple webdrivers.
-Those webdrivers are provided by most modern browsers like Chrome and Firefox.
-For the results in this thesis we used the Firefox webdriver.
+\todo{\selenium{} usage of test design}
+To benchmark full page loads including all resources we are using \selenium{}.
+This \emph{record and play} tool builds an interface for a usage of multiple \webdriver{}s.
+Those \webdriver{}s are provided by most modern browsers like Chrome and Firefox.
+For the results in this thesis we used the Firefox \webdriver{}.
 
 We request a page via a normal \httpRequest{} first.
 Afterwards we request the same page again via \lare{}.
@@ -346,10 +352,10 @@ Like in \ref{curl} we test every page on a local server and an external webserve
 
 \subsubsection{Results}
 
-The results of the selenium webdriver tests are different to the ones made with curl.
+The results of the \selenium{} \webdriver{} tests are different to the ones made with \curl{}.
 
 We first will take a look at the local tests again.
-Other than in the curl test results we see a huge effect of \lare{} even on the static pages.
+Other than in the \curl{} test results we see a huge effect of \lare{} even on the static pages.
 An average \lare{} load time of about 35\% with disabled template caching and 9\% with enabled template caching of the normal load time can be seen here.   2
 Other than on a normal request, the browser does not need to load the resources like images, scripts and styles.
 This means \lare{} requests often only need one request to make a page change.
@@ -456,7 +462,7 @@ This makes \lare{} more effective, because the load times relative to the normal
 	/ & /imprint/ & 70.6183847ms & 25.6731125ms (36.35\%) & - & + \\
 	/imprint/ & / & 69.7824729ms & 25.9579276ms (37.20\%) & - & + \\
 	\hline
-\caption{Selenium benchmark results on a local machine}
+\caption{\selenium{} benchmark results on a local machine}
 \label{tab:selenium_benchmark_results_local}
 \end{longtable}
 \end{center}
@@ -547,7 +553,7 @@ This makes \lare{} more effective, because the load times relative to the normal
 	/ & /imprint/ & 207.511026ms & 153.2500877ms (73.85\%) & + & - \\
 	/imprint/ & / & 204.5646389ms & 151.5592111ms (74.09\%) & + & - \\
 	\hline
-\caption{Selenium benchmark results on a external machine}
+\caption{\selenium{} benchmark results on a external machine}
 \label{tab:selenium_benchmark_results_external}
 \end{longtable}
 \end{center}
