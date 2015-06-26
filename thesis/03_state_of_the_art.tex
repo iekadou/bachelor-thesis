@@ -1,11 +1,11 @@
 \section{State of the art}
 \ajax{} is a widely used technique in the internet to build web applications because of the user experience improvements it brings.
-In \cite{bib:roodt06} is mentioned that \ajax{} applications have a better usability than non-\ajax{} websites.
-The same conclusion is made in \cite{bib:klugeKarglWeber07}, despite of the lack of browser navigation support.
-Beside the navigation problem another disadvantage is, as presented in \cite{bib:mesbah09}, crawling \ajax{} applications is not trivial.
+In \cite{roodt2006effect} is mentioned that \ajax{} applications have a better usability than non-\ajax{} websites.
+The same conclusion is made in \cite{kluge2007effects}, despite of the lack of browser navigation support.
+Beside the navigation problem another disadvantage is, as presented in \cite{mesbah2009analysis}, crawling \ajax{} applications is not trivial.
 One solution of this task is finding clickables and navigating to every page found by this.
-Nevertheless \cite{bib:mesbah09} states also that this only generates a snapshot of the full application.
-Even search engines are avoiding to crawl websites because of it's difficulty\cite{bib:matter08}.
+Nevertheless \cite{mesbah2009analysis} states also that this only generates a snapshot of the full application.
+Even search engines are avoiding to crawl websites because of it's difficulty\cite{duda2009ajax}.
 Currently the task of building a crawlable \singlePageApplication{} using \ajax{} is often avoided, instead crawling algorithms are getting improved and in focus of research.
 
 \subsection{Client-side templates\label{clientSideTemplates}}
@@ -14,7 +14,7 @@ A lot of \ajax{} applications use a JSON API which already predefines the outcom
 JSON has to be interpreted by the \ajax{}-engine and rendered into HTML.
 As plain string modifications are difficult to maintain and on large applications not very handy, client-side templates become more and more widespread.
 Another advantage of this practice is the strong separation of the logic on the server and views on the client-side.
-
+\\
 Besides their benefits, a few disadvantages come with them:
 After interpreting the first \httpRequest{} other requests have to be made to load the templating engine and the data which should be rendered into the template.
 This means you have to make three requests:
@@ -24,8 +24,8 @@ This means you have to make three requests:
     \item Third the data which should be rendered into the templates, requested by the AJAX engine.
 \end{itemize}
 
-To avoid the need to wait on the third request, sometimes the initial requests already contains initial data, which results in the need of backend templates to render it and the client templates for further usage.
-
+\noindent{}To avoid the need to wait on the third request, sometimes the initial requests already contains initial data, which results in the need of backend templates to render it and the client templates for further usage.
+\\
 Another problem that needs to be solved is the SEO of those pages.
 \WebPage{}s implemented with client-side templates need a method to be visible for search engines.
 A common way to achieve that is using prerendered sites which are visible to search bots like the Googlebot.
@@ -37,33 +37,33 @@ When further data is needed, it can be requested asynchronous, when not using a 
 So the client has to wait at least two round trip times or four delays.
 Additionally the frontend rendering time is relevant.
 Other than at server-side rendering the frontend rendering can not be cached.
-
+\\
 Any further request is then made by the \ajax{} engine itself.
 An efficient web application which uses client-side rendering requests one url on which the response contains all needed data.
 In more complex projects it can happen that multiple requests have to be made until every needed data to render is available.
-
+\\
 More requests can be required if more complexity is stored in the client.
 
 
 \subsection{\ClientSideMVC{}\label{clientSideMVC}}
 In addition to only outsource the templating to the frontend, there are complete client-side MVC frameworks.
 Those frameworks use the model view controller pattern, where the controller has a connection to the web server.
-
+\\
 Built on REST APIs they move all logic into the client-side.
 This approach is built primarily on the motivation to reduce the web server load and traffic.
-
+\\
 In most cases, similar to simple client-side templates, mentioned in \ref{clientSideTemplates}, client-side MVCs need three requests to render the first page.
-
+\\
 Further requests then are not made to request URLs in the old fashioned way, but to retrieve objects through a REST API. 
 Object manipulation, logical methods and everything, normally implemented in a server backend should be in the frontend in those frameworks.
-
+\\
 Using this pattern, you will still have the same problems as with client-side templates, but on another level.
 The web server will not gather all information which is needed, send it to the templating engine which then renders those.
 The client itself decides which information it needs and requests it from the server.
-
+\\
 Load and traffic of the server in this pattern is relatively low, because it will only create, update, delete or display objects in the database. 
 More logical functions on the server-side are not needed.
-
+\\
 Clients, especially mobile devices and slow computers, might struggle with the load of work instead.
 
 \subsubsection{load time analysis}
@@ -71,7 +71,7 @@ As shown before, this methods needs 3 requests to display the initial \webPage{}
 To get into more detail, the client needs to wait for the first request to be completed and then the \ajax{} engine has to be loaded completely.
 After this third request by the client is made.
 He then waited three round trip times, or six delays, plus the load time by the server and download time of those three requests.
-
+\\
 Any further request is then made by the \ajax{} engine itself.
 Normally on strict \clientSideMVC{}s per \webPage{} multiple small requests have to be made.
 On each of this method strikes the delay two times.
@@ -86,34 +86,34 @@ This is done, because everything after the \enquote{\#} will not be sent to the 
 To let the server know that you want to request a specific page this URL modification is needed.
 At this \enquote{?\_escaped\_fragment\_=} URL a snapshot of the full page should be available.
 This means, instead of only providing a few parts of the page required by AJAX, the whole HTML DOM should be delivered.
-
+\\
 This technique was developed for URL changing by JavaScript without a full page reload.
 Old browsers without the implementation of the History API are not able to change the URL without a full load of a page.
 To gain navigation functionality on \singlePageApplication{}s the only way was to change the hash value in the URL, which does not call a page load, but updates the URL and pushes it to the navigation history.
 
 \subsection{\hijax{}}
 One way to implement \singlePageApplication{}s using \ajax{} is to use the pattern of HIJAX.
-
+\\
 When using this pattern, you plan the \webSite{} with \ajax{}.
 Changes of the HTML markup should be avoided.
 A good way to do that is using classes in the link, which later gains semantics in JavaScript.
 But when implementing the \webSite{} you first implement it as a traditional non \ajax{} \webSite{}.
 Every \webPage{} should be delivered fully and links should be linking to real \webPage{}s.
 No JavaScript should be needed to run the site.
-
+\\
 When the \webSite{} is implemented completely the event listeners on the links will be \emph{hijacked} and processed by JavaScript.
 This script then creates a new XMLHttpRequest which requests only the updated parts of the page and renders the response.
-
+\\
 When this pattern is used the \webSite{} degrades gracefully.
 This means even when JavaScript is not available or blocked the \webSite{} still works completely.
 
 \subsection{PJAX\label{pjax}}
 PJAX, introduced 2011 by Chris Wanstrath, is a jQuery plugin that uses AJAX and pushState to deliver a fast browsing experience with real permalinks, page titles, and a working back button.\footnote{https://github.com/defunkt/jquery-pjax\#introduction}
-
+\\
 PJAX let the browser replace a container in a page by requesting a URL in certain way like adding a \enquote{?pjax} query parameter.
 When requesting a page on a server like \enquote{http://example.com/test/} a full page is responded, with \enquote{http://example.com/test/?pjax} only one container will be rendered.
 In combination with \hijax{} it is possible to have links like \emph{<a href="/test/">test</a>} but PJAX performs a request to \emph{/test/?pjax} instead.
 This lets crawlers which are not able to interpret JavaScript crawl all normal pages.
 But normal browsers will have the advantages of AJAX with only replacing one container instead.
-
+\\
 PJAX has the ability to either send one specific container or a full page per URL. It has no ability to send containers according to the browsers previous page.

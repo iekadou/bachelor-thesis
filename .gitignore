@@ -124,5 +124,6 @@ evaluation/selenium/.idea
 *.pyc
 distribute-0.6.34.tar.gz
 thesis.pdf
+thesis/thesis.pdf
 webapp/webapp/cached_templates/*
 !webapp/webapp/cached_templates/.gitkeep

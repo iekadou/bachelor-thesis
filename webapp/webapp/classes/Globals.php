@@ -2,7 +2,7 @@
 
 namespace Iekadou\Webapp;
 
-use Iekadou\Lare\Lare as Lare;
+use Lare_Team\Lare\Lare as Lare;
 
 class Globals {
     private static $vars = array();

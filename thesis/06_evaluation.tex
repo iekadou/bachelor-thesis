@@ -1,56 +1,57 @@
 \section{Evaluation}
-\todo{describe test design}
 \lare{} is tested based on a sample web application.
 It provides different type of sites which are designed to perform the different aspects of this evaluation.
-
-%As stated in \cite{bib:palomaeki09} \enquote{proper test definition, execution, reporting and repeatable test results are of utmost importance}.
-
+\\
+As stated in \cite{palomaki2010web} \enquote{proper test definition, execution, reporting and repeatable test results are of utmost importance}.
+To achieve those criteria we first focused on the test definition.
+\\
 To evaluate \lare{} we first test it's functionality.
 We check if the desired content is delivered and if \lare{} is actually performing like expected.
-
+\\
 It is not easy to test \ajax{} \webApplication{}s.
-As seen in \cite{bib:marchetto_tonella_ricca07} there is a lack of good testing tools, especially when it comes to white-box testing.
-\selenium{} is mentioned there as a good tool for black-box testing.
-It is also suggested in \cite{bib:palomaeki09} for a non-abstract HTTP request performance testing, which can represent the requests of a single user.
-
-In \cite{bib:marchetto_tonella_ricca08} a new automated testing technique is introduced, again based on \selenium{}.
-
+As seen in \cite{marchetto2007testing} there is a lack of good testing tools, especially when it comes to white-box testing.
+\selenium{}\footnote{http://www.seleniumhq.org/} is mentioned there as a good tool for black-box testing.
+Also in \cite{lundmarkautomatic} it is referred to as a good possibility to test web applications.
+It is also suggested in \cite{palomaki2010web} for a non-abstract HTTP request performance testing, which can represent the requests of a single user.
+\\
+In \cite{marchetto2008state} a new automated testing technique is introduced, again based on \selenium{}.
+\\
 As to evaluate \lare{} there is no need to actually test the whole application, but only to check whether \lare{} works, \selenium{} in our case is sufficient.
-
+\\
 We make specific requests and want an specific answer of it.
 Especially we want to have the same content rendered through \lare{} as through normal \httpRequest{}s.
-
+\\
 \selenium{} additionally makes it possible to use different \webdriver{}s, in this thesis FireFox and Chrome are used.
 This is important because of the different implementations of browsers' features.
-
+\\
 To test the performance, we will use two technologies.
-\cite{bib:bozdag_mesbah_vanDeursen08}
+\cite{bozdag2008performance}
 First of all \curl{} based tests will be done.
 Those tests will focus on the first response, containing the markup.
 This will show how \lare{} influences the webserver.
-
+\\
 Additionially the webapp will be benchmarked by using the Chrome Network Tools.
 This method provides the possiblity to check whether further requests for scripts, images, etc. are influenced.
 The Chrome Network Tools will show the actual load time the user has to wait for, until the whole page is loaded.
-
+\\
 To make the tests as representive as possible caching in the relevant layers will be enabled and disabled if to see whether it influences the results or not.
 Some caching algorithms can not be easily disabled.
 E.g. hardware and hard drive caching will not be disabled in our tests.
 As those caching algorithms will not effect the results much, we let them enabled.
-
+\\
 Mysql's caching method Query Caching will be enabled and disabled.
 Twig, the template engine allows caching, which will be enabled and disabled as well.
 Additionally all tests are performed on a local machine and a remote server, to see whether the latency takes effect in the performance of \lare{}.
-
+\\
 We will distinguish between static pages without database queries and dynamic pages which have those.
 Every page relevant for the test will be requested in different modes.
 First of all every site will be requested normally.
 After that it will be requested with \lare{} enabled.
 As \lare{} should only influence subsequent requests, every page will be tested with \http{} headers from different sources, imitating those requests.
 
+\todo{describe test design}
 %As one traditional testing model, we will evaluate the \pjaxr{} sample application via blackbox tests.
 %Testing \ajax{} is not trivial due to multiple programming- and markup-languages influencing it. 
-%One possibility to test web applications, as suggested in \cite{bib:lundmark11}, is Selenium\footnote{http://www.seleniumhq.org/}.
 %With this tool it is possible to generate automated tests for web applications.
 %
 %To evaluate whether the application is crawlable or not is an important criteria whether \pjaxr{} fulfills it goals.
@@ -58,7 +59,7 @@ As \lare{} should only influence subsequent requests, every page will be tested 
 %The crawled content should be similar to a non-dynamic HTML file, defined for every URL.
 %Content which is not directly provided via an URL but asynchronously, like via an autocompletion, should not be relevant.
 %
-%One way to crawl \ajax{} web applications, recommended in \cite{bib:crawljax_tweb12} is to use Crawljax\footnote{http://crawljax.com/}. 
+%One way to crawl \ajax{} web applications, recommended in \cite{mesbah2012crawling} is to use Crawljax\footnote{http://crawljax.com/}. 
 %It explores \ajax{}-based web applications by following every link recursively and saving the associated content. In this thesis the three endpoints of the sample project will be crawled by Crawljax to see whether all endpoints provide the same content or not.
 %
 %Another way to evaluate whether \pjaxr{} fulfils its goals, is testing if the Googlebot\footnote{http://google.com/bot.html} will discover all the content provided.
@@ -70,28 +71,28 @@ As \lare{} should only influence subsequent requests, every page will be tested 
 
 The sample web application used to test \lare{} in this thesis is implemented in PHP.
 To implement \lare{} we used \lareJS{} in the frontend, \twigLare{} and \phpLare{} for the backend.
-
+\\
 We use the MVC design pattern, but with a slightly different naming.
 For web applications it is common to use the name \emph{template} for what is called view in the MVC.
 As "controller" is not a common name PHP web applications as well, we use the phrase \emph{view} for those.
 With this we follow the naming of django\footnote{https://docs.djangoproject.com/en/1.8/faq/general/\#django-appears-to-be-a-mvc-framework-but-you-call-the-controller-the-view-and-the-view-the-template-how-come-you-don-t-use-the-standard-names}.
-
+\\
 Instead of using models for this benchmark evaluation, we are using raw SQL queries to ensure the same queries are made every time.
 Nevertheless it is prepared to inherit from the BaseModel class to be create models for later presentation purposes.
-
+\\
 The sample web application consists of 2 static pages \emph{/home/} and \emph{/imprint/}.
-
+\\
 To demonstrate dynamic \WebPage{}s we used the Delicious Dataset\footnote{http://fabianabel.de/data/mypes-www2010.html}.
 This is available under \emph{/tags/}.
-
+\\
 On the left side is a list to sub pages where the tags are categorized by it's starting character.
 Per alphabetic character one of those pages exists, additionally one page for tags starting with numbers and one starting with non alphanumeric characters.
 Behind each \emph{category} the count of tags in this category is displayed.
 This list is available on every sub page under the \emph{/tags/} url.
-
+\\
 On the right side a paginated list of all distinct tags in the current category is shown.
 It is sorted alphabetically and 30 tags per page are displayed.
-
+\\
 We are using the namespaces like shown in tab. \ref{tab:sampleapp_namespaces}.
 
 \begin{table}[h]
@@ -116,7 +117,7 @@ We are using the namespaces like shown in tab. \ref{tab:sampleapp_namespaces}.
 
 To test the performance of \lare{} a few different types of requests are needed to benchmark.
 The reference level will be a normal \httpRequest{} to each \webPage{}.
-
+\\
 The tested pages are available at the URLs:
 
 \begin{itemize}
@@ -126,9 +127,9 @@ The tested pages are available at the URLs:
 \item /tags/p/2/
 \end{itemize}
 
-Additionally the \webPage{}s will be requested via \lare{}.
+\noindent{}Additionally the \webPage{}s will be requested via \lare{}.
 To achieve this at \curl{} we extend the request's header with the corresponding \emph{HTTP-X-LARE} namespace.
-
+\\
 With \selenium{} we will later test the pages with real web browsers to get results which are closer to reality.
 The tested page to page requests are:
 
@@ -168,173 +169,63 @@ The tested page to page requests are:
 \todo{curl usage of test design}
 We are using \curl{} to test the plain load times of the initial request of normal \httpRequest{}s and \lare{} requests.
 Those \curl{} requests do not include additional data like images, scripts and stylesheets, just the plain HTML.
-
+\\
 The bash script \enquote{curl\_tests.sh} provides the functionality to run those \curl{} tests.
-To use it run 
-\enquote{/.../evaluation/curl/curl\_tests.sh URL MAX\_RUNS LARE\_NAMESPACE CACERT}.
-
+To use it run
+\\
+\enquote{../evaluation/curl/curl\_tests.sh URL MAX\_RUNS LARE\_NAMESPACE CACERT}.
+\\
 URL dedicates where the web application is available, e.g. \emph{http://lare.iekadou.com}, MAX\_RUNS defines how many \curl{} requests per page should be made.
 LARE\_NAMEPSACE defines the namespace, which should be used when testing the \lare{} requests, e.g. Lare.Tags.p.
 CACERT is the only optional paremeter, which should only be set when requesting an SSL server. It then should be the path to the CACERT file.
-
-
+\\
 To test all relevant sites we defined a variable PAGES inside the script, containing URLs \emph{/}, \emph{/imprint/}, \emph{/tags/p/} and \emph{/tags/p/2/}.
 For each page of those we make a normal request, followed by a \lare{} request, with the namespace defined in LARE\_NAMESPACE. 
 To get better test results we repeat those two requests \emph{MAX\_RUN} times. The output represents then the load times needed in seconds.
-
+\\
 For the results in this thesis, markes as local, we use a Macbook Pro Retina Early 2013 (2,7 GHz, 16GB Ram).
 As web server we are running an Apache via Mamp Pro 3.1 for Mac OSX with PHP 5.3.6.
 As database server we are using MySQL in version 5.5.42.
-
+\\
 When running the benchmarks on an external server we are using a virtual server running OS: Ubuntu 12.04.5 LTS.
 It has a Intel(R) Xeon(R)CPU E5520, 4 GB ram, PSA version 11.5.30, Mysql version 5.5.41 and php version 5.3.10.
-
+\\
 Additionally we test every request with database caching (DBC) enabled, disabled and template caching(TC) enabled and disabled.
 
 \subsubsection{Results}
 
 You can see the full results of our benchmarks in tables \ref{tab:curl_results_local} and \ref{tab:curl_results_external}.
-
+\\
 First we will take a look at the results of the local tests.
-
+\\
 Those tests show that the load times of \lare{} requests of static pages in general are quite the same then on normal \httpRequest{}s.
 \lare{} does not seem to have a huge effect on static pages without a lot of heavy operations like backend queries. It makes the responses a bit smaller, but no logical operations can be avoided.
-
+\\
 Template caching has not a big effect on the difference between \lare{} and normal requests, but the absolute load times get a bit down.
 Database caching has not even on the absolute times an effect at those static pages, because no backend queries are made.
-
+\\
 When requesting a dynamic page and sending the namespace of a static page like in our tests \enquote{Lare.Tags.Imprint} the results of \lare{} are still similar to normal requests.
 This can be explained by the fact that almost the whole page needs to be changed, including every database query.
-
+\\
 The results on dynamic pages with a related namespace, in our case \enquote{Lare.Tags.p} differ a lot.
 When database caching is enabled the load times of \lare{} are around 90\% with template caching enabled and about 80\% of the normal load times with disabled template caching.
-
+\\
 Without database caching this these times they are \textbf{7\%} with template caching and \textbf{10\%} without.
-
+\\
 Those improvemnts are caused by the amount of database queries that can be avoided. This also explains the differences between enabled and disabled database caching settings.
-
+\\
 When we take a look at the external tests we can see the same pattern.
 The effect of \lare{} on dynamic pages is a bit smaller.
 Wihtout database caching they are about \textbf{12\%} with template caching and \textbf{16\%} without.
-
+\\
 Why does it have not this huge effect anymore?
-
+\\
 This can be explained with the latency.
 In our tests it was 40ms.
 \httpRequest{}s need two Round Trip Times, or four times the latency for connection establishment.
 When we substract those 160ms from the normal and the \lare{} requests we see ratios similar to the local tests.
-
+\\
 In general we can say, that \lare{} has more effect the more time of backend logic like database queries can be avoided.
-
-\newpage{}
-
-\begin{center}
-\begin{longtable}{llllll}
-	\hline
-	\textbf{URL} & \textbf{Normal loadtime} & \textbf{\lare{} loadtime} & \textbf{Namespace} & \textbf{TC} & \textbf{DBC} \\
-	\hline
-	/ & 0.03740 & 0.03600 (96,26\%) & Lare.Tags.p & + & + \\
-	/imprint/ & 0.03590 & 0.03620 (100,84\%) & Lare.Tags.p & + & + \\
-	/tags/p/ & 0.03950 & 0.03480 (88,10\%) & Lare.Tags.p & + & + \\
-	/tags/p/2/ & 0.03940 & 0.03550 (90,10\%) & Lare.Tags.p & + & + \\
-	\hline
-	/ & 0.03370 & 0.03610 (107,12\%) & Lare.Tags.Imprint & + & + \\
-	/imprint/ & 0.03570 & 0.03450 (96,64\%) & Lare.Tags.Imprint & + & + \\
-	/tags/p/ & 0.03910 & 0.04080 (104,36\%) & Lare.Tags.Imprint & + & + \\
-	/tags/p/2/ & 0.04040 & 0.03960 (98,02\%) & Lare.Tags.Imprint & + & + \\
-	\hline
-	\hline
-	/ & 0.03400 & 0.03380 (99,41\%) & Lare.Tags.p & + & - \\
-	/imprint/ & 0.03430 & 0.03480 (101,46\%) & Lare.Tags.p & + & - \\
-	\textbf{/tags/p/} & \textbf{1.02180} & \textbf{0.07230 (7,08\%)} & \textbf{Lare.Tags.p} & \textbf{+} & \textbf{-}\\
-	/tags/p/2/ & 1.03130 & 0.07310 (7,09\%) & Lare.Tags.p & + & - \\
-	\hline
-	/ & 0.03440 & 0.03650 (106,10\%) & Lare.Tags.Imprint & + & - \\
-	/imprint/ & 0.03540 & 0.03480 (98,31\%) & Lare.Tags.Imprint & + & - \\
-	/tags/p/ & 1.02390 & 1.04130 (101,70\%) & Lare.Tags.Imprint & + & - \\
-    \textbf{/tags/p/2/} & \textbf{1.03440} & \textbf{1.04980 (101,49\%)} & \textbf{Lare.Tags.Imprint} & \textbf{+} & \textbf{-}\\
-    \hline
-	\hline
-	/ & 0.07210 & 0.06660 (92,37\%) & Lare.Tags.p & - & - \\
-	/imprint/ & 0.06690 & 0.06410 (95,81\%) & Lare.Tags.p & - & - \\
-	/tags/p/ & 1.08420 & 0.10720 (9,89\%) & Lare.Tags.p & - & - \\
-    \textbf{/tags/p/2/} & \textbf{1.09660} & \textbf{0.10900 (9,94\%)} & \textbf{Lare.Tags.p} & \textbf{-} & \textbf{-}\\
-    \hline
-	/ & 0.06920 & 0.06860 (99,13\%) & Lare.Tags.Imprint & - & - \\
-	/imprint/ & 0.06840 & 0.06520 (95,32\%) & Lare.Tags.Imprint & - & - \\
-	/tags/p/ & 1.09020 & 1.09620 (100,55\%) & Lare.Tags.Imprint & - & - \\
-	/tags/p/2/ & 1.09000 & 1.07740 (98,84\%) & Lare.Tags.Imprint & - & - \\
-	\hline
-	\hline
-	/ & 0.07070 & 0.06630 (93,78\%) & Lare.Tags.p & - & + \\
-	/imprint/ & 0.06710 & 0.06510 (97,02\%) & Lare.Tags.p & - & + \\
-	/tags/p/ & 0.08440 & 0.06990 (82,82\%) & Lare.Tags.p & - & + \\
-	/tags/p/2/ & 0.08550 & 0.06930 (81,05\%) & Lare.Tags.p & - & + \\
-	\hline
-	/ & 0.07010 & 0.06790 (96,86\%) & Lare.Tags.Imprint & - & + \\
-	/imprint/ & 0.06770 & 0.06510 (96,16\%) & Lare.Tags.Imprint & - & + \\
-	/tags/p/ & 0.08540 & 0.08230 (96,37\%) & Lare.Tags.Imprint & - & + \\
-	\textbf{/tags/p/2/} & \textbf{0.08390} & \textbf{0.08220 (97,97\%)} & \textbf{Lare.Tags.Imprint} & \textbf{-} & \textbf{+} \\
-	\hline
-\caption{\curl{} results on a local machine}
-\label{tab:curl_results_local}
-\end{longtable}
-\end{center}
-
-
-
-\begin{center}
-\begin{longtable}{llllll}
-	\hline
-	\textbf{URL} & \textbf{Normal loadtime} & \textbf{\lare{} loadtime} & \textbf{Namespace} & \textbf{TC} & \textbf{DBC} \\
-	\hline
-	/ & 0.16520 & 0.14070 (85,17\%) & Lare.Tags.p & + & + \\
-	/imprint/ & 0.14360 & 0.12850 (89,48\%) & Lare.Tags.p & + & + \\
-	/tags/p/ & 0.15420 & 0.13180 (85,47\%) & Lare.Tags.p & + & + \\
-	/tags/p/2/ & 0.14610 & 0.14200 (97,19\%) & Lare.Tags.p & + & + \\
-	\hline
-	/ & 0.14050 & 0.13350 (95,02\%) & Lare.Tags.Imprint & + & + \\
-	/imprint/ & 0.13690 & 0.13630 (99,56\%) & Lare.Tags.Imprint & + & + \\
-	/tags/p/ & 0.14470 & 0.14170 (97,93\%) & Lare.Tags.Imprint & + & + \\
-	/tags/p/2/ & 0.14230 & 0.13310 (93,53\%) & Lare.Tags.Imprint & + & + \\
-	\hline
-	\hline
-	/ & 0.14860 & 0.14580 (98,11\%) & Lare.Tags.p & + & - \\
-	/imprint/ & 0.14990 & 0.13830 (92,66\%) & Lare.Tags.p & + & - \\
-	\textbf{/tags/p/} & \textbf{1.55500} & \textbf{0.19070 (12,26\%)} & \textbf{Lare.Tags.p} & \textbf{+} & \textbf{-} \\
-	/tags/p/2/ & 1.52150 & 0.19600 (12,88\%) & Lare.Tags.p & + & - \\
-	\hline
-	/ & 0.14160 & 0.14080 (99,44\%) & Lare.Tags.Imprint & + & - \\
-	/imprint/ & 0.14300 & 0.13790 (96,43\%) & Lare.Tags.Imprint & + & - \\
-	/tags/p/ & 1.50930 & 1.54400 (102,30\%) & Lare.Tags.Imprint & + & - \\
-	\textbf{/tags/p/2/} & \textbf{1.51030} & \textbf{1.56460 (103,59\%)} & \textbf{Lare.Tags.Imprint} & \textbf{+} & \textbf{-} \\
-	\hline
-	\hline
-	/ & 0.20450 & 0.18600 (90,95\%) & Lare.Tags.p & - & - \\
-	/imprint/ & 0.20350 & 0.18130 (89,09\%) & Lare.Tags.p & - & - \\
-	/tags/p/ & 1.64180 & 0.30550 (18,61\%) & Lare.Tags.p & - & - \\
-	\textbf{/tags/p/2/} & \textbf{1.65950} & \textbf{0.24830 (14,96\%)} & \textbf{Lare.Tags.p} & \textbf{-} & \textbf{-} \\
-	\hline
-	/ & 0.20390 & 0.19800 (97,11\%) & Lare.Tags.Imprint & - & - \\
-	/imprint/ & 0.20440 & 0.18360 (89,82\%) & Lare.Tags.Imprint & - & - \\
-	/tags/p/ & 1.64260 & 1.62680 (99,04\%) & Lare.Tags.Imprint & - & - \\
-	/tags/p/2/ & 1.63810 & 1.67440 (102,22\%) & Lare.Tags.Imprint & - & - \\
-	\hline
-	\hline
-	/ & 0.20940 & 0.20020 (95,61\%) & Lare.Tags.p & - & + \\
-	/imprint/ & 0.20300 & 0.19040 (93,79\%) & Lare.Tags.p & - & + \\
-	/tags/p/ & 0.22250 & 0.20760 (93,30\%) & Lare.Tags.p & - & + \\
-	/tags/p/2/ & 0.20940 & 0.20160 (96,28\%) & Lare.Tags.p & - & + \\
-	\hline
-	/ & 0.20800 & 0.20500 (98,56\%) & Lare.Tags.Imprint & - & + \\
-	/imprint/ & 0.19970 & 0.19480 (97,55\%) & Lare.Tags.Imprint & - & + \\
-	/tags/p/ & 0.21420 & 0.20200 (94,30\%) & Lare.Tags.Imprint & - & + \\
-	\textbf{/tags/p/2/} & \textbf{0.21630} & \textbf{0.22510 (104,07\%)} & \textbf{Lare.Tags.Imprint} & \textbf{-} & \textbf{+} \\
-	\hline
-\caption{\curl{} results on a external machine}
-\label{tab:curl_results_external}
-\end{longtable}
-\end{center}
 
 \subsection{\selenium{}\label{selenium}}
 
@@ -343,220 +234,39 @@ To benchmark full page loads including all resources we are using \selenium{}.
 This \emph{record and play} tool builds an interface for a usage of multiple \webdriver{}s.
 Those \webdriver{}s are provided by most modern browsers like Chrome and Firefox.
 For the results in this thesis we used the Firefox \webdriver{}.
-
+\\
 We request a page via a normal \httpRequest{} first.
 Afterwards we request the same page again via \lare{}.
 We are using a lot of different page to page requests, to see where \lare{} has a bigger or smaller effect on the load times.
-
+\\
 Like in \ref{curl} we test every page on a local server and an external webserver and we disabled and enable database and template caching.
 
 \subsubsection{Results}
 
 The results of the \selenium{} \webdriver{} tests are different to the ones made with \curl{}.
-
+\\
 We first will take a look at the local tests again.
 Other than in the \curl{} test results we see a huge effect of \lare{} even on the static pages.
 An average \lare{} load time of about 35\% with disabled template caching and 9\% with enabled template caching of the normal load time can be seen here.   2
 Other than on a normal request, the browser does not need to load the resources like images, scripts and styles.
 This means \lare{} requests often only need one request to make a page change.
 A normal requests needs to load, or at least compare, about 9 resources for the same action.
-
+\\
 Again requesting a static page does not show any changes when it comes to database caching.
-
+\\
 When it comes to dynamic pages we have to take a more detailed look to the requests.
 Requesting a dynamic page from another \lare{} namespace with disabled database caching takes almost the same time like a normal request.
 This is because the same backend requests need to be done.
 Those uncached database requests take as we can see in table \ref{tab:curl_results_local} the majority of time.
-
+\\
 With disabled caching in the database and in a related namespace instead, \lare{} has a huge effect.
 Enabled template caching improving the load times from 5\% with a disabled template caching to 3,5\%.
-
+\\
 When requesting the same pages with enabled database caching we see a \lare{} load time of about 16\% with unrelated namespaces.
 Related namespaces in the same configuration lead to values of about 10\%.
-
+\\
 Enabled template caching lower the load times of the normal and \lare{} requests, but not of the resources.
 This makes \lare{} more effective, because the load times relative to the normal requests incl. all resources decrease.
-
-
-\begin{center}
-\begin{longtable}{llllll}
-	\hline
-	\textbf{From} & \textbf{To} & \textbf{Normal loadtime} & \textbf{\lare{} loadtime} & \textbf{TC} & \textbf{DBC} \\
-	\hline
-	/tags/p/ & /tags/p/2/ & 60.0648983ms & 7.3076173ms (12.17\%) & + & + \\
-	/tags/p/2/ & /tags/p/ & 51.5302378ms & 5.7457083ms (11.15\%) & + & + \\
-	\hline
-	/tags/p/ & / & 58.0190003ms & 5.2543307ms (9.06\%) & + & + \\
-	/tags/p/2/ & / & 45.1883941ms & 4.159042ms (9.20\%) & + & + \\
-	/tags/p/ & /imprint/ & 46.8359346ms & 4.3459044ms (9.28\%) & + & + \\
-	/tags/p/2/ & /imprint/ & 47.1970978ms & 4.2372439ms (8.98\%) & + & + \\
-	\hline
-	/ & / & 56.6017328ms & 5.4929997ms (9.70\%) & + & + \\
-	/imprint/ & /imprint/ & 43.3243723ms & 4.1624412ms (76.67\%) & + & + \\
-	/tags/p/ & /tags/p/ & 54.4607062ms & 5.5379726ms (10.17\%) & + & + \\
-	/tags/p/2/ & /tags/p/2/ & 52.5258287ms & 5.7707781ms (10.99\%) & + & + \\
-	\hline
-	/ & /tags/p/ & 66.8794388ms & 10.4380685ms (15.61\%) & + & + \\
-	/imprint/ & /tags/p/ & 52.089504ms & 9.1059678ms (17.48\%) & + & + \\
-	\hline
-	/ & /imprint/ & 57.6817111ms & 5.884066ms (10.20\%) & + & + \\
-	/imprint/ & / & 45.9628159ms & 4.6333061ms (10.08\%) & + & + \\
-	\hline
-	\hline
-	/tags/p/ & /tags/p/2/ & 1243.4891679ms & 46.5173918ms (3.74\%) & + & - \\
-	/tags/p/2/ & /tags/p/ & 1236.3124832ms & 43.4368424ms (3.51\%) & + & - \\
-	\hline
-	/tags/p/ & / & 53.4060902ms & 5.1304958ms (9.61\%) & + & - \\
-	/tags/p/2/ & / & 45.4183183ms & 4.206772ms (9.26\%) & + & - \\
-	/tags/p/ & /imprint/ & 46.2665835ms & 4.175386ms (9.02\%) & + & - \\
-	/tags/p/2/ & /imprint/ & 46.0661066ms & 4.2264232ms (9.17\%) & + & - \\
-	\hline
-	/ & / & 53.5617939ms & 5.4352539ms (10.15\%) & + & - \\
-	/imprint/ & /imprint/ & 45.0215085ms & 4.4406ms (65.68\%) & + & - \\
-	/tags/p/ & /tags/p/ & 1234.5362779ms & 44.369364ms (3.59\%) & + & - \\
-	/tags/p/2/ & /tags/p/2/ & 1235.7906042ms & 45.1390014ms (3.65\%) & + & - \\
-	\hline
-	/ & /tags/p/ & 1246.2746233ms & 1197.6706971ms (96.10\%) & + & - \\
-	/imprint/ & /tags/p/ & 1231.1385665ms & 1191.9845789ms (96.82\%) & + & - \\
-	\hline
-	/ & /imprint/ & 49.8334108ms & 6.1112746ms (12.26\%) & + & - \\
-	/imprint/ & / & 44.540915ms & 4.2382487ms (9.52\%) & + & - \\
-	\hline
-	\hline
-	/tags/p/ & /tags/p/2/ & 1281.1725193ms & 69.312793ms (5.41\%) & - & - \\
-	/tags/p/2/ & /tags/p/ & 1271.3418256ms & 67.1285484ms (5.28\%) & - & - \\
-	\hline
-	/tags/p/ & / & 81.102332ms & 27.2707205ms (33.63\%) & - & - \\
-	/tags/p/2/ & / & 69.681426ms & 25.9004252ms (37.17\%) & - & - \\
-	/tags/p/ & /imprint/ & 68.4034544ms & 24.2320953ms (35.43\%) & - & - \\
-	/tags/p/2/ & /imprint/ & 66.3318697ms & 23.254195ms (35.06\%) & - & - \\
-	\hline
-	/ & / & 80.4801214ms & 27.0665394ms (33.63\%) & - & - \\
-	/imprint/ & /imprint/ & 66.282428ms & 23.5402204ms (35.52\%) & - & - \\
-	/tags/p/ & /tags/p/ & 1277.0515153ms & 67.8621459ms (5.31\%) & - & - \\
-	/tags/p/2/ & /tags/p/2/ & 1266.6883795ms & 68.0796981ms (5.37\%) & - & - \\
-	\hline
-	/ & /tags/p/ & 1274.8229527ms & 1224.9995695ms (96.09\%) & - & - \\
-	/imprint/ & /tags/p/ & 1273.1817246ms & 1221.7685327ms (95.96\%) & - & - \\
-	\hline
-	/ & /imprint/ & 71.5289704ms & 25.8452978ms (36.13\%) & - & - \\
-	/imprint/ & / & 70.3443044ms & 26.8150602ms (38.12\%) & - & - \\
-	\hline
-	\hline
-	/tags/p/ & /tags/p/2/ & 96.6278896ms & 31.5540318ms (32.66\%) & - & + \\
-	/tags/p/2/ & /tags/p/ & 84.6051469ms & 29.4296049ms (34.78\%) & - & + \\
-	\hline
-	/tags/p/ & / & 78.0617908ms & 28.0351468ms (35.91\%) & - & + \\
-	/tags/p/2/ & / & 70.2056237ms & 26.3221693ms (37.49\%) & - & + \\
-	/tags/p/ & /imprint/ & 66.3406013ms & 23.5038ms (35.43\%) & - & + \\
-	/tags/p/2/ & /imprint/ & 67.9293146ms & 23.1398233ms (34.06\%) & - & + \\
-	\hline
-	/ & / & 79.6650023ms & 27.2197206ms (34.17\%) & - & + \\
-	/imprint/ & /imprint/ & 65.1834701ms & 23.0573013ms (35.37\%) & - & + \\
-	/tags/p/ & /tags/p/ & 89.4712661ms & 29.4440881ms (32.91\%) & - & + \\
-	/tags/p/2/ & /tags/p/2/ & 86.7669023ms & 30.3473338ms (34.98\%) & - & + \\
-	\hline
-	/ & /tags/p/ & 101.7855178ms & 43.100569ms (42.34\%) & - & + \\
-	/imprint/ & /tags/p/ & 84.2801923ms & 42.5754955ms (50.52\%) & - & + \\
-	\hline
-	/ & /imprint/ & 70.6183847ms & 25.6731125ms (36.35\%) & - & + \\
-	/imprint/ & / & 69.7824729ms & 25.9579276ms (37.20\%) & - & + \\
-	\hline
-\caption{\selenium{} benchmark results on a local machine}
-\label{tab:selenium_benchmark_results_local}
-\end{longtable}
-\end{center}
-
-\newpage{}
-
-\begin{center}
-\begin{longtable}{llllll}
-	\hline
-	\textbf{From} & \textbf{To} & \textbf{Normal loadtime} & \textbf{\lare{} loadtime} & \textbf{TC} & \textbf{DBC} \\
-	\hline
-	/tags/p/ & /tags/p/2/ & 378.7378772ms & 100.0062951ms (26.41\%) & + & + \\
-	/tags/p/2/ & /tags/p/ & 149.1767846ms & 100.5256257ms (67.39\%) & + & + \\
-	\hline
-	/tags/p/ & / & 177.8015667ms & 101.0766767ms (56.86\%) & + & + \\
-	/tags/p/2/ & / & 145.9762462ms & 100.3458274ms (68.74\%) & + & + \\
-	/tags/p/ & /imprint/ & 145.1269058ms & 99.0440198ms (68.25\%) & + & + \\
-	/tags/p/2/ & /imprint/ & 143.6989026ms & 96.5441573ms (67.19\%) & + & + \\
-	\hline
-	/ & / & 184.0143055ms & 96.8061586ms (52.61\%) & + & + \\
-	/imprint/ & /imprint/ & 146.1839403ms & 102.3730996ms (70.03\%) & + & + \\
-	/tags/p/ & /tags/p/ & 158.4086978ms & 96.0358653ms (60.63\%) & + & + \\
-	/tags/p/2/ & /tags/p/2/ & 146.5099972ms & 99.6919812ms (68.04\%) & + & + \\
-	\hline
-	/ & /tags/p/ & 172.8212049ms & 104.4932832ms (60.46\%) & + & + \\
-	/imprint/ & /tags/p/ & 146.4761414ms & 108.3417488ms (73.97\%) & + & + \\
-	\hline
-	/ & /imprint/ & 154.5478889ms & 99.9289012ms (64.66\%) & + & + \\
-	/imprint/ & / & 141.8673753ms & 93.5422212ms (65.94\%) & + & + \\
-	\hline
-	\hline
-	/tags/p/ & /tags/p/2/ & 1759.8420863ms & 165.503113ms (9.40\%) & + & - \\
-	/tags/p/2/ & /tags/p/ & 1565.4801458ms & 153.9259203ms (9.83\%) & + & - \\
-	\hline
-	/tags/p/ & / & 183.7747229ms & 99.9362148ms (54.38\%) & + & - \\
-	/tags/p/2/ & / & 142.2313467ms & 113.300735ms (79.66\%) & + & - \\
-	/tags/p/ & /imprint/ & 143.6316948ms & 104.1513079ms (72.51\%) & + & - \\
-	/tags/p/2/ & /imprint/ & 145.2610703ms & 99.569909ms (68.55\%) & + & - \\
-	\hline
-	/ & / & 174.5883816ms & 95.7787123ms (54.86\%) & + & - \\
-	/imprint/ & /imprint/ & 145.7255202ms & 95.7090602ms (65.68\%) & + & - \\
-	/tags/p/ & /tags/p/ & 1526.8233515ms & 147.9105317ms (9.70\%) & + & - \\
-	/tags/p/2/ & /tags/p/2/ & 1542.0292612ms & 148.6008572ms (9.64\%) & + & - \\
-	\hline
-	/ & /tags/p/ & 1587.1344271ms & 1474.1047079ms (92.88\%) & + & - \\
-	/imprint/ & /tags/p/ & 1556.204205ms & 1544.0254721ms (99.22\%) & + & - \\
-	\hline
-	/ & /imprint/ & 154.0036756ms & 98.7195222ms (64.10\%) & + & - \\
-	/imprint/ & / & 146.4833535ms & 94.3328383ms (64.40\%) & + & - \\
-	\hline
-	\hline
-	/tags/p/ & /tags/p/2/ & 1668.684526ms & 229.4092215ms (13.75\%) & + & - \\
-	/tags/p/2/ & /tags/p/ & 1616.4873064ms & 214.1759213ms (13.25\%) & + & - \\
-	\hline
-	/tags/p/ & / & 221.7372628ms & 154.6111857ms (69.73\%) & + & - \\
-	/tags/p/2/ & / & 196.4610228ms & 161.2432577ms (82.07\%) & + & - \\
-	/tags/p/ & /imprint/ & 202.10608ms & 144.7256252ms (71.61\%) & + & - \\
-	/tags/p/2/ & /imprint/ & 203.7251935ms & 146.0406372ms (71.69\%) & + & - \\
-	\hline
-	/ & / & 224.4458685ms & 154.079448ms (68.65\%) & + & - \\
-	/imprint/ & /imprint/ & 200.6108772ms & 153.1330621ms (76.33\%) & + & - \\
-	/tags/p/ & /tags/p/ & 1665.8789629ms & 206.5612557ms (12.40\%) & + & - \\
-	/tags/p/2/ & /tags/p/2/ & 1576.9212358ms & 222.5106568ms (14.11\%) & + & - \\
-	\hline
-	/ & /tags/p/ & 1689.5422182ms & 1546.2859407ms (91.52\%) & + & - \\
-	/imprint/ & /tags/p/ & 1621.0944534ms & 1573.9399932ms (97.09\%) & + & - \\
-	\hline
-	/ & /imprint/ & 211.8133351ms & 153.5218091ms (72.48\%) & + & - \\
-	/imprint/ & / & 197.1394442ms & 149.1897551ms (75.68\%) & + & - \\
-	\hline
-	\hline
-	/tags/p/ & /tags/p/2/ & 233.9591823ms & 152.9520268ms (65.38\%) & + & - \\
-	/tags/p/2/ & /tags/p/ & 220.6901163ms & 159.6925743ms (72.36\%) & + & - \\
-	\hline
-	/tags/p/ & / & 230.4939319ms & 158.3108659ms (68.68\%) & + & - \\
-	/tags/p/2/ & / & 216.9803952ms & 158.1357452ms (72.88\%) & + & - \\
-	/tags/p/ & /imprint/ & 196.3278417ms & 164.4535144ms (83.76\%) & + & - \\
-	/tags/p/2/ & /imprint/ & 222.7822235ms & 150.0005896ms (67.33\%) & + & - \\
-	\hline
-	/ & / & 236.6149375ms & 156.5104787ms (66.15\%) & + & - \\
-	/imprint/ & /imprint/ & 195.0586462ms & 149.5430947ms (76.67\%) & + & - \\
-	/tags/p/ & /tags/p/ & 221.6735031ms & 155.7583656ms (70.26\%) & + & - \\
-	/tags/p/2/ & /tags/p/2/ & 215.5333872ms & 161.8046043ms (75.07\%) & + & - \\
-	\hline
-	/ & /tags/p/ & 282.1626445ms & 185.7336999ms (65.83\%) & + & - \\
-	/imprint/ & /tags/p/ & 222.8544114ms & 168.8039173ms (75.75\%) & + & - \\
-	\hline
-	/ & /imprint/ & 207.511026ms & 153.2500877ms (73.85\%) & + & - \\
-	/imprint/ & / & 204.5646389ms & 151.5592111ms (74.09\%) & + & - \\
-	\hline
-\caption{\selenium{} benchmark results on a external machine}
-\label{tab:selenium_benchmark_results_external}
-\end{longtable}
-\end{center}
 
 
 

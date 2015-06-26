@@ -15,15 +15,35 @@
 \usepackage{xcolor}
 \usepackage{float}
 \usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{caption}
+
+\captionsetup[longtable]{format=hang,font=large,labelfont=bf}
+\captionsetup[figure]{format=hang,font=large,labelfont=bf}
+\captionsetup[table]{format=hang,font=large,labelfont=bf}
+\captionsetup[lstlisting]{format=hang,font=small,labelfont=bf}
 
 \usepackage{listings}
 \lstdefinelanguage{HTML5}{
   language=HTML,
   morecomment=[s]{<!-}{-->},
   tag=[s],
+  basicstyle=\small,
   otherkeywords={lare-head, lare-body, lare-namespace}
 }
-\lstset{language=HTML5}
+\lstset{language=HTML5, 
+        numbers=left, 
+        framexleftmargin=15pt,
+        numbersep=6pt,
+        xleftmargin=2pt,
+        numberstyle=\scriptsize,
+        captionpos=b, 
+        frame=single, 
+        aboveskip=2em, 
+        belowcaptionskip=1em}
+        
+        
+\def\UrlBreaks{\do\/\do-}
 
 \makeglossaries
 
@@ -50,11 +70,13 @@
 \def \twig {\gls{twig}}
 \def \twigLare {\gls{twigLare}}
 \def \webApplication {\gls{webApplication}}
+\def \WebApplication {\Gls{webApplication}}
 \def \webdriver{WebDriver}
-\def \webPage {\gls{webPage}}
-\def \WebPage {\Gls{webPage}}
-\def \webSite {\gls{webSite}}
-
+\def \webBrowser{\gls{webBrowser}}
+\def \webPage{\gls{webPage}}
+\def \WebPage{\Gls{webPage}}
+\def \webServer{\gls{webServer}}
+\def \webSite{\gls{webSite}}
 
 \author{Jonas Braun}
 
@@ -92,6 +114,8 @@
 
 \newcommand\todo[1]{\textcolor{red}{#1}}
 
+\todo{packages used}
+
 \newpage{}
 
 \include{01_introduction}
@@ -120,77 +144,12 @@
 
 \include{07_conclusion}
 
+\newpage{}
 
+\include{08_appendix}
 
-\begin{thebibliography}{9}
-
-\bibitem{bib:jonsson09}
-    David Jonsson (2009).
-    \emph{Database driven user friendly web application using Ajax}
-    Master Thesis. Ume\aa{} University
-
-\bibitem{bib:gov_uk13}
-  Peter Herlihy (2013).
-  \emph{How many people are missing out on JavaScript enhancement?}
-  https://gds.blog.gov.uk/2013/10/21/how-many-people-are-missing-out-on-javascript-enhancement/
-
-\bibitem{bib:matter09}
-  Reto Matter
-  \emph{AJAX Crawl: Making AJAX Applications Searchable}
-  Master Thesis. Swiss Federal Institute of Technology Zurich
-
-\bibitem{bib:roodt06}
-  Youri op't Roodt (2006).
-  \emph{The effect of Ajax on performance and usability in web environments}.
-  Master Thesis. University of Amsterdam
-
-\bibitem{bib:klugeKarglWeber07}
-  Kluge, Jonas and Kargl, Frank and Weber, Michael (2007).
-  \emph{The effects of the AJAX technology on web application usability}.
-  WebIST 2007, Barcelona
-
-\bibitem{bib:mesbah09}
-  Mesbah, Ali (2009).
-  \emph{Analysis and Testing of Ajax-based Single-page Web Applications}.
-  Ph.D. Thesis. TU Delft
-
-\bibitem{bib:matter08}
-  Duda, Cristian and Frey, Gianni and Kossmann, Donald and Matter, Reto and Zhou, Chong (2009).
-  \emph{AJAX Crawl: Making AJAX Applications Searchable}.
-  Data Engineering, 2009. ICDE '09, Shanghai
-  
-\bibitem{bib:lundmark11}
-  Lundmark, Simon (2011)
-  \emph{Automatic Testing of Modern Web Applications in an Agile Environment}
-  Bachelor Thesis, Stockholm
-
-\bibitem{bib:crawljax_tweb12}
-  Mesbah, Ali and van Deursen, Arie and Lenselink, Stefan
-  \emph{Crawling {Ajax}-based Web Applications through Dynamic Analysis of User Interface State Changes}
-  ACM Transactions on the Web (TWEB) 2012
-
-\bibitem{bib:palomaeki09}
-  Jukka Palom\"aki
-  \emph{Web Application Performance Testing}
-  Master Thesis. University of Turku (2009)
-
-\bibitem{bib:marchetto_tonella_ricca08}
-  Alessandro Marchetto, Paolo Tonella and Filippo Ricca
-  \emph{State-Based Testing of Ajax Web Applications}
-  ICST '08 Proceedings of the 2008 International Conference on Software Testing, Verification, and Validation
-
-\bibitem{bib:marchetto_tonella_ricca07}
-  Alessandro Marchetto, Paolo Tonella and Filippo Ricca
-  \emph{Testing Techniques applied to AJAX Web Applications}
-  International Journal on Software Tools for Technology Transfer (STTT)
-  
-  
-\bibitem{bib:bozdag_mesbah_vanDeursen08}
-  Engin Bozdag, Ali Mesbah and Arie van Deursen
-  \emph{Performance Testing of Data Delivery Techniques for AJAX Applications}
-  TUD-SERG Technical Report Series, Journal of Web Engineering
-
-\end{thebibliography}
+\bibliographystyle{alpha}
+\bibliography{bib}
 
 \printglossary
 
@@ -201,7 +160,7 @@
 %  
 %
 %  \subsection{\httpRequests{}}
-%    The world wide web has one main protocol to let web-browsers and web-servers communicate, the Hypertext Transfer Protocol (HTTP), which is built on top of the Transmission Control Protocol (TCP).
+%    The World Wide Web has one main protocol to let web-browsers and web-servers communicate, the Hypertext Transfer Protocol (HTTP), which is built on top of the Transmission Control Protocol (TCP).
 %    TCP and so \httpRequests{} always start with a handshake to establish a connection before data is transferred.
 %    After this handshake, the client sends the request data to the web-server.
 %    This recognizes and interprets the request and if the requested resource is available, sends the according data back, otherwise it sends an error.
@@ -230,7 +189,7 @@
 %
 %
 %  \subsection{Client-server model\label{clientServerModel}}
-%    The world wide web has one standard pattern which controls the data flow, the \enquote{Client-server model}. It defines that a client requests a web source via a \httpRequest{} including a URL and HTTP-headers which define what exactly the client wants to receive from the server. Afterwards all further resources, e.g. css, images, scripts, which are linked on this web source are requested. Any further request behaves in the exact same way, a full load of a page is always needed.
+%    The World Wide Web has one standard pattern which controls the data flow, the \enquote{Client-server model}. It defines that a client requests a web source via a \httpRequest{} including a URL and HTTP-headers which define what exactly the client wants to receive from the server. Afterwards all further resources, e.g. css, images, scripts, which are linked on this web source are requested. Any further request behaves in the exact same way, a full load of a page is always needed.
 %
 %    \subsubsection{Load time analysis}
 %      The Client-server model has one initial \httpRequest{} to get the HTML-page and afterwards it has another request per resource linked in it. 

@@ -2,8 +2,8 @@
 
 namespace Iekadou\Webapp;
 
-use Iekadou\Lare\Lare as Lare;
-use Iekadou\TwigLare\Twig_Lare_Extension;
+use Lare_Team\Lare\Lare as Lare;
+use Lare_Team\TwigLare\Twig_Lare_Extension;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
 
