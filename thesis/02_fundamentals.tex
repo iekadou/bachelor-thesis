@@ -15,8 +15,7 @@ Each tag may have attributes.
 Allowed attributes are defined per tag, e.g. an anchor tag (<a>) may have an href attribute, which is not allowed on a div tag (<div>).
 This href attribute defines where the anchor should lead to, when clicked on.
 \\
-Another type of attributes are the data attributes.
-It is a attribute whose name starts with the string \enquote{data-} followed by at least one other character.
+Another type of attribute is the data attribute whose name starts with the string \enquote{data-} followed by at least one other character.
 Those attributes are intended to store custom information, for which there are no more appropriate attributes or elements.
 \\
 There is a special attribute called \enquote{id} which defines the unique identifier of a tag.
@@ -38,20 +37,27 @@ Subsquently it sends \httpRequest{}s to receive the images, Cascading Style Shee
 \end{figure}
 
 \noindent{}Figure \ref{fig:http_components} displays this communication of a \webBrowser{} and a \webServer{}.
-On the top left you see a abstract representation of a \webPage{}.
+On the top left you see an abstract representation of a \webPage{}.
 On the right side in the middle you can see the response, in this case a complete new \webPage{}, which then replaces the previous from the top left completely.
 
 
 \subsection{Dynamic content and synchronicity\label{synchronicity}}
-Dynamic content in \webSite{}s is content which is changed within an already fully loaded \webPage{}, without loading another full page including all resources. 
-The normal \httpRequest{}, which is described in \ref{httpRequest}, does not support dynamic changes of content. 
-To retrieve new information the client has to request another full \webPage{}, including all resources and data which is necessary, which makes this model \enquote{synchronous}.
-An \enquote{asynchronous} model is able to change content dynamically without having to load a whole page. 
+Dynamic content in \webSite{}s is content which is not statically saved on the \webServer{}, as static content is.
+Typically it gets fetched via backend services.
+A backend service can be a database or other sort of API to derive information from.
+Often it changes too often to save it in the filesystem of the \webServer{}.
+Other reasons for this type of content can be using a content management system, or depending on data which you can not influence and has to be changed by others.
+\\
+The normal \httpRequest{}, which is described in \ref{httpRequest}, does not support asynchronous changes of content.
+This means it is not possible to change content within an already fully loaded \webPage{}.
+To retrieve new information the client has to request another full \webPage{}, including all resources and data which is necessary.
+This makes this kind of \webSite{} \enquote{synchronous}.
+An \enquote{asynchronous} \webSite{} is able to change content dynamically without having to load a whole new page.
 \ajax{}, as shown in \ref{ajax}, is the most used technique for asynchronous \webSite{}s.
 
 \subsection{\ajax{}\label{ajax}}
 Asynchronous JavaScript and XML is a technology to implement dynamic \webPage{}s.
-JavaScript is used to make requests to a \webServer{} without loading a full new page.
+The JavaScript stucture XMLHttpRequest (XHR) is used to make requests to a \webServer{} without loading a full new page.
 The response then is interpreted by an \ajax{}-engine.
 \begin{figure}[H]
 \centering
@@ -60,8 +66,8 @@ The response then is interpreted by an \ajax{}-engine.
 \label{fig:ajax_components}
 \end{figure}
 
-\noindent{}As shown in fig. \ref{fig:http_components} a normal \http{} request by a browser forces the requests always to be synchronous, which means that the client has to wait for a fully loaded page on every request.
-Through the \enquote{Asynchronous JavaScript and XML}, short \ajax{}, this can be improved.
+\noindent{}As shown in fig. \ref{fig:http_components} a normal \http{} request by a browser forces requests always to be synchronous, due to the fact that always the whole page is replaced on every request.
+\enquote{Asynchronous JavaScript and XML}, short \ajax{}, can improve that.
 The data flow in AJAX is very similar to the normal browser behaviour, but is using a new component: the \enquote{\ajax{}-engine}.
 The first request to a \webServer{} using \ajax{} is the complete same as one without \ajax{} with the exception, that one of the requested sources is a JavaScript, which instantiates a \ajax{}-engine.
 The following requests are handled by this \ajax{}-engine, allowing to asynchronously request content from the \webServer{}.
@@ -76,12 +82,12 @@ A disadvantage of a lot of \singlePageApplication{}s is the lack of browser hist
 When changing the content the browser does not interpret it as a new page, but only changed content.
 This leads into a missing functionality of forward- and back-buttons in browsers.
 \\
-Additionally a problem of SPAs is, that it has a huge impact on SEO.
+Additionally a problem of SPAs is, that it has a huge impact on search engine optimization (SEO).
 The \webPage{} is often rendered inside the browser, and not structured into different URLs.
-Those facts make it hard for a search-engine to discover it.
+Those facts make it hard for a search engines and other crawlers to discover it.
 
 \subsection{History API}
-The History API is part of HTML5 specification by \gls{w3c}.
+The History API is part of the HTML5 specification by \gls{w3c}.
 It describes the API for an History object which is part of the session history.
 This session history enables functionality like the back and forward buttons on browsers.
 Defined as a list of session history entries, it represents the browsing history.

@@ -13,7 +13,7 @@ Load times from 3\% to 99\% relatively to normal requests display this.
 \\
 Besides other reasons the biggest difference between those low and high load times is the changed content.
 Requesting a very dynamic page with a not related namespace has nearly no improvements relatively to normal requests.
-Being on a very dynamic page, requesting a page with only a few changes makes it possible to experience a bigger benefit of \lare{}.
+Being on a very dynamic page, requesting a page with a related namespace makes it possible to experience a bigger benefit of \lare{}.
 \\
 What does that mean for the usage of \lare{}, when is it a good idea to use it?
 \\
@@ -22,13 +22,13 @@ This makes it a good to use scenario.
 \\
 When having dynamic content on a page and only a few elements change when requesting a new \webPage{} \lare{} strikes most.
 \\
-\webSite{}s that are a collection of unrelated \webPage{}s are not taking a lot of benefit off \lare{}.
+\WebSite{}s that are a collection of completely unrelated very dynamic \webPage{}s are not taking a lot of benefit off \lare{}.
 \\
 The more content stays from page to page, the more \lare{} scores.
 \\
 As Tim Berners-Lee states in \cite{berners1998cool} URLs should not change.
 When using \lare{} in an already running application it is possible to stick with the current used URLs.
-It does not need patterns like Hashbang-URLs, or such.
+It does not need special URL patterns like Hashbang-URLs, or such.
 \\
 Load tests with multiple users as the amount of concurrent users should be up to 10000 to be representative\cite{bozdag2008performance}.
 In the future it would be good to do such a performance benchmark, to see how \lare{} effects such amounts of users.

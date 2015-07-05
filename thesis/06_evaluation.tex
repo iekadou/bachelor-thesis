@@ -1,6 +1,6 @@
 \section{Evaluation}
-\lare{} is tested based on a sample web application.
-It provides different type of sites which are designed to perform the different aspects of this evaluation.
+To see whether the desired capabilities are fulfilled \lare{} is tested based on a sample web application.
+It provides different types of pages which are designed to perform the different aspects of this evaluation.
 \\
 As stated in \cite{palomaki2010web} \enquote{proper test definition, execution, reporting and repeatable test results are of utmost importance}.
 To achieve those criteria we first focused on the test definition.
@@ -12,11 +12,12 @@ It is not easy to test \ajax{} \webApplication{}s.
 As seen in \cite{marchetto2007testing} there is a lack of good testing tools, especially when it comes to white-box testing.
 \selenium{}\footnote{http://www.seleniumhq.org/} is mentioned there as a good tool for black-box testing.
 Also in \cite{lundmarkautomatic} it is referred to as a good possibility to test web applications.
-It is also suggested in \cite{palomaki2010web} for a non-abstract HTTP request performance testing, which can represent the requests of a single user.
+It is also suggested in \cite{palomaki2010web} for non-abstract HTTP request performance testing, which can represent the requests of a single user.
 \\
 In \cite{marchetto2008state} a new automated testing technique is introduced, again based on \selenium{}.
 \\
-As to evaluate \lare{} there is no need to actually test the whole application, but only to check whether \lare{} works, \selenium{} in our case is sufficient.
+We want to evaluate \lare{} and no the web application by itself, so there is no need to actually test the whole application, but only to check whether \lare{} works.
+\selenium{} in our case is sufficient.
 \\
 We make specific requests and want an specific answer of it.
 Especially we want to have the same content rendered through \lare{} as through normal \httpRequest{}s.
@@ -27,20 +28,17 @@ This is important because of the different implementations of browsers' features
 To test the performance, we will use two technologies.
 \cite{bozdag2008performance}
 First of all \curl{} based tests will be done.
-Those tests will focus on the first response, containing the markup.
-This will show how \lare{} influences the webserver.
+Those tests will focus on the initial request, containing the markup and \lare{} requests containing the according markup for it.
 \\
-Additionially the webapp will be benchmarked by using the Chrome Network Tools.
-This method provides the possiblity to check whether further requests for scripts, images, etc. are influenced.
-The Chrome Network Tools will show the actual load time the user has to wait for, until the whole page is loaded.
+Additionially the \webApplication{} will be benchmarked by using \selenium{} in combination with the window.performance attribute, introduced in HTML5.
+This method provides the possibility to check whether further requests for scripts, images, etc. are influenced.
+It will show the actual load time the user has to wait for, until the whole page is loaded and ready to be displayed.
 \\
-To make the tests as representive as possible caching in the relevant layers will be enabled and disabled if to see whether it influences the results or not.
-Some caching algorithms can not be easily disabled.
-E.g. hardware and hard drive caching will not be disabled in our tests.
-As those caching algorithms will not effect the results much, we let them enabled.
+To make the tests as representative as possible caching in the relevant layers will be enabled and disabled to see whether it influences the results or not.
+Hardware and especially hard drive caching will stay untouched in our benchmarks.
 \\
 Mysql's caching method Query Caching will be enabled and disabled.
-Twig, the template engine allows caching, which will be enabled and disabled as well.
+Twig allows template caching, which will be enabled and disabled as well.
 Additionally all tests are performed on a local machine and a remote server, to see whether the latency takes effect in the performance of \lare{}.
 \\
 We will distinguish between static pages without database queries and dynamic pages which have those.
@@ -49,7 +47,6 @@ First of all every site will be requested normally.
 After that it will be requested with \lare{} enabled.
 As \lare{} should only influence subsequent requests, every page will be tested with \http{} headers from different sources, imitating those requests.
 
-\todo{describe test design}
 %As one traditional testing model, we will evaluate the \pjaxr{} sample application via blackbox tests.
 %Testing \ajax{} is not trivial due to multiple programming- and markup-languages influencing it. 
 %With this tool it is possible to generate automated tests for web applications.
@@ -77,15 +74,15 @@ For web applications it is common to use the name \emph{template} for what is ca
 As "controller" is not a common name PHP web applications as well, we use the phrase \emph{view} for those.
 With this we follow the naming of django\footnote{https://docs.djangoproject.com/en/1.8/faq/general/\#django-appears-to-be-a-mvc-framework-but-you-call-the-controller-the-view-and-the-view-the-template-how-come-you-don-t-use-the-standard-names}.
 \\
-Instead of using models for this benchmark evaluation, we are using raw SQL queries to ensure the same queries are made every time.
+Instead of using models for this benchmark, we are using raw SQL queries to ensure the same queries are made every time.
 Nevertheless it is prepared to inherit from the BaseModel class to be create models for later presentation purposes.
 \\
 The sample web application consists of 2 static pages \emph{/home/} and \emph{/imprint/}.
 \\
-To demonstrate dynamic \WebPage{}s we used the Delicious Dataset\footnote{http://fabianabel.de/data/mypes-www2010.html}.
+To demonstrate dynamic content we use the Delicious Dataset\footnote{http://fabianabel.de/data/mypes-www2010.html}.
 This is available under \emph{/tags/}.
 \\
-On the left side is a list to sub pages where the tags are categorized by it's starting character.
+On the left side at this page is a list to sub pages where the tags are categorized by it's starting character.
 Per alphabetic character one of those pages exists, additionally one page for tags starting with numbers and one starting with non alphanumeric characters.
 Behind each \emph{category} the count of tags in this category is displayed.
 This list is available on every sub page under the \emph{/tags/} url.
@@ -113,12 +110,16 @@ We are using the namespaces like shown in tab. \ref{tab:sampleapp_namespaces}.
 \end{table}
 
 
-\subsection{Tests}
+\subsection{browser functionality tests\label{browser_functionality_tests}}
+
+\todo{describe browser functionality tests}
+
+\subsection{Testsuite\label{testsuite}}
 
 To test the performance of \lare{} a few different types of requests are needed to benchmark.
 The reference level will be a normal \httpRequest{} to each \webPage{}.
 \\
-The tested pages are available at the URLs:
+The tested pages are available at the paths:
 
 \begin{itemize}
 \item /
@@ -165,8 +166,8 @@ The tested page to page requests are:
     \end{itemize}
 \end{itemize}
 
-\subsection{\curl{}\label{curl}}
-\todo{curl usage of test design}
+\subsection{\curl{} benchmarks\label{curl}}
+%\todo{curl usage of test design}
 We are using \curl{} to test the plain load times of the initial request of normal \httpRequest{}s and \lare{} requests.
 Those \curl{} requests do not include additional data like images, scripts and stylesheets, just the plain HTML.
 \\
@@ -175,11 +176,14 @@ To use it run
 \\
 \enquote{../evaluation/curl/curl\_tests.sh URL MAX\_RUNS LARE\_NAMESPACE CACERT}.
 \\
-URL dedicates where the web application is available, e.g. \emph{http://lare.iekadou.com}, MAX\_RUNS defines how many \curl{} requests per page should be made.
-LARE\_NAMEPSACE defines the namespace, which should be used when testing the \lare{} requests, e.g. Lare.Tags.p.
-CACERT is the only optional paremeter, which should only be set when requesting an SSL server. It then should be the path to the CACERT file.
-\\
-To test all relevant sites we defined a variable PAGES inside the script, containing URLs \emph{/}, \emph{/imprint/}, \emph{/tags/p/} and \emph{/tags/p/2/}.
+\begin{itemize}
+    \item URL dedicates where the web application is available e.g. \emph{http://lare.iekadou.com}
+    \item MAX\_RUNS defines how many \curl{} requests per page should be made
+    \item LARE\_NAMEPSACE defines the namespace, which should be used when testing the \lare{} requests, e.g. Lare.Tags.p.
+    \item CACERT is the only optional paremeter, which should only be set when requesting an SSL server. It then should be the path to the CACERT file.
+\end{itemize}
+
+\noindent{}To test all relevant sites we defined a variable PAGES inside the script, containing paths \emph{/}, \emph{/imprint/}, \emph{/tags/p/} and \emph{/tags/p/2/}.
 For each page of those we make a normal request, followed by a \lare{} request, with the namespace defined in LARE\_NAMESPACE. 
 To get better test results we repeat those two requests \emph{MAX\_RUN} times. The output represents then the load times needed in seconds.
 \\
@@ -194,7 +198,7 @@ Additionally we test every request with database caching (DBC) enabled, disabled
 
 \subsubsection{Results}
 
-You can see the full results of our benchmarks in tables \ref{tab:curl_results_local} and \ref{tab:curl_results_external}.
+The full results of those benchmarks are shown in tables \ref{tab:curl_results_local} and \ref{tab:curl_results_external}.
 \\
 First we will take a look at the results of the local tests.
 \\
@@ -210,9 +214,9 @@ This can be explained by the fact that almost the whole page needs to be changed
 The results on dynamic pages with a related namespace, in our case \enquote{Lare.Tags.p} differ a lot.
 When database caching is enabled the load times of \lare{} are around 90\% with template caching enabled and about 80\% of the normal load times with disabled template caching.
 \\
-Without database caching this these times they are \textbf{7\%} with template caching and \textbf{10\%} without.
+Without database caching it changes to \textbf{7\%} with template caching and \textbf{10\%} without.
 \\
-Those improvemnts are caused by the amount of database queries that can be avoided. This also explains the differences between enabled and disabled database caching settings.
+Those improvments are caused by the amount of database queries that can be avoided. This also explains the differences between enabled and disabled database caching settings.
 \\
 When we take a look at the external tests we can see the same pattern.
 The effect of \lare{} on dynamic pages is a bit smaller.
@@ -225,11 +229,11 @@ In our tests it was 40ms.
 \httpRequest{}s need two Round Trip Times, or four times the latency for connection establishment.
 When we substract those 160ms from the normal and the \lare{} requests we see ratios similar to the local tests.
 \\
-In general we can say, that \lare{} has more effect the more time of backend logic like database queries can be avoided.
+In general we can say, that in these tests \lare{} has more effect the more time of backend logic like database queries can be avoided.
 
-\subsection{\selenium{}\label{selenium}}
+\subsection{\selenium{} benchmarks\label{selenium}}
 
-\todo{\selenium{} usage of test design}
+%\todo{\selenium{} usage of test design}
 To benchmark full page loads including all resources we are using \selenium{}.
 This \emph{record and play} tool builds an interface for a usage of multiple \webdriver{}s.
 Those \webdriver{}s are provided by most modern browsers like Chrome and Firefox.
@@ -237,20 +241,20 @@ For the results in this thesis we used the Firefox \webdriver{}.
 \\
 We request a page via a normal \httpRequest{} first.
 Afterwards we request the same page again via \lare{}.
-We are using a lot of different page to page requests, to see where \lare{} has a bigger or smaller effect on the load times.
+We make again all page to page requests, seen in \ref{testsuite}, to see where \lare{} has a bigger or smaller effect on the load times.
 \\
 Like in \ref{curl} we test every page on a local server and an external webserver and we disabled and enable database and template caching.
 
 \subsubsection{Results}
 
-The results of the \selenium{} \webdriver{} tests are different to the ones made with \curl{}.
+The results of the \selenium{} \webdriver{} benchmarks are different to the ones made with \curl{}.
 \\
 We first will take a look at the local tests again.
 Other than in the \curl{} test results we see a huge effect of \lare{} even on the static pages.
-An average \lare{} load time of about 35\% with disabled template caching and 9\% with enabled template caching of the normal load time can be seen here.   2
+An average \lare{} load time of about 35\% with disabled template caching and 9\% with enabled template caching of the normal load time can be seen here.
 Other than on a normal request, the browser does not need to load the resources like images, scripts and styles.
-This means \lare{} requests often only need one request to make a page change.
-A normal requests needs to load, or at least compare, about 9 resources for the same action.
+This results in the fact that \lare{} needs often only one request to make a page change.
+A normal request needs to load, or at least compare, about 9 resources for the same action in our \webApplication{}.
 \\
 Again requesting a static page does not show any changes when it comes to database caching.
 \\
@@ -260,7 +264,7 @@ This is because the same backend requests need to be done.
 Those uncached database requests take as we can see in table \ref{tab:curl_results_local} the majority of time.
 \\
 With disabled caching in the database and in a related namespace instead, \lare{} has a huge effect.
-Enabled template caching improving the load times from 5\% with a disabled template caching to 3,5\%.
+Enabled template caching improving the load times from \textbf{5\%} with a disabled template caching to \textbf{3,5\%}.
 \\
 When requesting the same pages with enabled database caching we see a \lare{} load time of about 16\% with unrelated namespaces.
 Related namespaces in the same configuration lead to values of about 10\%.

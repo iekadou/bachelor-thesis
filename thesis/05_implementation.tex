@@ -1,20 +1,25 @@
 \section{Implementation}
 
-\todo{decisions Lare Object}
-Considering the MVC pattern we have all logic in one object, in this case the \emph{Lare} object.
+Considering object-oriented programming the \emph{Lare} object builds the fundament of a \lare{} backend.
 It is a singleton in the request scope.
-When receiving a request the server creates it and analyzes if the current request is a \lare{} request and checks if there is a namespace.
+When receiving a request the server creates it and analyzes the current \http{} header whether a namespace is set or not.
+\\
+The \lare{} object contains all necessary data and functions.
+
 
 \subsection{\phpLare{}}
-\phpLare{} is a general \lare{} backend to used in PHP.
-It builds the base of every other Lare module in PHP, especially for template engines.
+\phpLare{} is a general \lare{} backend to be used in PHP.
+It builds the base of every other \lare{} module in PHP, especially for template engines.
 \\
-\lare{} is a implemented as a request-scoped Singleton.
-In PHP a singleton is implemented as a class, which provides only static methods and static attributes.
+As defined before the \lare{} object is implemented as a request-scoped singleton.
+This object gets created by the get\_instance() method.
+To prevent multiple objects of this class the \_\_clone() and  \_\_construct() methods are replaced by empty functions.
+\\
+Automatically one object gets instantiated after the definition of this class.
+
 
 \subsubsection{API}
 
-When including the Lare.php automatically a Singleton named Lare will be created.
 \begin{itemize}
 \item Lare::is\_enabled()
 
@@ -25,28 +30,33 @@ Sets the namespace of the current request to \$namespace.
 \item Lare::get\_current\_namespace()
 
 Returns the namespace of the current request.
-\item Lare::get\_matching(\$extension\_namespace = null)
+\item Lare::get\_matching\_count(\$extension\_namespace = null)
 
-\$extension\_namespace is an optional paramenter, to check the matching to a given namespace. If \$extension\_namespace is not given, the matching will be done against the namespace of the current request.
+\$extension\_namespace is an optional parameter, to check the matching to a given namespace. If \$extension\_namespace is not provided, the matching will be done against the current namespace.
 
-Returns the most specific matching namespace level.
+Returns how many parts of the namespaces (from outer to inner) are matching, before the first mismatch occurs.
 \item Lare::matches(\$extension\_namespace = null)
 
-\$extension\_namespace is an optional paramenter, to check the matching to a given namespace. If \$extension\_namespace is not given, the matching will be done against the namespace of the current request.
+\$extension\_namespace is an optional parameter, to check the matching to a given namespace. If \$extension\_namespace is not given, the matching will be done against the namespace of the current request.
 
 Returns true if the whole namespace is matching, otherwise false.
+\item Lare::get\_instance()
+
+Returns the \lare{} singleton and creates it if not instantiated before.
 \end{itemize}
-    
+
 \subsection{\twigLare{}}
 Twig-Lare brings Lare functionality to the template engine Twig\footnote{http://twig.sensiolabs.org/}.
 Twig is used by Symfony, a framework which is used in e.g. Drupal 8, eZPublish, phpBB and Sylius.
 \\
-Twig-Lare is a implemented as a Twig extension.
-It consists of a TwigTokenParser, a anonymous TwigSimpleFunction and a global variable.
-The TwigTokenParser Twig\_Lare\_TokenParser\_LareExtends is the heart of the extension.
-It provides the possibility to use the tag \{\% lare\_extends \%\} in the way it may be used in django.
-To prevent multiple extend tags, including the default twig tag \emph{\{\% extends \%\}} it throws a Error if either the default tag or \{\% lare\_extends \%\} was already used.
-Additionally we ensure that it is not called inside a block tag.
+Twig-Lare is implemented as a Twig extension.
+It consists of a TwigTokenParser and the global variable lare\_current\_namespace.
+The TwigTokenParser
+\\
+Twig\_Lare\_TokenParser\_LareExtends is the heart of the extension.
+It provides the possibility to use the tag \{\% lare\_extends \%\} in the way the default twig tag \{\% extends \%\} tag is used.
+Additionally it prevents multiple extend tags.
+Furthermore it is ensured that it is not called inside a block tag, like seen in the default twig tag.
 
 \begin{minipage}[c]{0.95\linewidth}
 \begin{lstlisting}[caption=Example Lare Template, label=example_lare_template]
@@ -56,17 +66,19 @@ Additionally we ensure that it is not called inside a block tag.
     ...
   </div>
 {% endblock page %}
-{% block lare-namespace %}
+{% block lare_namespace %}
   {{ current_lare_namespace }}
-{% endblock lare-namespace %}
+{% endblock lare_namespace %}
 \end{lstlisting}
 \end{minipage}
 \\
-The example above shows the usage of this tag.
-When the current namespace is not inside Lare.Namespace it extends to the \:\:\_\_base.twig template because the second namespace does not match then.
-But when the current namespace is \emph{Lare.Namespace}, then it extends \:\:\_\_lare.twig.
+Listing \ref{example_lare_template} shows the usage of this tag.
+Using Symfony \enquote{::} is a shortcut for the default template directory.
+When the current namespace is not inside \emph{Lare.Namespace} it extends to the base.twig template, because the second namespace does not match then.
+When the current namespace is \emph{Lare.Namespace} lare.twig will get extended.
 \\
-As the namespace matching occurs on the second level in this example, the overriden block should be the second, with the naming in this thesis \emph{page}.
+As the namespace matching occurs on the second level in this example, the overridden block should be the according one.
+For the naming in this thesis the \emph{page} block should be provided.
 Inside this block a <div> container with the according ID has to be placed.
 
 \subsubsection{API}
@@ -108,13 +120,16 @@ Extends ::\_\_lare.html if \$lare\_namespace is matching, otherwise it extends \
 Extends \$lare\_template if \$lare\_namespace is matching, otherwise it extends \$default\_template.
 \end{itemize}
 
+\todo{API of \lare{} object}
+
 \subsection{\lareJS{}}
-\lareJS{}, as successor of jquery-pjaxr, is the frontend engine for \lare{}, using AJAX to communicate to the server.
-jQuery-pjaxr was introduced as an extended version of jquery-pjax, allowing to replace multiple containers with one request, instead of only one.
-Matching by the ID of an container it was not the job of the frontend to define which container should be replaced, but the backend with giving the correct IDs.
-\\
-Introducing \lareJS{} achieved the ability differ the current page via namespaces.
+%\lareJS{}, as successor of jquery-pjaxr, is the frontend engine for \lare{}, using AJAX to communicate with the server.
+%jQuery-pjaxr was introduced as an extended version of jquery-pjax, allowing to replace multiple containers with one request, instead of only one.
+%Matching by the ID of an container it was not the job of the frontend to define which container should be replaced, but the backend with giving the correct IDs.
+%\\
+%Introducing \lareJS{} achieved the ability differ the current page via namespaces.
 \todo{describe \lareJS{}}
 
 
 \subsection{concluding remarks}
+\todo{concluding remarks of \lare{}}
