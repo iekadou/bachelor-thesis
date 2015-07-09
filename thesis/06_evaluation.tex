@@ -110,9 +110,27 @@ We are using the namespaces like shown in tab. \ref{tab:sampleapp_namespaces}.
 \end{table}
 
 
-\subsection{browser functionality tests\label{browser_functionality_tests}}
+\subsection{Capability tests\label{browser_functionality_tests}}
 
-\todo{describe browser functionality tests}
+\lare{} should fulfil a few requirements.
+First it should deliver the same content as normal HTTP requests.
+Second the browser functionality should work like in normal requests.
+In detail, the back and forward buttons should work, the history.go() function should work, and the URL should be updated.
+
+To check whether the requirements are fulfilled we use the sample \webApplication{} in combination with \selenium{}.
+
+To run tests with \selenium{} the python class Testcase is inherited and used.
+
+The following capabilities are tested in this testsuite.
+\begin{itemize}
+\item Content of the response of HTTP-requests
+\item Content of the response of \lare{} requests
+\item Back functionality
+\item Forward functionality
+\item URL changes when using \lare{}
+\end{itemize}
+
+The results show, that \lare{} fulfils the desired capabilities.
 
 \subsection{Testsuite\label{testsuite}}
 

@@ -20,30 +20,67 @@ Automatically one object gets instantiated after the definition of this class.
 
 \subsubsection{API}
 
-\begin{itemize}
-\item Lare::is\_enabled()
-
+\large{\textbf{\textit{Lare::is\_enabled()}}}
+\\
 Returns true if the current request is a Lare request, otherwise false.
-\item Lare::set\_current\_namespace(\$namespace)
-
-Sets the namespace of the current request to \$namespace.
-\item Lare::get\_current\_namespace()
-
+\\
+\\
+\\
+\large{\textit{\textbf{Lare::set\_current\_namespace(\$namespace)}}}
+\\
+\\
+\begin{tabular}{|p{4cm}|p{9cm}|}
+    \hline
+    \textbf{name} & \textbf{description} \\
+    \hline
+    \$namespace & specifies the namespace which should be set as the current namespace. \\
+    \hline
+\end{tabular}
+\\
+\\
+Sets the namespace of the current page.
+\\
+\\
+\\
+\large{\textbf{\textit{Lare::get\_current\_namespace()}}
+\\
 Returns the namespace of the current request.
-\item Lare::get\_matching\_count(\$extension\_namespace = null)
-
-\$extension\_namespace is an optional parameter, to check the matching to a given namespace. If \$extension\_namespace is not provided, the matching will be done against the current namespace.
-
-Returns how many parts of the namespaces (from outer to inner) are matching, before the first mismatch occurs.
-\item Lare::matches(\$extension\_namespace = null)
-
-\$extension\_namespace is an optional parameter, to check the matching to a given namespace. If \$extension\_namespace is not given, the matching will be done against the namespace of the current request.
-
-Returns true if the whole namespace is matching, otherwise false.
-\item Lare::get\_instance()
-
+\\
+\\
+\\
+\large{\textbf{\textit{Lare::get\_matching\_count(\$extension\_namespace=None)}}}
+\\
+\begin{tabular}{|p{4cm}|p{8cm}|}
+    \hline
+    \textbf{name} & \textbf{description} \\
+    \hline
+    \$extension\_namespace & (optional) specifies the namespace which should be matched. If not set the current namespace of the Lare object will be used instead. \\
+    \hline
+\end{tabular}
+\\
+\\
+Returns how many parts of the \$extension\_namespace and the previous namespace (from outer to inner) are matching, before the first mismatch occurs.
+\\
+\\
+\\
+\large{\textbf{\textit{Lare::matches(\$extension\_namespace=None)}}}}
+\\
+\begin{tabular}{|p{5cm}|p{8cm}|}
+    \hline
+    \textbf{name} & \textbf{description} \\
+    \hline
+    \$extension\_namespace & (optional) specifies the namespace which should be matched. If not set the current namespace of the Lare object will be used instead. \\
+    \hline
+\end{tabular}
+\\
+\\
+Returns true if the extension\_namespace matches the previous namespace (on as many layers as extension\_namespace has), otherwise false.
+\\
+\\
+\\
+\large{\textbf{\textit{Lare::get\_instance()}}}
+\\
 Returns the \lare{} singleton and creates it if not instantiated before.
-\end{itemize}
 
 \subsection{\twigLare{}}
 Twig-Lare brings Lare functionality to the template engine Twig\footnote{http://twig.sensiolabs.org/}.
@@ -83,17 +120,21 @@ Inside this block a <div> container with the according ID has to be placed.
 
 \subsubsection{API}
 
-\begin{itemize}
-\item \{\% lare\_extends \$default\_template \%\}
+\large{\textbf{\textit{\{\% lare\_extends \$default\_template \$lare\_namespace \$lare\_template \%\}}}}
+\\
+\begin{tabular}{|p{4cm}|p{8cm}|}
+    \hline
+    \textbf{name} & \textbf{description} \\
+    \hline
+    \$default\_template & specifies which template should be extended in case of a non matching namespace. \\
+    \hline
+    \$lare\_namespace & (optional) specifies the namespace which is tested against to decide whether the \$default\_template or the \$lare\_template should be extended. If not set, \$default\_template will be extended. \\
+    \hline
+    \$lare\_template & (optional, default='::\_\_lare.html') specifies which template should be extended in case of a namespace match. \\
+    \hline
+\end{tabular}
 
-Extends \$default\_template like the original \{\% extends \$default\_template \%\}.
-\item \{\% lare\_extends \$default\_template \$lare\_namespace \%\}
-
-Extends ::\_\_lare.html if \$lare\_namespace is matching, otherwise it extends \$default\_template.
-\item \{\% lare\_extends \$default\_template \$lare\_template \$lare\_namespace \%\}
-
-Extends \$lare\_template if \$lare\_namespace is matching, otherwise it extends \$default\_template.
-\end{itemize}
+Extends the \$default\_template if \$lare\_namespace is not matching, extends \$lare\_template otherwise.
 
 
 \subsection{\djangoLare{}}
@@ -107,29 +148,118 @@ Still as one package it is available via \emph{pip install django-lare} command.
 
 
 \subsubsection{API}
+The \textbf{lare\_extends} tag should be used in the django templating engine.
 
-\begin{itemize}
-\item \{\% lare\_extends \$default\_template \%\}
+\newpage{}
+\noindent{}\large{\textbf{\textit{\{\% lare\_extends default\_template lare\_namespace lare\_template \%\}}}}
+\\
+\\
+\begin{tabular}{|p{4cm}|p{9cm}|}
+    \hline
+    \textbf{name} & \textbf{description} \\
+    \hline
+    default\_template & specifies which template should be extended in case of a non matching namespace. \\
+    \hline
+    lare\_namespace & (optional) specifies the namespace which is tested against to decide whether the default\_template or the lare\_template should be extended. If not set, default\_template will be extended. \\
+    \hline
+    lare\_template & (optional, default='\_\_lare.html') specifies which template should be extended in case of a namespace match. \\
+    \hline
+\end{tabular}
+\\
+\\
+\\
+Extends the default\_template if lare\_namespace is not matching, extends lare\_template otherwise.
+\\
+\\
+\\
+\\
+In the following API documentation of the \textbf{\lare{}} object will \textbf{lare} represent the singleton instance.
+\\
+\\
+\\
+\large{\textbf{\textit{lare.is\_enabled()}}}
+\\
+Returns true if the current request is a Lare request, otherwise false.
+\\
+\\
+\\
+\large{\textit{\textbf{lare.set\_current\_namespace(namespace)}}}
+\\
+\\
+\begin{tabular}{|p{4cm}|p{9cm}|}
+    \hline
+    \textbf{name} & \textbf{description} \\
+    \hline
+    namespace & specifies the namespace which should be set as the current namespace. \\
+    \hline
+\end{tabular}
+\\
+\\
+Sets the namespace of the current page.
+\\
+\\
+\\
+\large{\textbf{\textit{lare.get\_current\_namespace()}}
+\\
+Returns the namespace of the current request.
+\\
+\\
+\\
+\large{\textbf{\textit{lare.get\_matching\_count(extension\_namespace=None)}}}
+\\
+\begin{tabular}{|p{4cm}|p{8cm}|}
+    \hline
+    \textbf{name} & \textbf{description} \\
+    \hline
+    extension\_namespace & (optional) specifies the namespace which should be matched. If not set the current namespace of the Lare object will be used instead. \\
+    \hline
+\end{tabular}
+\\
+\\
+Returns how many parts of the extension\_namespace and the previous namespace (from outer to inner) are matching, before the first mismatch occurs.
+\\
+\\
+\\
+\large{\textbf{\textit{lare.matches(extension\_namespace=None)}}}}
+\\
+\begin{tabular}{|p{4cm}|p{8cm}|}
+    \hline
+    \textbf{name} & \textbf{description} \\
+    \hline
+    extension\_namespace & (optional) specifies the namespace which should be matched. If not set the current namespace of the Lare object will be used instead. \\
+    \hline
+\end{tabular}
+\\
+\\
+Returns true if the extension\_namespace matches the previous namespace (on as many layers as extension\_namespace has), otherwise false.
+\\
+\\
+\\
+\large{\textbf{\textit{lare.get\_instance()}}}
+\\
+Returns the \lare{} singleton and creates it if not instantiated before.
+\\
+\\
+\\
+After modifications and restructuring of \djangoLare{} the API is similar to the API of \phpLare{}.
 
-Extends \$default\_template like the original \{\% extends \$default\_template \%\}.
-\item \{\% lare\_extends \$default\_template \$lare\_namespace \%\}
-
-Extends ::\_\_lare.html if \$lare\_namespace is matching, otherwise it extends \$default\_template.
-\item \{\% lare\_extends \$default\_template \$lare\_template \$lare\_namespace \%\}
-
-Extends \$lare\_template if \$lare\_namespace is matching, otherwise it extends \$default\_template.
-\end{itemize}
-
-\todo{API of \lare{} object}
 
 \subsection{\lareJS{}}
-%\lareJS{}, as successor of jquery-pjaxr, is the frontend engine for \lare{}, using AJAX to communicate with the server.
-%jQuery-pjaxr was introduced as an extended version of jquery-pjax, allowing to replace multiple containers with one request, instead of only one.
-%Matching by the ID of an container it was not the job of the frontend to define which container should be replaced, but the backend with giving the correct IDs.
-%\\
-%Introducing \lareJS{} achieved the ability differ the current page via namespaces.
-\todo{describe \lareJS{}}
-
-
-\subsection{concluding remarks}
-\todo{concluding remarks of \lare{}}
+\lareJS{}, as successor of jquery-pjaxr, is the JavaScript frontend engine for \lare{}, using AJAX to communicate with the server.
+It was first built as an extended version of jquery-pjax, allowing to replace multiple containers with one request, instead of only one.
+Other than in jquery-pjax it is not needed to define which containers should be replace in the frontend.
+It is the job of the backend to define which elements should change, as the frontend does an ID based matching.
+\lareJS{} additionally provides the functionality to extend the HTTP header by the current \lare{} namespace.
+\\
+After the script is loaded it automatically tests if the History API is available or not.
+If the requirements are fulfilled it gets initialized.
+\\
+As described in \ref{lare_frontend} a \lare{} frontend has to hijack page changes.
+\lareJS{}, implemented as a jQuery\footnote{\url{https://jquery.com}} plugin realizes this by just one function call, e.g. \$(document).lare('a');.
+jQuery plugins normally have a syntax like \$('a').lare();.
+But semantically \lareJS{} sets the focus on the engine itself, instead of the items.
+Anyway the event listeners will be set by using this method.
+\\
+Besides the \lare{} functionality \lareJS{} provides utilities for JavaScript including helping functions like e.g. \$(document).lareAlways(function(e) { ... });.
+This runs function(e) {} every time a lare request is finished successfully or a history step is made.
+This makes it possible to imitate \$(document).ready(function(e) { ... }); provided by jQuery, to hook functions to the document ready event.

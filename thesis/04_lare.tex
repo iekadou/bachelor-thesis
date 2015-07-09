@@ -47,8 +47,8 @@ Backend queries such as database queries can then be left out if they are not ne
 
 
 \subsection{Realization}
-\todo{\hijax{} is used}
 To load a page, the first request is a normal \httpRequest{} followed by a JavaScript script initializing the \lare{} frontend module.
+With this \lare{} follows the \hijax{} pattern, as it fully degrades for usage without JavaScript.
 Further requests to the same host are then initiated by this module.
 The \http{} header of these requests is extended by the namespace of the current website.
 The web server using a \lare{} backend compares the namespace of the requested resource and the namespace in the \http{} header.
@@ -66,7 +66,7 @@ Common \httpRequest{}s and \lare{} requests request the same URL which makes it 
 While on normal requests a full \webPage{} is responded \lare{} requests only get the changed containers as response.
 Search engines and other crawlers are able to crawl every link it can find on a page and interpret it as normal \webPage{}s without any deficit.
 
-\subsubsection{\lare{} frontend}
+\subsubsection{\lare{} frontend\label{lare_frontend}}
 
 A \lare{} frontend has as mentioned before a few things to be implemented.
 The first requirement is the ability to hijack page changes.
