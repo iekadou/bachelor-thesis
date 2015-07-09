@@ -185,6 +185,7 @@
             var namespace_match = data.match(/<lare-namespace>([\s\S.]*)<\/lare-namespace>/i);
             if (namespace_match) {
                 namespace = $(parseHTML(namespace_match[0].replace(/(\r\n|\n|\r|\s|\t)/gm, ''))).html();
+                $('body').attr('data-lare-namespace', namespace);
             }
 
             // FF bug: Won't autofocus fields that are inserted via JS.

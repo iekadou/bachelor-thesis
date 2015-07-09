@@ -7,11 +7,9 @@
             {{ pagination|raw }}
         </div>
     {% endblock content %}
-{% block additional_lare_includes %}
-<div id="additional_lare_includes">
+{% block additional_lare_includes %}<div id="additional_lare_includes">
     <script>
         $('.tagLetter').removeClass('strong');
         $('.tagLetter[href="/tags/{{current_char}}/"]').addClass('strong');
     </script>
-</div>
-{% endblock additional_lare_includes %}
+</div>{% endblock additional_lare_includes %}

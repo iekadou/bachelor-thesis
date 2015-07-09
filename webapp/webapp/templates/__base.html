@@ -1,3 +1,4 @@
+<!Doctype html>
 <html lang="{{lang}}">
 <head>
     <meta charset="utf-8">
@@ -29,8 +30,8 @@
                     <a class="navbar-brand" href="/"><img src="/static/img/lare.png" alt="Lare.io Logo"></a>
                 </div>
                 <ul id="lare-navbar" class="nav navbar-nav navbar-collapse collapse navbar-right">
-                    <li><a href="#"><div id="render_time" class="pull-left">{% rendering_time %} s {{QUERY_COUNT}} queries on {{DB_CONNECTION_COUNT}} connections</div></a></li>
-                    <li><a href="#">{{ current_time }}</a></li>
+                    {% if display_debug_information %}<li><a href="#"><div id="render_time" class="pull-left">{% rendering_time %} s {{QUERY_COUNT}} queries on {{DB_CONNECTION_COUNT}} connections</div></a></li>{% endif %}
+                    {% if display_current_time %}<li><a href="#">{{ current_time }}</a></li>{% endif %}
                     <li><a href="{% url 'tags' 'p' %}">tags</a></li>
                 </ul>
             </div>
@@ -59,6 +60,5 @@
     <script src="/static/js/main.js"></script>
     </div>
     {% endblock site %}
-{% block additional_lare_includes %}<div id="additional_lare_includes"></div>{% endblock additional_lare_includes %}
-</body>
+{% block additional_lare_includes %}<div id="additional_lare_includes"></div>{% endblock additional_lare_includes %}</body>
 </html>
