@@ -1,4 +1,4 @@
-\section{Implementation}
+\section{Implementation\label{chap:implementation}}
 
 Considering object-oriented programming the \emph{Lare} object builds the fundament of a \lare{} backend.
 It is a singleton in the request scope.
@@ -29,7 +29,7 @@ Returns true if the current request is a Lare request, otherwise false.
 \large{\textit{\textbf{Lare::set\_current\_namespace(\$namespace)}}}
 \\
 \\
-\begin{tabular}{|p{4cm}|p{9cm}|}
+\begin{tabular}{|p{4cm}|p{9.5cm}|}
     \hline
     \textbf{name} & \textbf{description} \\
     \hline
@@ -50,7 +50,7 @@ Returns the namespace of the current request.
 \\
 \large{\textbf{\textit{Lare::get\_matching\_count(\$extension\_namespace=None)}}}
 \\
-\begin{tabular}{|p{4cm}|p{8cm}|}
+\begin{tabular}{|p{5cm}|p{8.5cm}|}
     \hline
     \textbf{name} & \textbf{description} \\
     \hline
@@ -94,75 +94,53 @@ Twig\_Lare\_TokenParser\_LareExtends is the heart of the extension.
 It provides the possibility to use the tag \{\% lare\_extends \%\} in the way the default twig tag \{\% extends \%\} tag is used.
 Additionally it prevents multiple extend tags.
 Furthermore it is ensured that it is not called inside a block tag, like seen in the default twig tag.
-
-\begin{minipage}[c]{0.95\linewidth}
-\begin{lstlisting}[caption=Example Lare Template, label=example_lare_template]
-{% lare_extends "::base.twig" "Lare.Namespace" "::lare.twig" %}
-{% block page %}
-  <div id="page">
-    ...
-  </div>
-{% endblock page %}
-{% block lare_namespace %}
-  {{ current_lare_namespace }}
-{% endblock lare_namespace %}
-\end{lstlisting}
-\end{minipage}
 \\
-Listing \ref{example_lare_template} shows the usage of this tag.
+Listing \ref{lst:tags_template} shows the usage of this tag.
 Using Symfony \enquote{::} is a shortcut for the default template directory.
-When the current namespace is not inside \emph{Lare.Namespace} it extends to the base.twig template, because the second namespace does not match then.
-When the current namespace is \emph{Lare.Namespace} lare.twig will get extended.
+When the current namespace is not inside \emph{Lare.Tags} it extends to the \_\_tags\_base.html template.
+When the current namespace is inside \emph{Lare.Tags} \_\_lare.html will get extended.
 \\
-As the namespace matching occurs on the second level in this example, the overridden block should be the according one.
-For the naming in this thesis the \emph{page} block should be provided.
-Inside this block a <div> container with the according ID has to be placed.
+As the namespace matching occurs on the second level in this example, the overridden block for a match should be the third level containers.
+For the naming in this thesis the \emph{content} block should be provided.
+Inside this block <div> containers with the according IDs should to be placed, like shown in listing \ref{lst:lare_response}.
 
 \subsubsection{API}
 
 \large{\textbf{\textit{\{\% lare\_extends \$default\_template \$lare\_namespace \$lare\_template \%\}}}}
 \\
-\begin{tabular}{|p{4cm}|p{8cm}|}
+\begin{tabular}{|p{4cm}|p{9cm}|}
     \hline
     \textbf{name} & \textbf{description} \\
     \hline
-    \$default\_template & specifies which template should be extended in case of a non matching namespace. \\
+    \$default\_template & specifies the path of the template relative to the template dir which should be extended in case of a non matching namespace. \\
     \hline
     \$lare\_namespace & (optional) specifies the namespace which is tested against to decide whether the \$default\_template or the \$lare\_template should be extended. If not set, \$default\_template will be extended. \\
     \hline
-    \$lare\_template & (optional, default='::\_\_lare.html') specifies which template should be extended in case of a namespace match. \\
+    \$lare\_template & (optional, default='::\_\_lare.html') specifies the path of the template relative to the template dir which should be extended in case of a namespace match. \\
     \hline
 \end{tabular}
 
-Extends the \$default\_template if \$lare\_namespace is not matching, extends \$lare\_template otherwise.
+\noindent{}Extends the \$default\_template if \$lare\_namespace is not matching, extends \$lare\_template otherwise.
 
 
 \subsection{\djangoLare{}}
-
-\djangoLare{} was the first backend of \lare{}.
-It was introduced as a single object containing logic and template tools.
-After implementing \phpLare{} we decided to change the structure of the django backend towards the new segmentation.
-\\
 Similar to the combination of \phpLare{} and \twigLare{}, \djangoLare{} consists of a Lare object as in the PHP backend and implements the same templating tools as the Twig extension.
 Still as one package it is available via \emph{pip install django-lare} command.
 
-
 \subsubsection{API}
 The \textbf{lare\_extends} tag should be used in the django templating engine.
-
-\newpage{}
-\noindent{}\large{\textbf{\textit{\{\% lare\_extends default\_template lare\_namespace lare\_template \%\}}}}
 \\
+\large{\textbf{\textit{\{\% lare\_extends default\_template lare\_namespace lare\_template \%\}}}}
 \\
 \begin{tabular}{|p{4cm}|p{9cm}|}
     \hline
     \textbf{name} & \textbf{description} \\
     \hline
-    default\_template & specifies which template should be extended in case of a non matching namespace. \\
+    default\_template & specifies the path of the template relative to the template dir which should be extended in case of a non matching namespace. \\
     \hline
     lare\_namespace & (optional) specifies the namespace which is tested against to decide whether the default\_template or the lare\_template should be extended. If not set, default\_template will be extended. \\
     \hline
-    lare\_template & (optional, default='\_\_lare.html') specifies which template should be extended in case of a namespace match. \\
+    lare\_template & (optional, default='\_\_lare.html') specifies the path of the template relative to the template dir which should be extended in case of a namespace match. \\
     \hline
 \end{tabular}
 \\
@@ -207,7 +185,7 @@ Returns the namespace of the current request.
 \\
 \large{\textbf{\textit{lare.get\_matching\_count(extension\_namespace=None)}}}
 \\
-\begin{tabular}{|p{4cm}|p{8cm}|}
+\begin{tabular}{|p{4cm}|p{9cm}|}
     \hline
     \textbf{name} & \textbf{description} \\
     \hline
@@ -222,7 +200,7 @@ Returns how many parts of the extension\_namespace and the previous namespace (f
 \\
 \large{\textbf{\textit{lare.matches(extension\_namespace=None)}}}}
 \\
-\begin{tabular}{|p{4cm}|p{8cm}|}
+\begin{tabular}{|p{4cm}|p{9cm}|}
     \hline
     \textbf{name} & \textbf{description} \\
     \hline
@@ -254,11 +232,11 @@ It is the job of the backend to define which elements should change, as the fron
 After the script is loaded it automatically tests if the History API is available or not.
 If the requirements are fulfilled it gets initialized.
 \\
-As described in \ref{lare_frontend} a \lare{} frontend has to hijack page changes.
+As described in \ref{sec:lare_frontend} a \lare{} frontend has to hijack page changes.
 \lareJS{}, implemented as a jQuery\footnote{\url{https://jquery.com}} plugin realizes this by just one function call, e.g. \$(document).lare('a');.
 jQuery plugins normally have a syntax like \$('a').lare();.
 But semantically \lareJS{} sets the focus on the engine itself, instead of the items.
-Anyway the event listeners will be set by using this method.
+The event listeners will be set by using this method internally.
 \\
 Besides the \lare{} functionality \lareJS{} provides utilities for JavaScript including helping functions like e.g. \$(document).lareAlways(function(e) { ... });.
 This runs function(e) {} every time a lare request is finished successfully or a history step is made.

@@ -11,22 +11,22 @@ RewriteCond %{ENV:REDIRECT_STATUS} ^$
 RewriteRule (.*) / [R=404,L,NC]
 
 # frontend urls
-RewriteRule ^$ views/index.php [L]
-RewriteRule ^imprint/$ views/imprint.php [L]
-RewriteRule ^logout/$ views/logout.php [L]
-RewriteRule ^register/$ views/register.php [L]
-RewriteRule ^tags/$ views/tags.php [L]
-RewriteRule ^tags/([^/\.]+)/?$ views/tags.php?current_char=$1 [L]
-RewriteRule ^tags/([^/\.]+)/([^/\.]+)/?$ views/tags.php?current_char=$1&page=$2 [L]
+RewriteRule ^$ views/index.php?%{QUERY_STRING} [L]
+RewriteRule ^imprint/$ views/imprint.php?%{QUERY_STRING} [L]
+RewriteRule ^logout/$ views/logout.php?%{QUERY_STRING} [L]
+RewriteRule ^register/$ views/register.php?%{QUERY_STRING} [L]
+RewriteRule ^tags/$ views/tags.php?%{QUERY_STRING} [L]
+RewriteRule ^tags/([^/\.]+)/?$ views/tags.php?current_char=$1&%{QUERY_STRING} [L]
+RewriteRule ^tags/([^/\.]+)/([^/\.]+)/?$ views/tags.php?current_char=$1&page=$2&%{QUERY_STRING} [L]
 
 # account urls
-RewriteRule ^account/$ views/account/index.php [L]
-RewriteRule ^account/profile/$ views/account/profile.php [L]
+RewriteRule ^account/$ views/account/index.php?%{QUERY_STRING} [L]
+RewriteRule ^account/profile/$ views/account/profile.php?%{QUERY_STRING} [L]
 
 # api urls
-RewriteRule ^api/login/$ api/login.php [L]
-RewriteRule ^api/profile/$ api/profile.php [L]
-RewriteRule ^api/register/$ api/register.php [L]
+RewriteRule ^api/login/$ api/login.php?%{QUERY_STRING} [L]
+RewriteRule ^api/profile/$ api/profile.php?%{QUERY_STRING} [L]
+RewriteRule ^api/register/$ api/register.php?%{QUERY_STRING} [L]
 
 # restrictions
 RewriteRule ^classes/.*$ - [R=404,L,NC]

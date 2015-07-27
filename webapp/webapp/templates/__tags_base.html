@@ -5,18 +5,14 @@
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 text-center">
-                    <h1>
-                        Tags
-                    </h1>
-                    <h2>
-                        a sample queryset DELICIOUS.
-                    </h2>
+                    <h1 id="tags_headline">{{ current_char }} Tags - page {{ current_page }}</h1>
+                    <h2>from the sample queryset DELICIOUS.</h2>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-6 text-center">
                     {% for char, char_count in char_counts %}
-                    <a class="tagLetter {% if current_char == char %} strong{% endif %}" href="{% url 'tags' char %}">
+                    <a class="tagLetter {% if current_char == char %} strong{% endif %}" href="{% url 'tags' char '1' %}">
                         {{ char }} ({{char_count}})
                     </a><br>
                     {% endfor %}

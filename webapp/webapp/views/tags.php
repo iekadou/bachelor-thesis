@@ -17,9 +17,10 @@ if (isset($_GET['page']) && preg_match('/^[0-9]+$/', $_GET['page'])) {
     $current_page = $_GET['page'];
 } else { $current_page = '1'; }
 
-new View('Tags.'.$current_char.'.'.$current_page, Translation::translate('Tags'), 'tags.html');
+new View('Tags.'.$current_char.$current_page, Translation::translate('Tags'), 'tags.html');
 
 View::set_template_var('current_char', $current_char);
+View::set_template_var('current_page', $current_page);
 
 // get all tag counts, per starting chars
 if (View::get_template_var('lare_matching') < 2) {

@@ -1,4 +1,4 @@
-\section{Evaluation}
+\section{Evaluation\label{chap:evaluation}}
 To see whether the desired capabilities are fulfilled \lare{} is tested based on a sample web application.
 It provides different types of pages which are designed to perform the different aspects of this evaluation.
 \\
@@ -16,11 +16,8 @@ It is also suggested in \cite{palomaki2010web} for non-abstract HTTP request per
 \\
 In \cite{marchetto2008state} a new automated testing technique is introduced, again based on \selenium{}.
 \\
-We want to evaluate \lare{} and no the web application by itself, so there is no need to actually test the whole application, but only to check whether \lare{} works.
-\selenium{} in our case is sufficient.
-\\
-We make specific requests and want an specific answer of it.
-Especially we want to have the same content rendered through \lare{} as through normal \httpRequest{}s.
+We use \selenium{} to check if \phpLare{} in combination with \twigLare{} and \lareJS{} works as expected.
+Especially we check if the same content is rendered through \lare{} as through normal \httpRequest{}s.
 \\
 \selenium{} additionally makes it possible to use different \webdriver{}s, in this thesis FireFox and Chrome are used.
 This is important because of the different implementations of browsers' features.
@@ -30,7 +27,7 @@ To test the performance, we will use two technologies.
 First of all \curl{} based tests will be done.
 Those tests will focus on the initial request, containing the markup and \lare{} requests containing the according markup for it.
 \\
-Additionially the \webApplication{} will be benchmarked by using \selenium{} in combination with the window.performance attribute, introduced in HTML5.
+Additionally the \webApplication{} will be benchmarked by using \selenium{} in combination with the window.performance attribute, introduced in HTML5.
 This method provides the possibility to check whether further requests for scripts, images, etc. are influenced.
 It will show the actual load time the user has to wait for, until the whole page is loaded and ready to be displayed.
 \\
@@ -69,10 +66,7 @@ As \lare{} should only influence subsequent requests, every page will be tested 
 The sample web application used to test \lare{} in this thesis is implemented in PHP.
 To implement \lare{} we used \lareJS{} in the frontend, \twigLare{} and \phpLare{} for the backend.
 \\
-We use the MVC design pattern, but with a slightly different naming.
-For web applications it is common to use the name \emph{template} for what is called view in the MVC.
-As "controller" is not a common name PHP web applications as well, we use the phrase \emph{view} for those.
-With this we follow the naming of django\footnote{https://docs.djangoproject.com/en/1.8/faq/general/\#django-appears-to-be-a-mvc-framework-but-you-call-the-controller-the-view-and-the-view-the-template-how-come-you-don-t-use-the-standard-names}.
+We use the MVC design pattern but follow the naming of django\footnote{https://docs.djangoproject.com/en/1.8/faq/general/\#django-appears-to-be-a-mvc-framework-but-you-call-the-controller-the-view-and-the-view-the-template-how-come-you-don-t-use-the-standard-names}.
 \\
 Instead of using models for this benchmark, we are using raw SQL queries to ensure the same queries are made every time.
 Nevertheless it is prepared to inherit from the BaseModel class to be create models for later presentation purposes.
@@ -80,9 +74,15 @@ Nevertheless it is prepared to inherit from the BaseModel class to be create mod
 The sample web application consists of 2 static pages \emph{/home/} and \emph{/imprint/}.
 \\
 To demonstrate dynamic content we use the Delicious Dataset\footnote{http://fabianabel.de/data/mypes-www2010.html}.
-This is available under \emph{/tags/}.
-\\
-On the left side at this page is a list to sub pages where the tags are categorized by it's starting character.
+This is available under \emph{/tags/}, seen in fig. \ref{fig:lare_tags}.
+\begin{figure}[H]
+\centering 
+\includegraphics[width=14cm]{images/lare_p_1.png}
+\caption[lare_tags]{Screenshot of /tags/p/1/ of the sample \webApplication{}}
+\label{fig:lare_tags}
+\end{figure}
+
+\noindent{}On the left side at this page is a list to sub pages where the tags are categorized by it's starting character.
 Per alphabetic character one of those pages exists, additionally one page for tags starting with numbers and one starting with non alphanumeric characters.
 Behind each \emph{category} the count of tags in this category is displayed.
 This list is available on every sub page under the \emph{/tags/} url.
@@ -100,8 +100,9 @@ We are using the namespaces like shown in tab. \ref{tab:sampleapp_namespaces}.
 	\hline
 	/ & Lare & Home &  \\
 	/imprint/ & Lare & Imprint &  \\
-	/tags/ & Lare & Tags & all \\
-	/tags/a/ & Lare & Tags & a \\
+	/tags/ & Lare & Tags & all1 \\
+	/tags/a/ & Lare & Tags & a1 \\
+	/tags/a/ & Lare & Tags & a2 \\
 	/tags/.../ & Lare & Tags & ... \\
 	\hline
 \end{tabular}
@@ -113,36 +114,31 @@ We are using the namespaces like shown in tab. \ref{tab:sampleapp_namespaces}.
 \subsection{Capability tests\label{browser_functionality_tests}}
 
 \lare{} should fulfil a few requirements.
-First it should deliver the same content as normal HTTP requests.
-Second the browser functionality should work like in normal requests.
-In detail, the back and forward buttons should work, the history.go() function should work, and the URL should be updated.
-
-To check whether the requirements are fulfilled we use the sample \webApplication{} in combination with \selenium{}.
-
-To run tests with \selenium{} the python class Testcase is inherited and used.
-
-The following capabilities are tested in this testsuite.
+As \lare{} is a divided in a frontend and a backend we decided to write external tests to check if it works as desired.
+For this purpose we use the sample \webApplication{} in combination with \selenium{}.
+\\
+The following capabilities are tested:
 \begin{itemize}
-\item Content of the response of HTTP-requests
+\item Content of the response of common \httpRequest{}s
 \item Content of the response of \lare{} requests
 \item Back functionality
 \item Forward functionality
 \item URL changes when using \lare{}
 \end{itemize}
 
-The results show, that \lare{} fulfils the desired capabilities.
 
-\subsection{Testsuite\label{testsuite}}
+\subsection{Performance Testsuite\label{testsuite}}
 
 To test the performance of \lare{} a few different types of requests are needed to benchmark.
 The reference level will be a normal \httpRequest{} to each \webPage{}.
+Additionally we built a \webApplication{} based on AngularJS, to have a reference of a \clientSideMVC{}.
 \\
 The tested pages are available at the paths:
 
 \begin{itemize}
 \item /
 \item /imprint/
-\item /tags/p/
+\item /tags/p/1/
 \item /tags/p/2/
 \end{itemize}
 
@@ -157,7 +153,7 @@ The tested page to page requests are:
     \begin{itemize}
       \item / to /
       \item /imprint/ to /imprint/
-      \item /tags/p/ to /tags/p/
+      \item /tags/p/1/ to /tags/p/1/
       \item /tags/p/2/ to /tags/p/2/
     \end{itemize}
   \item Static page matching Site-Namespace:
@@ -167,52 +163,50 @@ The tested page to page requests are:
     \end{itemize}
   \item Dynamic page matching Site-Namespace:
     \begin{itemize}
-      \item / to /tags/p/
-      \item /imprint/ to /tags/p/
+      \item / to /tags/p/1/
+      \item /imprint/ to /tags/p/1/
     \end{itemize}
   \item Dynamic page to static page:
     \begin{itemize}
-      \item /tags/p/ to /
+      \item /tags/p/1/ to /
       \item /tags/p/2/ to /
-      \item /tags/p/ to /imprint/
+      \item /tags/p/1/ to /imprint/
       \item /tags/p/2/ to /imprint/
     \end{itemize}
   \item Dynamic page matching Page-Namespace:
     \begin{itemize}
-      \item /tags/p/ to /tags/p/2/
-      \item /tags/p/2/ to /tags/p/
+      \item /tags/p/1/ to /tags/p/2/
+      \item /tags/p/2/ to /tags/p/1/
     \end{itemize}
 \end{itemize}
 
 \subsection{\curl{} benchmarks\label{curl}}
-%\todo{curl usage of test design}
 We are using \curl{} to test the plain load times of the initial request of normal \httpRequest{}s and \lare{} requests.
-Those \curl{} requests do not include additional data like images, scripts and stylesheets, just the plain HTML.
+Those \curl{} requests do not include additional data like images, scripts and stylesheets, just the plain initial HTML.
+There is no point in testing the AngularJS application with this method, because the result of this request would not be the full site, as multiple, \ajax{} initiated requests are needed.
 \\
 The bash script \enquote{curl\_tests.sh} provides the functionality to run those \curl{} tests.
 To use it run
 \\
-\enquote{../evaluation/curl/curl\_tests.sh URL MAX\_RUNS LARE\_NAMESPACE CACERT}.
+\enquote{../evaluation/curl/curl\_tests.sh URL MAX\_RUNS CACERT}.
 \\
 \begin{itemize}
     \item URL dedicates where the web application is available e.g. \emph{http://lare.iekadou.com}
     \item MAX\_RUNS defines how many \curl{} requests per page should be made
-    \item LARE\_NAMEPSACE defines the namespace, which should be used when testing the \lare{} requests, e.g. Lare.Tags.p.
     \item CACERT is the only optional paremeter, which should only be set when requesting an SSL server. It then should be the path to the CACERT file.
 \end{itemize}
 
-\noindent{}To test all relevant sites we defined a variable PAGES inside the script, containing paths \emph{/}, \emph{/imprint/}, \emph{/tags/p/} and \emph{/tags/p/2/}.
-For each page of those we make a normal request, followed by a \lare{} request, with the namespace defined in LARE\_NAMESPACE. 
+\noindent{}To test all relevant sites we defined a variable PAGES inside the script, containing the requested paths.
+For each page of those we make a normal request, followed by a \lare{} request, with the namespace defined in NAMESPACES at the same index as the PAGE which gets requested.
 To get better test results we repeat those two requests \emph{MAX\_RUN} times. The output represents then the load times needed in seconds.
 \\
-For the results in this thesis, markes as local, we use a Macbook Pro Retina Early 2013 (2,7 GHz, 16GB Ram).
+For the results in this thesis, we use a Macbook Pro Retina Early 2013 (2,7 GHz, 16GB Ram).
 As web server we are running an Apache via Mamp Pro 3.1 for Mac OSX with PHP 5.3.6.
 As database server we are using MySQL in version 5.5.42.
 \\
-When running the benchmarks on an external server we are using a virtual server running OS: Ubuntu 12.04.5 LTS.
-It has a Intel(R) Xeon(R)CPU E5520, 4 GB ram, PSA version 11.5.30, Mysql version 5.5.41 and php version 5.3.10.
-\\
 Additionally we test every request with database caching (DBC) enabled, disabled and template caching(TC) enabled and disabled.
+\\
+Local tests are run from the same machine, external tests are run from an external network to imitate behaviour like in the WWW.
 
 \subsubsection{Results}
 
@@ -234,15 +228,13 @@ When database caching is enabled the load times of \lare{} are around 90\% with 
 \\
 Without database caching it changes to \textbf{7\%} with template caching and \textbf{10\%} without.
 \\
-Those improvments are caused by the amount of database queries that can be avoided. This also explains the differences between enabled and disabled database caching settings.
+Those improvements are caused by the amount of database queries that can be avoided. This also explains the differences between enabled and disabled database caching settings.
 \\
 When we take a look at the external tests we can see the same pattern.
 The effect of \lare{} on dynamic pages is a bit smaller.
-Wihtout database caching they are about \textbf{12\%} with template caching and \textbf{16\%} without.
+Without database caching they are about \textbf{12\%} with template caching and \textbf{16\%} without.
 \\
-Why does it have not this huge effect anymore?
-\\
-This can be explained with the latency.
+It does not have this huge effect anymore because of the latency.
 In our tests it was 40ms.
 \httpRequest{}s need two Round Trip Times, or four times the latency for connection establishment.
 When we substract those 160ms from the normal and the \lare{} requests we see ratios similar to the local tests.
@@ -259,9 +251,10 @@ For the results in this thesis we used the Firefox \webdriver{}.
 \\
 We request a page via a normal \httpRequest{} first.
 Afterwards we request the same page again via \lare{}.
-We make again all page to page requests, seen in \ref{testsuite}, to see where \lare{} has a bigger or smaller effect on the load times.
+Additionally we benchmark initial requests and page to page requests on the AngularJS platform.
+We make again all page transitions, seen in section \ref{testsuite}, to see where \lare{} has an effect on the load times and if it can keep up with AngularJS.
 \\
-Like in \ref{curl} we test every page on a local server and an external webserver and we disabled and enable database and template caching.
+Like in the section \ref{curl} we test every page on a local server and an external \webServer{} and we disable and enable database and template caching.
 
 \subsubsection{Results}
 

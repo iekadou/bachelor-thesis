@@ -21,9 +21,11 @@ class DBConnector {
         }
         $this->db_connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
         if (DB_CACHING) {
-            $this->db_connection->query("SET SESSION query_cache_type=1;");
+            $this->query("SET SESSION query_cache_type=1;");
+            $this->query("SET SESSION query_cache_size=1234567;");
         } else {
-            $this->db_connection->query("SET SESSION query_cache_type=0;");
+            $this->query("SET SESSION query_cache_type=0;");
+            $this->query("SET SESSION query_cache_size=0;");
         }
     }
 

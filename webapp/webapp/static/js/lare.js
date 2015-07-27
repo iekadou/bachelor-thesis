@@ -69,6 +69,7 @@
             return;
         }
 
+
         var url = $.isFunction(link.href) ? link.href() : link.href;
 
         var xhr_url = url;
@@ -84,6 +85,11 @@
         };
 
         var opts = fnLare.options = $.extend(true, {}, $.ajaxSettings, defaults, $.fn.lare.defaults, options);
+
+        // ignore links to the same page
+        if (link.href == location.href && !opts.reloadCurrentPage) {
+            return;
+        }
 
         if (!namespace) {
             namespace = $('body').data('lare-namespace') || '';
@@ -546,6 +552,7 @@
             push: true,
             replace: false,
             scrollTo: 0,
+            reloadCurrentPage: false,
             supportedVersion: supportedVersion,
             version: version
         };

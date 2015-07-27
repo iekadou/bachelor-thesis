@@ -14,6 +14,12 @@ define('Lare', true);
 // configs
 include(PATH."config/webapp.php");
 
+if (TEMPLATE_CACHING) {
+    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+    header("Cache-Control: post-check=0, pre-check=0", false);
+    header("Pragma: no-cache");
+}
+
 require_once(PATH."vendor/autoload.php");
 require_once(PATH."classes/Globals.php");
 require_once(PATH."classes/DBConnector.php");

@@ -10,6 +10,6 @@
 {% block additional_lare_includes %}<div id="additional_lare_includes">
     <script>
         $('.tagLetter').removeClass('strong');
-        $('.tagLetter[href="/tags/{{current_char}}/"]').addClass('strong');
+        $('.tagLetter[href="/tags/{{current_char}}/1/"]').addClass('strong');
     </script>
-</div>{% endblock additional_lare_includes %}
+</div><h1 id="tags_headline">{{ current_char }} Tags - page {{ current_page }}</h1>{% endblock additional_lare_includes %}

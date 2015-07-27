@@ -1,0 +1,31 @@
+<div class="home-hero">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                <h1>
+                    {{current_char}} Tags - page {{current_page}}
+                </h1>
+                <h2>
+                    from the sample queryset DELICIOUS.
+                </h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6 text-center">
+                <div id="content">
+                    <a href class="tagLetter" ng-repeat="char in chars" ng-click="getTags(char.char, 1)">
+                        <span ng-class="{strong: current_char === char.char}">{{ char.char }} ({{ char.char_count }})</span><br>
+                    </a><br>
+                </div>
+            </div>
+            <div class="col-xs-6 text-center">
+                <div ng-repeat="tag in tags">
+                    {{tag.tag}} <br>
+                </div>
+                <ul class="pagination">
+                    <li ng-class="{active: tag_page.page === current_page, disabled: tag_page.disabled}" ng-repeat="tag_page in tag_pages"><a href ng-click="getTags(current_char, tag_page.page)" data-tags-page="#/tags/{{current_char}}/{{ tag_page.page }}/" ng-bind-html="tag_page.label"></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
