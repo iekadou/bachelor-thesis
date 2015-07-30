@@ -2,7 +2,7 @@
 
 Considering object-oriented programming the \emph{Lare} object builds the fundament of a \lare{} backend.
 It is a singleton in the request scope.
-When receiving a request the server creates it and analyzes the current \http{} header whether a namespace is set or not.
+When receiving a request the server creates it and analyses the current \http{} header whether a namespace is set or not.
 \\
 The \lare{} object contains all necessary data and functions.
 
@@ -11,8 +11,8 @@ The \lare{} object contains all necessary data and functions.
 \phpLare{} is a general \lare{} backend to be used in PHP.
 It builds the base of every other \lare{} module in PHP, especially for template engines.
 \\
-As defined before the \lare{} object is implemented as a request-scoped singleton.
-This object gets created by the get\_instance() method.
+As defined before, the \lare{} object is implemented as a request-scoped singleton.
+This object is created by the get\_instance() method.
 To prevent multiple objects of this class the \_\_clone() and  \_\_construct() methods are replaced by empty functions.
 \\
 Automatically one object gets instantiated after the definition of this class.
@@ -59,7 +59,7 @@ Returns the namespace of the current request.
 \end{tabular}
 \\
 \\
-Returns how many parts of the \$extension\_namespace and the previous namespace (from outer to inner) are matching, before the first mismatch occurs.
+Returns how many parts of the \$extension\_namespace and the previous name\-space (from outer to inner) are matching, before the first mismatch occurs.
 \\
 \\
 \\
@@ -87,22 +87,20 @@ Twig-Lare brings Lare functionality to the template engine Twig\footnote{http://
 Twig is used by Symfony, a framework which is used in e.g. Drupal 8, eZPublish, phpBB and Sylius.
 \\
 Twig-Lare is implemented as a Twig extension.
-It consists of a TwigTokenParser and the global variable lare\_current\_namespace.
-The TwigTokenParser
-\\
-Twig\_Lare\_TokenParser\_LareExtends is the heart of the extension.
-It provides the possibility to use the tag \{\% lare\_extends \%\} in the way the default twig tag \{\% extends \%\} tag is used.
+It consists of a TwigTokenParser and the global variable \enquote{lare\_current\_namespace}.
+The TwigTokenParser \emph{Twig\_Lare\_TokenParser\_LareExtends} is the heart of the extension.
+It provides the possibility to use the tag \{\% lare\_extends \%\} in the way the default Twig tag \{\% extends \%\} is used.
 Additionally it prevents multiple extend tags.
-Furthermore it is ensured that it is not called inside a block tag, like seen in the default twig tag.
+Furthermore it is ensured that it is not called inside a block tag, as seen in the default twig tag.
 \\
 Listing \ref{lst:tags_template} shows the usage of this tag.
 Using Symfony \enquote{::} is a shortcut for the default template directory.
-When the current namespace is not inside \emph{Lare.Tags} it extends to the \_\_tags\_base.html template.
-When the current namespace is inside \emph{Lare.Tags} \_\_lare.html will get extended.
+When the current namespace is not inside \emph{Lare.Tags}, it extends to the \_\_tags\_base.html template.
+When the current namespace is inside, \emph{Lare.Tags} \_\_lare.html will get extended.
 \\
 As the namespace matching occurs on the second level in this example, the overridden block for a match should be the third level containers.
 For the naming in this thesis the \emph{content} block should be provided.
-Inside this block <div> containers with the according IDs should to be placed, like shown in listing \ref{lst:lare_response}.
+Inside this block \emph{<div>} containers with the according IDs should be placed, as shown in listing \ref{lst:lare_response}.
 
 \subsubsection{API}
 
@@ -112,20 +110,20 @@ Inside this block <div> containers with the according IDs should to be placed, l
     \hline
     \textbf{name} & \textbf{description} \\
     \hline
-    \$default\_template & specifies the path of the template relative to the template dir which should be extended in case of a non matching namespace. \\
+    \$default\_template & specifies the path of the template relative to the template directory which should be extended in case of a non matching namespace. \\
     \hline
-    \$lare\_namespace & (optional) specifies the namespace which is tested against to decide whether the \$default\_template or the \$lare\_template should be extended. If not set, \$default\_template will be extended. \\
+    \$lare\_namespace & (optional) specifies the namespace against which is tested to decide whether the \$default\_template or the \$lare\_template should be extended. If not set, \$default\_template will be extended. \\
     \hline
-    \$lare\_template & (optional, default='::\_\_lare.html') specifies the path of the template relative to the template dir which should be extended in case of a namespace match. \\
+    \$lare\_template & (optional, default='::\_\_lare.html') specifies the path of the template relative to the template directory which should be extended in case of a name\-space match. \\
     \hline
 \end{tabular}
 
 \noindent{}Extends the \$default\_template if \$lare\_namespace is not matching, extends \$lare\_template otherwise.
 
 
-\subsection{\djangoLare{}}
+\subsection{\DjangoLare{}}
 Similar to the combination of \phpLare{} and \twigLare{}, \djangoLare{} consists of a Lare object as in the PHP backend and implements the same templating tools as the Twig extension.
-Still as one package it is available via \emph{pip install django-lare} command.
+As one package it is available via \emph{pip install django-lare} command.
 
 \subsubsection{API}
 The \textbf{lare\_extends} tag should be used in the django templating engine.
@@ -136,11 +134,11 @@ The \textbf{lare\_extends} tag should be used in the django templating engine.
     \hline
     \textbf{name} & \textbf{description} \\
     \hline
-    default\_template & specifies the path of the template relative to the template dir which should be extended in case of a non matching namespace. \\
+    default\_template & specifies the path of the template relative to the template directory which should be extended in case of a non matching namespace. \\
     \hline
-    lare\_namespace & (optional) specifies the namespace which is tested against to decide whether the default\_template or the lare\_template should be extended. If not set, default\_template will be extended. \\
+    lare\_namespace & (optional) specifies the namespace against which is tested to decide whether the default\_template or the lare\_template should be extended. If not set, default\_template will be extended. \\
     \hline
-    lare\_template & (optional, default='\_\_lare.html') specifies the path of the template relative to the template dir which should be extended in case of a namespace match. \\
+    lare\_template & (optional, default='\_\_lare.html') specifies the path of the template relative to the template directory which should be extended in case of a name\-space match. \\
     \hline
 \end{tabular}
 \\
@@ -151,7 +149,7 @@ Extends the default\_template if lare\_namespace is not matching, extends lare\_
 \\
 \\
 \\
-In the following API documentation of the \textbf{\lare{}} object will \textbf{lare} represent the singleton instance.
+In the following API documentation of the \textbf{\lare{}} object \textbf{lare} represents the singleton instance.
 \\
 \\
 \\
@@ -223,21 +221,21 @@ After modifications and restructuring of \djangoLare{} the API is similar to the
 
 
 \subsection{\lareJS{}}
-\lareJS{}, as successor of jquery-pjaxr, is the JavaScript frontend engine for \lare{}, using AJAX to communicate with the server.
+\lareJS{} is the JavaScript frontend engine for \lare{}, using AJAX to communicate with the server.
 It was first built as an extended version of jquery-pjax, allowing to replace multiple containers with one request, instead of only one.
-Other than in jquery-pjax it is not needed to define which containers should be replace in the frontend.
+Other than in jquery-pjax it is not needed to define which containers should be replaced in the frontend.
 It is the job of the backend to define which elements should change, as the frontend does an ID based matching.
 \lareJS{} additionally provides the functionality to extend the HTTP header by the current \lare{} namespace.
 \\
 After the script is loaded it automatically tests if the History API is available or not.
-If the requirements are fulfilled it gets initialized.
+If the requirements are fulfilled it gets initialised.
 \\
 As described in \ref{sec:lare_frontend} a \lare{} frontend has to hijack page changes.
-\lareJS{}, implemented as a jQuery\footnote{\url{https://jquery.com}} plugin realizes this by just one function call, e.g. \$(document).lare('a');.
-jQuery plugins normally have a syntax like \$('a').lare();.
+\lareJS{}, implemented as a jQuery\footnote{\url{https://jquery.com}} plugin realizes this by just one function call, e.g. \emph{\$(document).lare('a');}.
+jQuery plugins normally have a syntax like \emph{\$('a').lare();}.
 But semantically \lareJS{} sets the focus on the engine itself, instead of the items.
-The event listeners will be set by using this method internally.
+The event listeners are set by using this method internally.
 \\
-Besides the \lare{} functionality \lareJS{} provides utilities for JavaScript including helping functions like e.g. \$(document).lareAlways(function(e) { ... });.
+Besides the \lare{} functionality \lareJS{} provides utilities for JavaScript including auxiliary functions like \$(document).lareAlways(function(e) { ... });.
 This runs function(e) {} every time a lare request is finished successfully or a history step is made.
-This makes it possible to imitate \$(document).ready(function(e) { ... }); provided by jQuery, to hook functions to the document ready event.
+This makes it possible to imitate the event listener \emph{\$(document).ready(function(e) { ... });} provided by jQuery, to hook functions to the \enquote{document ready event}.

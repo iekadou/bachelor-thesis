@@ -1,25 +1,25 @@
 \section{State of the art\label{chap:state_of_the_art}}
-\ajax{} is a widely used technique in the internet to build web applications because of the user experience improvements it brings.
-In \cite{roodt2006effect} is mentioned that \ajax{} applications have a better usability than non-\ajax{} websites.
-The same conclusion is made in \cite{kluge2007effects}, despite of the lack of browser navigation support.
-Beside the navigation problem another disadvantage is, as presented in \cite{mesbah2009analysis}, crawling \ajax{} applications is not trivial.
-One solution of this task is finding clickables and navigating to every page found by this.
-Nevertheless \cite{mesbah2009analysis} states also that this only generates a snapshot of the full application.
-Even search engines are avoiding to crawl websites because of it's difficulty\cite{duda2009ajax}.
-Currently the task of building a crawlable \singlePageApplication{} using \ajax{} is often avoided, instead crawling algorithms are getting improved and are in focus of research.
+\ajax{} is a widely used technique in the internet to build web applications because of the user experience improvements it features.
+In \cite{roodt2006effect} is mentioned that \ajax{} applications have a better usability than non-\ajax{} \webSite{}s.
+The same conclusion is made in \cite{kluge2007effects}, despite the lack of browser navigation support.
+Besides the navigation problem, another disadvantage is, as presented in \cite{mesbah2009analysis}, crawling \ajax{} applications is not trivial.
+One solution to this task is finding clickables and navigating to every page found.
+Nevertheless \cite{mesbah2009analysis} also states that this only generates a snapshot of the full application.
+Even search engines are avoiding to crawl \webSite{}s because of it's difficulty\cite{duda2009ajax}.
+Currently the task of building a crawlable \singlePageApplication{} using \ajax{} is often avoided. Instead crawling algorithms are improved and in focus of research.
 
 \subsection{Client-side rendering\label{sec:state_client_side_rendering}}
 When building an asynchronous web application it is possible to render the pages in the client or in the server.
-A lot of \ajax{} applications use a JSON API which already predfines the outcome of this decision:
+A lot of \ajax{} applications use a JSON API which already predefines the outcome of this decision:
 \\
 JSON is sent by the server, interpreted and rendered by the \ajax{}-engine in the client.
 An advantage of this practice is the strong separation of the logic on the server and views on the client-side.
 This \webApplication{} design also reduces the server load as the computation of rendering the data is made in the client.
-The overhead of HTML markup for styles and the UI is not sent on every \webPage{} anymore which additionally reduces the traffic.
+The overhead of HTML markup for styles and the UI is not sent for every \webPage{} anymore which additionally reduces the traffic.
 As plain string modifications are difficult to maintain especially on large applications, client-side templates become more and more widespread.
 \\
 As the web server does not render \webPage{}s, it is hard to create snapshots for search engines.
-Headless browsers like \enquote{Phantom.js\footnote{http://phantomjs.org/}} can render such pages and serve them for crawlers.
+Headless browsers like \enquote{Phantom.js}\footnote{http://phantomjs.org/} can render such pages and serve them for crawlers.
 
 \begin{figure}[H]
 \centering
@@ -28,7 +28,7 @@ Headless browsers like \enquote{Phantom.js\footnote{http://phantomjs.org/}} can 
 \label{fig:frontend_snapshots}
 \end{figure}
 
-\noindent{}Figure \ref{fig:frontend_snapshots} shows the flow of a request by a crawler with the use of an headless browser and HashBang URLs, introcuded in \ref{hashbangurls}.
+\noindent{}Figure \ref{fig:frontend_snapshots} shows the flow of a request by a crawler with the use of a headless browser and HashBang URLs, introcuded in \ref{hashbangurls}.
 After the initial crawl request is made, the web server lets the server-side headless browser render a snapshot of the HTML and then response to the crawler with this snapshot.
 
 \subsubsection{Load time analysis}
@@ -42,7 +42,7 @@ With client-side rendering at least three requests are needed, before data is re
 \noindent{}It is not possible to run the three requests listed above in any other order or concurrently, because the \ajax{} engine is linked in the initial HTML file and the data gets requested by the \ajax{} engine.
 \\
 Sometimes the frontend templates must be requested additionally if they are not part of the HTML document or the AJAX engine.
-Those template requests could be made concurrently to retrieving the data, which is the reason that those further requests are ignored in the following analysis.
+Those template requests could be made concurrently to retriev the data, which is the reason that those further requests are ignored in the following analysis.
 \\
 To get a bit more into detail this means a series of requests and responses.
 Mike Belshe states in \cite{belshe2010more} \enquote{More bandwidth doesn't matter (much)}.
@@ -51,9 +51,9 @@ Considering this and the fact he states that Round Trip Times influence the Web 
 As HTTP is based on TCP it first has to make a handshake, which takes one RTT.
 All of those three requests take at least one additional RTT, too.
 This means it is necessary to wait at least four RTTs before the page starts to be rendered.
-Taking the RTT of 70ms, used in \cite{spero1994analysis}, this means a waiting time of 280ms before rendering could start.
+Taking the RTT of 70ms, used in \cite{spero1994analysis}, this means a waiting time of 280ms before rendering can start.
 \\
-An efficient \webApplication{} which uses client-side rendering requests one url on which the response contains all needed data.
+An efficient \webApplication{} which uses client-side rendering requests one URL on which the response contains all needed data.
 If more requests are needed an additional RTT per request has to be added to the example above.
 \\
 Despite the fact that the server could need additional time to render the page, common \httpRequest{}s need 2 RTTs less than this pattern.
@@ -62,16 +62,15 @@ Despite the fact that the server could need additional time to render the page, 
 In addition to only outsource the templating to the frontend, there are complete client-side MVC frameworks.
 Those frameworks use the model view controller pattern, where the controller has a connection to the web server.
 \\
-Built on REST APIs they move all logic into the client-side.
+Built on REST APIs\footnote{\url{http://www.peej.co.uk/articles/rest.html}} they move all logic into the client-side.
 This approach is built primarily on the motivation to reduce the web server load and traffic.
 \\
-The initial request is divided in to the three requests as shown in section\ref{sec:state_client_side_rendering}.
-Further requests then are not made to request URLs in the old fashioned way, but to retrieve objects through a REST API. 
-Object manipulation, logical methods and everything, normally implemented in a server backend should be in the frontend in those frameworks.
+The initial request is divided into the three requests as shown in section \ref{sec:state_client_side_rendering}.
+Further requests are not made to request URLs in the old fashioned way, but to retrieve objects through a REST API. 
+Object manipulation, logical methods and everything normally implemented in a server backend should be in the frontend in those frameworks.
 \\
 Using this pattern, the same problems as with client-side templates will appear but on another level.
-The web server will not gather all information which is needed, send it to the templating engine which then renders those.
-The client itself decides which information it needs and requests it from the server.
+Instead of the web server, the client decides which information it needs and requests it from the server and renders those.
 \\
 Load and traffic of the server in this pattern is relatively low, because it will only create, update, delete or retrieve objects in the database. 
 More logical functions on the server-side are not needed normally.
@@ -80,29 +79,29 @@ Clients, especially mobile devices and slow computers, might struggle with the l
 \\
 The most used client-side MVC framework is AngularJS\footnote{https://angularjs.org/}. In the evaluation in chapter \ref{chap:evaluation} it also represents this kind of \webApplication{}s.
 
-\subsubsection{load time analysis}
-Similar to simple client-side templates, mentioned in \ref{sec:state_client_side_rendering}, client-side MVCs need at least three requests to render the first page.
-In most of the cases more than one model needs to be known by the client to render a page, which increases the amount of requests to render a page.
+\subsubsection{Load time analysis}
+Similar to simple client-side templates mentioned in \ref{sec:state_client_side_rendering}, client-side MVCs need at least three requests to render the first page.
+In most cases more than one model needs to be known by the client to render a page, which increases the amount of requests to render a page.
 \\
 To get into more detail, the client needs to wait for the first request to be completed, then the \ajax{} engine has to be loaded.
-After the initialization of the \ajax{} engine it requests the needed data.
+After the initialization of the \ajax{} engine, it requests the needed data.
 \\
-We are using 70ms as RTT like in \ref{sec:state_client_side_rendering} and get a result of 280ms for those three requests.
-This result is the optimal result which can be achieved, but often it is much higher, due to there is not one data URL but multiple objects which have to be fetched.
+We are using 70ms as RTT as stated in \ref{sec:state_client_side_rendering} and get a result of 280ms for those three requests.
+This result is the optimal result which can be achieved, but often it is much higher, because there is not one but multiple objects which have to be fetched independently.
 It is not always possible to request all data concurrently, e.g. when a second object is linked in a first one.
-In this case the first object has to be fetched and afterwards the second one, when it's not known or linked before.
+In this case the first object has to be fetched and afterwards the second one if it's not known or linked before.
 
 \subsection{Hash-Bang URLs\label{hashbangurls}}
 In order to have a working SEO in SPAs it is recommended by Google to use hashbang URLs.
 This pattern defines that in the URL the \emph{hash part} should start with \enquote{\#!} instead of only \enquote{\#}.
 Finding this combination let crawlers know that the site provides an AJAX application and additionally full page snapshots created using techniques like shown in \ref{sec:state_client_side_rendering}.
-When a crawler e.g. finds a URL like \url{http://example.com/\#!site=test} it crawls \newline \url{http://example.com/?\_escaped\_fragment\_=site=test} instead.
+When a crawler e.g. finds an URL like \url{http://example.com/\#!site=test} it crawls \newline \url{http://example.com/?\_escaped\_fragment\_=site=test} instead.
 This is done, because everything after the \enquote{\#} will not be sent to the server, but is only recognized by the client.
 To let the server know that a specific page should be requested this URL modification is needed.
 At this \enquote{?\_escaped\_fragment\_=} URL a snapshot of the full page should be available.
 This means, instead of only providing a few parts of the page required by \ajax{}, the whole HTML DOM should be delivered.
 \\
-On the other side the \ajax{} engine can recognize everything behind the \enquote{\#} and requests the data needed for the page, which the ongoing part leads to.
+On the other hand the \ajax{} engine can recognize everything behind the \enquote{\#} and requests the data needed for the page, lead to by the ongoing part.
 \\
 This technique was developed for URL changing by JavaScript without a full page reload.
 Old browsers without the implementation of the History API are not able to change the URL without a full load of a page.
@@ -112,7 +111,7 @@ To gain navigation functionality on \singlePageApplication{}s the only way was t
 Another way to implement \singlePageApplication{}s using \ajax{} is to use the development pattern of HIJAX.
 When using PJAX and \lare{}, introduced in section \ref{sec:state_pjax} and chapter \ref{chap:lare}, the usage of this pattern is recommended.
 \\
-When developing a \webSite{} using this pattern it should be planned with the use of \ajax{} but in the first step implemented serving just common \httpRequest{}s.
+When developing a \webSite{} using this pattern, it should be planned with the use of \ajax{} but in the first step implemented serving just common \httpRequest{}s.
 Changes of the HTML markup in favour of \ajax{} should be avoided at this step.
 Every \webPage{} should be delivered fully and links should be linking to real \webPage{}s.
 No JavaScript should be needed to link \webPage{}s within the site.
@@ -128,11 +127,12 @@ This means even when JavaScript is not available or blocked, the \webSite{} stil
 PJAX, introduced 2011 by Chris Wanstrath, \enquote{is a jQuery plugin that uses AJAX and pushState to deliver a fast browsing experience with real permalinks, page titles, and a working back button.}\footnote{https://github.com/defunkt/jquery-pjax\#introduction}
 Using it makes it possible to use the HIJAX pattern, introduced in \ref{hijax}.
 \\
-PJAX let the browser replace a container in a page by requesting a URL in certain way like adding a \enquote{?pjax} query parameter.
-When requesting a page on a server on \url{http://example.com/test/} a full page is responded.
+PJAX let the browser replace a container in a page by requesting a URL in a certain way like adding a \enquote{?pjax} query parameter.
+When requesting a page like e.g. \url{http://example.com/test/} a full page is responded.
 Requests at \url{http://example.com/test/?pjax} will be responded with only one container.
-In combination with \hijax{} it is possible to have links like \emph{<a href="/test/" class="pjax">test</a>} but PJAX performs a request to \url{http://example.com/test/?pjax} instead.
+In combination with \hijax{} it is possible to have links pointing to \emph{<a href="/test/" class="pjax">test</a>} while PJAX requests \url{http://example.com/test/?pjax}.
 Crawlers which are not able to interpret JavaScript crawl all pages in the common way.
-Browser which are able to interpret JavaScript will have the advantages of AJAX instead.
+Browsers which are able to interpret JavaScript instead will have the advantages of AJAX.
 \\
-PJAX has the ability to either send one specific container or a full page per URL. It has no easy to use ability to send containers according to the client's previous page.
+PJAX has the ability to either send one specific container or a full page per URL. 
+Without great effort it is not able to send containers according to the client's previous page.

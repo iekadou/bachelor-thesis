@@ -18,6 +18,11 @@
 \usepackage{hyperref}
 \usepackage{caption}
 \usepackage{pdfpages}
+\usepackage{makecell}
+\renewcommand\theadalign{cb}
+\renewcommand\theadfont{\bfseries}
+\renewcommand\theadgape{\Gape[4pt]}
+\renewcommand\cellgape{\Gape[4pt]}
 
 \captionsetup[longtable]{format=hang,font=large,labelfont=bf}
 \captionsetup[figure]{format=hang,font=large,labelfont=bf}
@@ -57,6 +62,7 @@
 \def \ClientSideMVC{Client-side MVC}
 \def \curl{\gls{curl}}
 \def \djangoLare {\gls{djangoLare}}
+\def \DjangoLare {\Gls{djangoLare}}
 \def \hijax {\gls{hijax}}
 \def \html {\gls{html}}
 \def \http {HTTP}
