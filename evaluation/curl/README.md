@@ -2,12 +2,11 @@
 
 Usage:
 
-./curl_tests.sh $URL $ITERATIONS $PJAXR_ENABLED $PJAXR_NAMESPACE
+./curl_tests.sh $LARE_URL $ITERATIONS $CACERT
 
-$URL = URL to curl
+$LARE_URL = URL to Lare web application
 $ITERATIONS = Count of Iterations
-$PJAXR_ENABLED = true / false
-$PJAXR_NAMESPACE = Pjaxr Namespace of pervious page
+$CACERT = (optional) path to CACERT
 
 e.g.:
-./curl_tests.sh https://pjaxr.io 100 true Pjaxr.Home
+./curl_tests.sh https://lare.io 10 cacert.pem

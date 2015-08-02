@@ -1,21 +1,22 @@
 \section{Conclusion and future work\label{chap:conclusion}}
 
-We tested \lare{} to check if the browser functionality is available as in common \webApplication{}s.
-The results show that those expectations regarding back and forward buttons in the browser are satisfied.
+We implemented \phpLare{} and \twigLare{} to fulfil the browser functionality as in common \webApplication{}s.
+The back and forward buttons in the browser are functioning.
 Additionally the URL changes like on normal \webApplication{}s which makes it possible to bookmark \webPage{}s.
 \\
 The benchmark results show that the performance increases with \lare{}.
-The effect on static pages is always quite similar and satisfying.
+The effect on static pages is always quite satisfying and does not vary a lot.
 \\
 The results for dynamic pages are a bit more complex.
-The performance improvements by \lare{} vary a lot.
-Load times from 3\% to 99\% relatively to normal requests display this.
+The performance improvements by \lare{} in this case vary a lot.
+Load times from 5\% to 95\% relatively to normal requests display this.
 \\
 Besides other reasons the biggest difference between those low and high load times is the changed content.
 Requesting a very dynamic page with a non-related namespace has nearly no improvements relatively to normal requests.
 Being on a very dynamic page, requesting a page with a related namespace makes it possible to experience a bigger benefit of \lare{}.
+This effect is particularly caused by avoided backend queries.
 \\
-What does that mean for the usage of \lare{}, when is it a good idea to use it?
+%What does that mean for the usage of \lare{}, when is it a good idea to use it?
 \\
 Static pages have a better performance with \lare{} than without.
 Accordingly it is appropriate for this scenario.
@@ -24,14 +25,12 @@ When having dynamic content on a page and only a few elements change when reques
 \\
 \WebSite{}s that are a collection of completely unrelated very dynamic \webPage{}s do not benefit much from \lare{}.
 \\
-The more content stays from page to page, the more \lare{} scores.
-\\
 As Tim Berners-Lee states in \cite{berners1998cool} URLs should not change.
-When using \lare{} in an already running application it is possible to stick with the current used URLs.
+When using \lare{} in an already running application it is possible to stick with the currently used URLs.
 It does not need special URL patterns like Hashbang-URLs, or such.
 \\
-Load tests with multiple users as the amount of concurrent users should be up to 10000 to be representative \cite{bozdag2008performance}.
-In the future it is necessary to do such a performance benchmark, to see how \lare{} effects such amounts of users.
+Load tests with multiple users are important to do on \webApplication{}s.
+The amount of concurrent users should be up to 10000 to be representative \cite{bozdag2008performance}.
+In the future it is necessary to do such a performance benchmark, to see how \lare{} behaves with such amounts of users.
 \\
-Additionally it is recommended to test every new \lare{} backend in a way similar to the one presented in this thesis.
-The results in different programming languages and \webApplication{} designs may differ from the ones displayed here.
+Additionally it is recommended to implement and test every new \lare{} backend in a way similar to the one presented in this thesis.

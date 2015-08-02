@@ -10,7 +10,8 @@ As presented in \cite{jonsson2009database} \singlePageApplication{}s are more us
 \ajax{} is nowadays, other than mentioned in \cite{jonsson2009database}, available in nearly every browser.
 As stated in \cite{herlihy2013howmany} in 2013 only 1.1\% of the internet users visiting the \webSite{} of the UK government did not get their JavaScript enhancements.
 \\
-As mentioned in \cite{jonsson2009database} a disadvantage of \ajax{} is that users are not able to save their \webSite{}s as a bookmark, because while surfing on this page, the URL never changes.
+As mentioned in \cite{jonsson2009database} a disadvantage ochrome
+f \ajax{} is that users are not able to save their \webSite{}s as a bookmark, because while surfing on this page, the URL never changes.
 Additionally this lack of URLs for subpages leads to a contradiction to the current HTTP standard as defined in \cite{fielding1999hypertext}.
 A resource is defined there as \enquote{a network data object or service that can be identified by a URI}.
 A page which can only be accessed by \ajax{} and not via a normal URL does not fulfil this requirement.
@@ -22,11 +23,11 @@ Additionally \ajax{} driven \webApplication{}s may require multiple small server
 \SinglePageApplication{}s have another problem nowadays. 
 As mentioned in \cite{matter2008ajax} \ajax{} \webSite{}s are difficult to examine for search engines and other crawlers, due to several challenges.
 \\
-As Google is the most used search engine in the World Wide Web they have a design pattern\footnote{https://developers.google.com/webmasters/ajax-crawling/docs/getting-started (Accessed: Juli 22, 2015)} for implementing a crawlable \ajax{} web application.
+As Google is the most used search engine in the World Wide Web they have a design pattern, presented in \cite{google2014online}, for implementing a crawlable \ajax{} web application.
 In this guideline it is recommended to have snapshots of every \webPage{} available under non-user-friendly \gls{url}s, called Hash-Bang URLs.
 This means additional maintenance effort for \webSite{}s, especially when they are very dynamic.
 \\
-Even though Google can interpret JavaScript-generated content since May 2014\footnote{http://googlewebmastercentral.blogspot.no/2014/05/understanding-web-pages-better.html} they still give the advice to degrade graceful when it comes to JavaScript compatibility.
+Even though Google can interpret JavaScript-generated content since May 2014, as announced in \cite{hendriks2014understanding}, they still give the advice to degrade graceful when it comes to JavaScript compatibility.
 \\
 In this thesis we will improve and evaluate the performance of a new technology called \lare{}.
 Together with Stephan Gro{\ss} the author developed PJAXR, the predecessor of \lare{}, for using \ajax{} with it's advantages but trying to avoid the disadvantages explained before.
@@ -34,8 +35,8 @@ Together with Stephan Gro{\ss} the author developed PJAXR, the predecessor of \l
 The result of this cooperation was a frontend-side implementation called \emph{jquery-pjaxr}.
 As PJAXR also needed a backend to be implemented, the author developed the first PJAXR backend called \emph{django-pjaxr}.
 \\
-The libraries \lareJS{} and \djangoLare{} are introduced in this thesis as the successors of \emph{jquery-pjaxr} and \emph{django-pjaxr}.
-Additionally in this thesis the author will introduce a new \lare{} backend for PHP, \emph{\phpLare{}} and \emph{\twigLare{}}, an extension for the \twig{}\footnote{http://twig.sensiolabs.org/ (Accessed: June 16, 2015)} template-engine.
+The libraries \emph{\lareJS{}} and \emph{\djangoLare{}} are introduced in this thesis as the successors of \emph{jquery-pjaxr} and \emph{django-pjaxr}.
+Additionally in this thesis the author will introduce a new \lare{} backend for PHP, \emph{\phpLare{}} and \emph{\twigLare{}}, an extension for the \twig{}\footnote{\url{http://twig.sensiolabs.org/} (Accessed: June 16, 2015)} template-engine.
 \\
 Later \lare{} will be evaluated to reveal whether the expectations regarding browser functionality are satisfied.
 Furthermore the single user performance will be tested through benchmarks using \curl{} and \selenium{} in combination with the \webdriver{} API, to examine whether \lare{} is faster than normal web requests.

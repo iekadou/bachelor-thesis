@@ -6,7 +6,7 @@ Besides the navigation problem, another disadvantage is, as presented in \cite{m
 One solution to this task is finding clickables and navigating to every page found.
 Nevertheless \cite{mesbah2009analysis} also states that this only generates a snapshot of the full application.
 Even search engines are avoiding to crawl \webSite{}s because of it's difficulty\cite{duda2009ajax}.
-Currently the task of building a crawlable \singlePageApplication{} using \ajax{} is often avoided. Instead crawling algorithms are improved and in focus of research.
+Currently the task of building a crawlable \singlePageApplication{} using \ajax{} is often avoided. Instead crawling algorithms are improved and in focus of research. One example for this is  like \emph{ATUSO} \cite{mesbah2012invariant}.
 
 \subsection{Client-side rendering\label{sec:state_client_side_rendering}}
 When building an asynchronous web application it is possible to render the pages in the client or in the server.
@@ -19,7 +19,10 @@ The overhead of HTML markup for styles and the UI is not sent for every \webPage
 As plain string modifications are difficult to maintain especially on large applications, client-side templates become more and more widespread.
 \\
 As the web server does not render \webPage{}s, it is hard to create snapshots for search engines.
-Headless browsers like \enquote{Phantom.js}\footnote{http://phantomjs.org/} can render such pages and serve them for crawlers.
+Headless browsers like Phantom.js\footnote{\url{http://phantomjs.org/} (Accessed: Juli 28, 2015)} can render such pages and serve them for crawlers.
+\\
+Figure \ref{fig:frontend_snapshots} shows the flow of a request by a crawler with the use of a headless browser and HashBang URLs, introcuded in \ref{hashbangurls}.
+After the initial crawl request is made, the web server lets the server-side headless browser render a snapshot of the HTML and then response to the crawler with this snapshot.
 
 \begin{figure}[H]
 \centering
@@ -27,9 +30,6 @@ Headless browsers like \enquote{Phantom.js}\footnote{http://phantomjs.org/} can 
 \caption[frontend_snapshots]{Rendering client-side rendered pages with headless browser}
 \label{fig:frontend_snapshots}
 \end{figure}
-
-\noindent{}Figure \ref{fig:frontend_snapshots} shows the flow of a request by a crawler with the use of a headless browser and HashBang URLs, introcuded in \ref{hashbangurls}.
-After the initial crawl request is made, the web server lets the server-side headless browser render a snapshot of the HTML and then response to the crawler with this snapshot.
 
 \subsubsection{Load time analysis}
 With client-side rendering at least three requests are needed, before data is rendered:
@@ -58,11 +58,11 @@ If more requests are needed an additional RTT per request has to be added to the
 \\
 Despite the fact that the server could need additional time to render the page, common \httpRequest{}s need 2 RTTs less than this pattern.
 
-\subsection{\ClientSideMVC{}\label{clientSideMVC}}
+\subsection{\ClientSideMVC{}\label{sec:state_client_side_mvc}}
 In addition to only outsource the templating to the frontend, there are complete client-side MVC frameworks.
 Those frameworks use the model view controller pattern, where the controller has a connection to the web server.
 \\
-Built on REST APIs\footnote{\url{http://www.peej.co.uk/articles/rest.html}} they move all logic into the client-side.
+Built on REST APIs\footnote{\url{http://www.peej.co.uk/articles/rest.html} (Accessed: Juli 28, 2015)} they move all logic into the client-side.
 This approach is built primarily on the motivation to reduce the web server load and traffic.
 \\
 The initial request is divided into the three requests as shown in section \ref{sec:state_client_side_rendering}.
@@ -77,7 +77,7 @@ More logical functions on the server-side are not needed normally.
 \\
 Clients, especially mobile devices and slow computers, might struggle with the load of work instead.
 \\
-The most used client-side MVC framework is AngularJS\footnote{https://angularjs.org/}. In the evaluation in chapter \ref{chap:evaluation} it also represents this kind of \webApplication{}s.
+The most used client-side MVC framework is AngularJS\footnote{\url{https://angularjs.org/} (Accessed: Juli 28, 2015)}. In the evaluation in chapter \ref{chap:evaluation} it also represents this kind of \webApplication{}s.
 
 \subsubsection{Load time analysis}
 Similar to simple client-side templates mentioned in \ref{sec:state_client_side_rendering}, client-side MVCs need at least three requests to render the first page.
@@ -95,7 +95,7 @@ In this case the first object has to be fetched and afterwards the second one if
 In order to have a working SEO in SPAs it is recommended by Google to use hashbang URLs.
 This pattern defines that in the URL the \emph{hash part} should start with \enquote{\#!} instead of only \enquote{\#}.
 Finding this combination let crawlers know that the site provides an AJAX application and additionally full page snapshots created using techniques like shown in \ref{sec:state_client_side_rendering}.
-When a crawler e.g. finds an URL like \url{http://example.com/\#!site=test} it crawls \newline \url{http://example.com/?\_escaped\_fragment\_=site=test} instead.
+When a crawler e.g. finds an URL like \url{http://example.com/\#!site=test1} it crawls \newline \url{http://example.com/?\_escaped\_fragment\_=site=test1} instead.
 This is done, because everything after the \enquote{\#} will not be sent to the server, but is only recognized by the client.
 To let the server know that a specific page should be requested this URL modification is needed.
 At this \enquote{?\_escaped\_fragment\_=} URL a snapshot of the full page should be available.
@@ -124,13 +124,14 @@ When this pattern is used the \webSite{} degrades gracefully.
 This means even when JavaScript is not available or blocked, the \webSite{} still works, a client can still discover the single pages and a crawler sees the whole content.
 
 \subsection{PJAX\label{sec:state_pjax}}
-PJAX, introduced 2011 by Chris Wanstrath, \enquote{is a jQuery plugin that uses AJAX and pushState to deliver a fast browsing experience with real permalinks, page titles, and a working back button.}\footnote{https://github.com/defunkt/jquery-pjax\#introduction}
+PJAX, introduced 2011 by Chris Wanstrath, \enquote{is a jQuery plugin that uses AJAX and pushState to deliver a fast browsing experience with real permalinks, page titles, and a working back button.}\footnote{\url{https://github.com/defunkt/jquery-pjax\#introduction} (Accessed: Juli 28, 2015)}
 Using it makes it possible to use the HIJAX pattern, introduced in \ref{hijax}.
 \\
 PJAX let the browser replace a container in a page by requesting a URL in a certain way like adding a \enquote{?pjax} query parameter.
 When requesting a page like e.g. \url{http://example.com/test/} a full page is responded.
 Requests at \url{http://example.com/test/?pjax} will be responded with only one container.
-In combination with \hijax{} it is possible to have links pointing to \emph{<a href="/test/" class="pjax">test</a>} while PJAX requests \url{http://example.com/test/?pjax}.
+In combination with \hijax{} it is possible to have anchor tags like \emph{<a href="/test/" class="pjax">\newline{}test</a>} while PJAX requests \url{http://example.com/test/?pjax}.
+\\
 Crawlers which are not able to interpret JavaScript crawl all pages in the common way.
 Browsers which are able to interpret JavaScript instead will have the advantages of AJAX.
 \\

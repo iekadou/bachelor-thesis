@@ -9,7 +9,7 @@ The History API, released in October 2014, is required by \lare{} and presented 
 
 \subsection{\html{}\label{html}}
 Hypertext Markup Language (\html{}) is the language which is used to create \webPage{}s.
-It's specification is defined by the \gls{w3c}\footnote{http://www.w3.org/TR/html5/ (Accessed: June 24, 2015)}.
+It's specification is defined by the \gls{w3c}\footnote{\url{http://www.w3.org/TR/html5/} (Accessed: Juli 28, 2015)}.
 It allows to structure a web document semantically, but not to style it.
 Similar to XML it consists of hierarchically structured tags.
 Each tag may have attributes.
@@ -30,8 +30,8 @@ Each value of it may not occur more than once on a \webPage{}.
 \end{figure}
 
 \noindent{}Figure \ref{fig:lare_html} shows the rendered structure of a sample \webApplication{} which is used to demonstrate \lare{} and other techniques in this thesis.
-A <div> tag with the ID \enquote{site} (blue) contains among others a container with the ID \enquote{page} (pink).
-This contains the <div> tags with IDs \enquote{tags\_headline} (red) and \enquote{content} (green).
+A \emph{<div>} tag with the ID \enquote{site} (blue) contains among others a container with the ID \enquote{page} (pink).
+This contains the \emph{<div>} tags with IDs \enquote{tags\_headline} (red) and \enquote{content} (green).
 \\
 The HTML to this structure can be similar to listing \ref{lst:example_html}. It stats with \emph{<!Doctype html>} which defines that this HTML document uses the HTML in the version 5.
 Surrounding every code afterwards follows the \emph{<html>...</html>} tag.
@@ -41,7 +41,7 @@ Additionally in this area JavaScript(JS) can be defined or included to gain more
 \\
 The \emph{<body>...</body>} part of an HTML document is the space containing the visible content.
 This area is rendered and presented to the user.
-In our case some div tags in the structure mentioned before are located here.
+In our case some \emph{<div>} tags in the structure mentioned before are located here.
 
 \begin{minipage}[c]{0.95\linewidth}
 \begin{lstlisting}[caption=Sample HTML document, label=lst:example_html]
@@ -68,7 +68,6 @@ In our case some div tags in the structure mentioned before are located here.
 </html>
 \end{lstlisting}
 \end{minipage}
-
 \subsection{\httpRequest{}s\label{httpRequest}}
 The World Wide Web has one main protocol to let \webBrowser{}s and \webServer{}s communicate, the Hypertext Transfer Protocol (\http{}), which is built on top of the Transmission Control Protocol (TCP).
 TCP and so \httpRequest{}s always start with a handshake to establish a connection before data is transferred.
@@ -78,28 +77,21 @@ After this handshake, the client sends the request data to the \webServer{}.
 \WebApplication{}s typically render data out of a database into a \html{} template and send it back as the response.
 The browser receives this \webPage{}, interprets and renders it.
 Subsequently it sends \httpRequest{}s to receive the images, CSS and JS linked in this page.
-\\
-Figure \ref{fig:http_components} displays this request/response communication of a \webBrowser{} and a \webServer{} when requesting a \webPage{} initially.
 
 \begin{figure}[H]
 \centering
-\includegraphics[height=7cm]{images/http.pdf}
+\includegraphics[height=6cm]{images/http.pdf}
 \caption[http_components]{Component and communication diagram of \http{}}
 \label{fig:http_components}
 \end{figure}
 
+\noindent{}Figure \ref{fig:http_components} displays this request/response communication of a \webBrowser{} and a \webServer{} when requesting a \webPage{} initially.
+
 \subsection{Dynamic content and synchronicity\label{synchronicity}}
 
 Common \httpRequest{}s, which are described in \ref{httpRequest}, do not support asynchronous changes of content. As presented in fig. \ref{fig:http_components} the response of common \httpRequest{}s is always a full page, which replaces the previous one fully.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=12cm]{images/http_replacements.pdf}
-\caption[ajax_replacements]{Content replacements by common \httpRequest{}s}
-\label{fig:ajax_replacements}
-\end{figure}
-
-\noindent{}To retrieve new information the client has to request another full \webPage{}, including all resources and the necessary data.
+\\
+To retrieve new information the client has to request another full \webPage{}, including all resources and the necessary data.
 This makes this kind of \webSite{} \enquote{synchronous}.
 Even if newer \http{} versions recommend asynchronous requests to retrieve resources, the HTML document itself still is synchronous. 
 An \enquote{asynchronous} \webSite{} is able to change content \emph{dynamically} without having to load a whole new page.
@@ -112,13 +104,19 @@ A backend service can be a database or another sort of API to derive information
 Frequently it changes too often to save it in the filesystem of the \webServer{}.
 Other reasons for this type of content can be the use of a content management system or the dependence on data which you can not influence and has to be changed by others.
 \\
-Dynamic content and static content can both be delivered in synchronous and asynchronous \webApplication{}s.
-
+Dynamic and static content can both be delivered in synchronous and asynchronous \webApplication{}s.
+\\
+\begin{figure}[H]
+\centering
+\includegraphics[width=12cm]{images/http_replacements.pdf}
+\caption[ajax_replacements]{Content replacements by common \httpRequest{}s}
+\label{fig:ajax_replacements}
+\end{figure}
 
 \subsection{\ajax{}\label{ajax}}
 Asynchronous JavaScript and XML (\ajax{}) is a technology to implement dynamic \webPage{}s.
 The JavaScript structure XMLHttpRequest (XHR) is used to make requests to a \webServer{} without loading a full new page.
-
+\\
 A normal \httpRequest{} by a browser forces requests always to be synchronous.
 With the use of \ajax{}, asynchronous requests are possible.
 The data flow, shown in fig. \ref{fig:ajax_components}, is very similar to the normal browser behaviour, except the usage of a new component: the \enquote{\ajax{}-engine}.
@@ -134,6 +132,11 @@ The first request to a \webServer{} using \ajax{} is identical to one without \a
 \noindent{}The following requests are handled by this \ajax{}-engine, allowing to asynchronously request content from the \webServer{}.
 \ajax{} can request only small parts of a \webSite{}, most of the time in XML or JSON format, interprets it and only adds, replaces or appends old content with the newly received.
 Figure \ref{fig:ajax_replacements} shows that only one part of a \webPage{} is replaced, instead of the whole page in \httpRequest{}s.
+\\
+In this example the \emph{<div>} container with the id \enquote{page} is replaced.
+\ajax{} could request and replace smaller, bigger and multiple containers too, depending on the requested URL and \ajax{}-engine.
+But the common way to use plain \ajax{} is to just retrieve JSON data and render it, like shown in section \ref{sec:state_client_side_rendering}.
+In this scenario it is required to implement an endpoint for every possible content which needs to be sent, which makes it not very easy to implement and maintain.
 
 \begin{figure}[H]
 \centering
@@ -161,6 +164,6 @@ This session history enables functionality like the back and forward buttons on 
 Defined as a list of session history entries, it represents the browsing history.
 A session history entry may be a URL or a state object and may have additional information.
 \\
-It is possible to influence this list via the window.history.pushState(data, title[, url]) method, which allows to add a new state into this list.
+It is possible to influence this list via the \emph{window.history.pushState(data, title[, url])} method, which allows to add a new state into this list.
 This also effects the browser's navigation bar, which gains the possibility for users to share or bookmark a \webPage{}.
 \\

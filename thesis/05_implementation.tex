@@ -12,8 +12,8 @@ The \lare{} object contains all necessary data and functions.
 It builds the base of every other \lare{} module in PHP, especially for template engines.
 \\
 As defined before, the \lare{} object is implemented as a request-scoped singleton.
-This object is created by the get\_instance() method.
-To prevent multiple objects of this class the \_\_clone() and  \_\_construct() methods are replaced by empty functions.
+This object is created by the \emph{get\_instance()} method.
+To prevent multiple objects of this class the \emph{\_\_clone()} and  \emph{\_\_construct()} methods are replaced by empty functions.
 \\
 Automatically one object gets instantiated after the definition of this class.
 
@@ -25,11 +25,9 @@ Automatically one object gets instantiated after the definition of this class.
 Returns true if the current request is a Lare request, otherwise false.
 \\
 \\
-\\
 \large{\textit{\textbf{Lare::set\_current\_namespace(\$namespace)}}}
 \\
-\\
-\begin{tabular}{|p{4cm}|p{9.5cm}|}
+\begin{tabular}{|p{4cm}|p{9.3cm}|}
     \hline
     \textbf{name} & \textbf{description} \\
     \hline
@@ -40,17 +38,15 @@ Returns true if the current request is a Lare request, otherwise false.
 \\
 Sets the namespace of the current page.
 \\
-\\
-\\
-\large{\textbf{\textit{Lare::get\_current\_namespace()}}
+\newpage{}
+\noindent{}\large{\textbf{\textit{Lare::get\_current\_namespace()}}
 \\
 Returns the namespace of the current request.
 \\
 \\
-\\
 \large{\textbf{\textit{Lare::get\_matching\_count(\$extension\_namespace=None)}}}
 \\
-\begin{tabular}{|p{5cm}|p{8.5cm}|}
+\begin{tabular}{|p{5cm}|p{8.3cm}|}
     \hline
     \textbf{name} & \textbf{description} \\
     \hline
@@ -62,10 +58,9 @@ Returns the namespace of the current request.
 Returns how many parts of the \$extension\_namespace and the previous name\-space (from outer to inner) are matching, before the first mismatch occurs.
 \\
 \\
-\\
 \large{\textbf{\textit{Lare::matches(\$extension\_namespace=None)}}}}
 \\
-\begin{tabular}{|p{5cm}|p{8cm}|}
+\begin{tabular}{|p{5cm}|p{8.3cm}|}
     \hline
     \textbf{name} & \textbf{description} \\
     \hline
@@ -77,13 +72,12 @@ Returns how many parts of the \$extension\_namespace and the previous name\-spac
 Returns true if the extension\_namespace matches the previous namespace (on as many layers as extension\_namespace has), otherwise false.
 \\
 \\
-\\
 \large{\textbf{\textit{Lare::get\_instance()}}}
 \\
 Returns the \lare{} singleton and creates it if not instantiated before.
 
 \subsection{\twigLare{}}
-Twig-Lare brings Lare functionality to the template engine Twig\footnote{http://twig.sensiolabs.org/}.
+Twig-Lare brings Lare functionality to the template engine Twig\footnote{\url{http://twig.sensiolabs.org/} (Accessed: Juli 28, 2015)}.
 Twig is used by Symfony, a framework which is used in e.g. Drupal 8, eZPublish, phpBB and Sylius.
 \\
 Twig-Lare is implemented as a Twig extension.
@@ -106,7 +100,7 @@ Inside this block \emph{<div>} containers with the according IDs should be place
 
 \large{\textbf{\textit{\{\% lare\_extends \$default\_template \$lare\_namespace \$lare\_template \%\}}}}
 \\
-\begin{tabular}{|p{4cm}|p{9cm}|}
+\begin{tabular}{|p{4cm}|p{9.3cm}|}
     \hline
     \textbf{name} & \textbf{description} \\
     \hline
@@ -128,9 +122,10 @@ As one package it is available via \emph{pip install django-lare} command.
 \subsubsection{API}
 The \textbf{lare\_extends} tag should be used in the django templating engine.
 \\
+\\
 \large{\textbf{\textit{\{\% lare\_extends default\_template lare\_namespace lare\_template \%\}}}}
 \\
-\begin{tabular}{|p{4cm}|p{9cm}|}
+\begin{tabular}{|p{4cm}|p{9.3cm}|}
     \hline
     \textbf{name} & \textbf{description} \\
     \hline
@@ -143,14 +138,10 @@ The \textbf{lare\_extends} tag should be used in the django templating engine.
 \end{tabular}
 \\
 \\
-\\
 Extends the default\_template if lare\_namespace is not matching, extends lare\_template otherwise.
 \\
 \\
-\\
-\\
 In the following API documentation of the \textbf{\lare{}} object \textbf{lare} represents the singleton instance.
-\\
 \\
 \\
 \large{\textbf{\textit{lare.is\_enabled()}}}
@@ -158,11 +149,9 @@ In the following API documentation of the \textbf{\lare{}} object \textbf{lare} 
 Returns true if the current request is a Lare request, otherwise false.
 \\
 \\
-\\
 \large{\textit{\textbf{lare.set\_current\_namespace(namespace)}}}
 \\
-\\
-\begin{tabular}{|p{4cm}|p{9cm}|}
+\begin{tabular}{|p{4cm}|p{9.3cm}|}
     \hline
     \textbf{name} & \textbf{description} \\
     \hline
@@ -174,16 +163,14 @@ Returns true if the current request is a Lare request, otherwise false.
 Sets the namespace of the current page.
 \\
 \\
-\\
 \large{\textbf{\textit{lare.get\_current\_namespace()}}
 \\
 Returns the namespace of the current request.
 \\
 \\
-\\
 \large{\textbf{\textit{lare.get\_matching\_count(extension\_namespace=None)}}}
 \\
-\begin{tabular}{|p{4cm}|p{9cm}|}
+\begin{tabular}{|p{4cm}|p{9.3cm}|}
     \hline
     \textbf{name} & \textbf{description} \\
     \hline
@@ -192,13 +179,12 @@ Returns the namespace of the current request.
 \end{tabular}
 \\
 \\
-Returns how many parts of the extension\_namespace and the previous namespace (from outer to inner) are matching, before the first mismatch occurs.
-\\
+Returns how many parts of the extension\_namespace and the previous name\-space (from outer to inner) are matching, before the first mismatch occurs.
 \\
 \\
 \large{\textbf{\textit{lare.matches(extension\_namespace=None)}}}}
 \\
-\begin{tabular}{|p{4cm}|p{9cm}|}
+\begin{tabular}{|p{4.3cm}|p{9cm}|}
     \hline
     \textbf{name} & \textbf{description} \\
     \hline
@@ -210,11 +196,9 @@ Returns how many parts of the extension\_namespace and the previous namespace (f
 Returns true if the extension\_namespace matches the previous namespace (on as many layers as extension\_namespace has), otherwise false.
 \\
 \\
-\\
 \large{\textbf{\textit{lare.get\_instance()}}}
 \\
 Returns the \lare{} singleton and creates it if not instantiated before.
-\\
 \\
 \\
 After modifications and restructuring of \djangoLare{} the API is similar to the API of \phpLare{}.
@@ -231,11 +215,11 @@ After the script is loaded it automatically tests if the History API is availabl
 If the requirements are fulfilled it gets initialised.
 \\
 As described in \ref{sec:lare_frontend} a \lare{} frontend has to hijack page changes.
-\lareJS{}, implemented as a jQuery\footnote{\url{https://jquery.com}} plugin realizes this by just one function call, e.g. \emph{\$(document).lare('a');}.
+\lareJS{}, implemented as a jQuery\footnote{\url{https://jquery.com} (Accessed: Juli 28, 2015)} plugin realizes this by just one function call, e.g. \emph{\$(document).lare('a');}.
 jQuery plugins normally have a syntax like \emph{\$('a').lare();}.
 But semantically \lareJS{} sets the focus on the engine itself, instead of the items.
 The event listeners are set by using this method internally.
 \\
-Besides the \lare{} functionality \lareJS{} provides utilities for JavaScript including auxiliary functions like \$(document).lareAlways(function(e) { ... });.
+Besides the \lare{} functionality \lareJS{} provides utilities for JavaScript including auxiliary functions like \emph{\$(document).lareAlways(function(e) \{ ... \});}.
 This runs function(e) {} every time a lare request is finished successfully or a history step is made.
-This makes it possible to imitate the event listener \emph{\$(document).ready(function(e) { ... });} provided by jQuery, to hook functions to the \enquote{document ready event}.
+This makes it possible to imitate the event listener \emph{\$(document).ready(function(e) \{ ... \});} provided by jQuery, to hook functions to the \enquote{document ready event}.

@@ -1,9 +1,8 @@
 \section{\lare{}\label{chap:lare}}
-\subsection{Introduction\label{sec:lare_introduction}}
 \lare{}, lightweight \ajax{} replacement engine, is built on top of PJAX and successor of PJAXR.
 \\
 The idea of \lare{} is to have the advantages of \ajax{} while trying to avoid it's disadvantages.
-Introduced in Juli 2013 as an extended version of PJAX, it allows to replace multiple containers with a single request instead of being limited to the replacement of only one container.
+Introduced as an extended version of PJAX, it allows to replace multiple containers with a single request instead of being limited to the replacement of only one container.
 Matching the ID of a container it passes the duty to define which container should be replaced from the client-side to the server-side by setting the correct IDs.
 Introducing the tags \emph{<lare-head>} and \emph{<lare-body>} it gives the ability to change meta tags or the page title in the \emph{<head>} and replace containers inside the \emph{<body>} with only one request.
 \\
@@ -12,18 +11,18 @@ On the other hand \singlePageApplication{}s using \lare{} are easily crawlable b
 It also uses the pushState function of the History interface to achieve full functionality of browsers incl. back- and forward buttons.
 \lare{} is a generic solution for \singlePageApplication{}s and can be implemented in nearly every web application.
 
+\begin{figure}[H]
+\centering
+\includegraphics[height=9cm]{images/lare_replacements.pdf}
+\caption[lare_replacements]{Content replacements by \lare{}}
+\label{fig:lare_replacements}
+\end{figure}
+
 \noindent{}As shown in fig. \ref{fig:lare_replacements} only the needed parts of the content are replaced.
 It shows the behaviour of \lare{} when clicking on the link to the second page of the P tags in the sample web application.
 On the bottom of this figure left the \webPage{} is shown before the request.
 On the top right the response, which consists of the container with the IDs tags\_headline and content, is displayed.
 On the bottom right the result with the replaced containers is illustrated.
-\newpage{}
-\begin{figure}[H]
-\centering
-\includegraphics[width=14cm]{images/lare_replacements.pdf}
-\caption[lare_replacements]{Content replacements by \lare{}}
-\label{fig:lare_replacements}
-\end{figure}
 
 \subsection{Concept\label{sec:lare_concept}}
 
@@ -37,7 +36,7 @@ In this case when replacing \emph{B} with other content of the same level it cou
 \\
 After the \lare{} frontend is initialized it hijacks events like clicks on links and enriches the request with the current page's namespace.
 A \lare{} backend plugged into the application analyzes the namespace of the requested page and the one sent in the request.
-An earlier interpretation of the \lare{} namespaces like in a \webServer{} plugin for e.g. Apache\footnote{\url{http://httpd.apache.org/}} or Nginx\footnote{\url{http://nginx.org/}} is not possible, because the current request's namespace is set inside the application.
+An earlier interpretation of the \lare{} namespaces like in a \webServer{} plugin for e.g. Apache\footnote{\url{http://httpd.apache.org/} (Accessed: Juli 28, 2015)} or Nginx\footnote{\url{http://nginx.org/} (Accessed: Juli 28, 2015)} is not possible, because the current request's namespace is set inside the application.
 For every hierarchy level it checks if both namespaces match.
 If on one level the namespaces differ, the containers according to this level will be responded to the request.
 An optimized web application only fetches the data necessary for those containers and renders them afterwards.
@@ -55,7 +54,7 @@ The \lare{} frontend retrieves the response, replaces the containers at the \web
 The \lare{} frontend, e.g. \lareJS{}, takes the place of the \ajax{} engine.
 In addition to \ajax{}, \lare{} has a backend which helps to reduce server load and maps responses to the given namespace.
 It can decide which backend queries such as database queries are necessary in the current request.
-Additionally it should decide which templates are needed, as \lare{} responses have a different structure than normal HTML documents, which is presented later on.
+Additionally it should decide which templates are needed, as \lare{} responses have a different structure than normal HTML documents, which is presented in listing \ref{lst:lare_response}.
 
 \subsection{Realization\label{sec:lare_realization}}
 To load a page, the first request is a normal \httpRequest{} followed by a JavaScript script initializing the \lare{} frontend module.
@@ -69,7 +68,7 @@ Afterwards it decides which data is needs to be gathered and which template shou
 The content delivered by the \lare{} backend enriched web server is interpreted by the frontend module and replaces the related containers.
 This replacement is implemented using the ID attribute.
 Other methods identifying corresponding containers, e.g. X-Path are not as generic in it's position on the page as the ID.
-When a container is injected into the Document Object Model(DOM) or the position within a container is changed, the X-Path might not hit the correct container anymore.
+When a container is injected into the Document Object Model or the position within a container is changed, the X-Path might not hit the correct container anymore.
 For example the X-PATH \emph{//*[@id="page"]/div[2]} will not hit anymore if the previous div gets deleted.
 \\
 Using the History API makes it possible to update the URL like it would be made by normal requests.
@@ -165,8 +164,8 @@ The \lare{} template could then be formed like this:
 \end{lstlisting}
 \end{minipage}
 \\
-The <lare-head> tag is the counterpart to the <head> tag, <lare-body> to <body>.
-Instead of an attribute in the <lare-body> tag, the namespace will be delivered in the <lare-namespace> tag.
+The \emph{<lare-head>} tag is the counterpart to the \emph{<head>} tag, \emph{<lare-body>} to \emph{<body>}.
+Instead of an attribute in the \emph{<lare-body>} tag, the namespace will be delivered in the \emph{<lare-namespace>} tag.
 \\
 The tags page in our sample web application consists of two templates.
 On the one hand the character specific tags.html, seen in listing \ref{lst:tags_template}, which belongs to the third level namespace.
@@ -226,6 +225,6 @@ The response in this case is shown in listing \ref{lst:lare_response}.
 \end{minipage}
 
 \noindent{}Both necessary containers are rendered.
-The content div is rendered, because it is defined in the content block and the tags\_headline div is defined inside the additional\_lare\_includes block.
+The \enquote{content} \emph{<div>} is rendered, because it is defined in the \enquote{content} block and the \enquote{tags\_headline} \emph{<div>} is defined inside the \enquote{additional\_lare\_includes} block.
 \\
-This block is intended to update content which is not inside the current level's container, in this case tags\_headline is inside the site level of the \enquote{Tags} namespace.
+This block is intended to update content which is not inside the current level's container, in this case \enquote{tags\_headline} is inside the site level of the \enquote{Tags} namespace.
